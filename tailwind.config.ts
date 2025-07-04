@@ -27,6 +27,41 @@ export default {
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",
         },
+        // Cores da marca Siqueira Campos Imóveis
+        brand: {
+          brown: {
+            50: "#fdf8f6",
+            100: "#f2e8e5",
+            200: "#eaddd7",
+            300: "#e0cec7",
+            400: "#d2bab0",
+            500: "#bfa094",
+            600: "#a18072",
+            700: "#977669",
+            800: "#846358",
+            900: "#43302b",
+          },
+          beige: {
+            50: "#fefdfb",
+            100: "#fef7e0",
+            200: "#faedc4",
+            300: "#f7e2a9",
+            400: "#f2d583",
+            500: "#ebc35d",
+            600: "#d4a12a",
+            700: "#b8901f",
+            800: "#9c7a1a",
+            900: "#806419",
+          },
+        },
+        // Cores para status
+        status: {
+          disponivel: "#10b981",
+          alugado: "#f59e0b",
+          vendido: "#ef4444",
+          reservado: "#8b5cf6",
+          inativo: "#6b7280",
+        },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
