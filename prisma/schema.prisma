@@ -1,0 +1,379 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum TipoUsuario {
+  ADMIN
+  CORRETOR
+  ASSISTENTE
+  CLIENTE
+  MARKETING
+  DESENVOLVEDOR
+}
+
+enum StatusImovel {
+  DISPONIVEL
+  ALUGADO
+  VENDIDO
+  RESERVADO
+  INATIVO
+}
+
+enum TipoImovel {
+  CASA
+  APARTAMENTO
+  TERRENO
+  COMERCIAL
+  RURAL
+  COBERTURA
+  KITNET
+  LOFT
+}
+
+enum StatusLead {
+  PENDENTE
+  ASSUMIDO
+  EXPIRADO
+  FINALIZADO
+  CANCELADO
+}
+
+enum TipoTransacao {
+  VENDA
+  ALUGUEL
+  AMBOS
+}
+
+model Usuario {
+  id                Int           @id @default(autoincrement())
+  nome              String
+  email             String        @unique
+  senha             String?
+  whatsapp          String?
+  telefone          String?
+  cpf               String?       @unique
+  avatar            String?
+  ativo             Boolean       @default(true)
+  tipo              TipoUsuario
+  googleId          String?       @unique
+  emailVerificado   Boolean       @default(false)
+  tokenVerificacao  String?
+  tokenRecuperacao  String?
+  ultimoLogin       DateTime?
+  criadoEm          DateTime      @default(now())
+  atualizadoEm      DateTime      @updatedAt
+
+  // Relacionamentos
+  imoveis           Imovel[]
+  leads             Lead[]        @relation("LeadCorretor")
+  leadsRecebidos    Lead[]        @relation("LeadCliente")
+  visitas           Visita[]
+  contratos         Contrato[]
+  favoritos         Favorito[]
+  avaliacoes        Avaliacao[]
+  mensagens         Mensagem[]
+  atividades        Atividade[]
+  comissoes         Comissao[]
+  campanhas         Campanha[]
+  sessoes           Sessao[]
+
+  @@map("usuarios")
+}
+
+model Imovel {
+  id                Int             @id @default(autoincrement())
+  titulo            String
+  descricao         String
+  endereco          String
+  cidade            String          @default("Goiânia")
+  estado            String          @default("GO")
+  cep               String?
+  bairro            String
+  latitude          Float?
+  longitude         Float?
+  tipo              TipoImovel
+  transacao         TipoTransacao
+  preco             Decimal
+  precoAluguel      Decimal?
+  area              Float
+  areaTerreno       Float?
+  quartos           Int             @default(0)
+  banheiros         Int             @default(0)
+  vagas             Int             @default(0)
+  suites            Int             @default(0)
+  status            StatusImovel    @default(DISPONIVEL)
+  destaque          Boolean         @default(false)
+  mobiliado         Boolean         @default(false)
+  aceita            String?         // Pets, fumantes, etc
+  iptu              Decimal?
+  condominio        Decimal?
+  observacoes       String?
+  caracteristicas   String[]        // Array de características
+  fotos             String[]        // URLs das fotos
+  video             String?
+  tour360           String?
+  views             Int             @default(0)
+  criadoEm          DateTime        @default(now())
+  atualizadoEm      DateTime        @updatedAt
+
+  // Relacionamentos
+  corretor          Usuario         @relation(fields: [corretorId], references: [id])
+  corretorId        Int
+  leads             Lead[]
+  visitas           Visita[]
+  contratos         Contrato[]
+  favoritos         Favorito[]
+  avaliacoes        Avaliacao[]
+  atividades        Atividade[]
+  historicos        HistoricoPreco[]
+
+  @@map("imoveis")
+}
+
+model Lead {
+  id                Int         @id @default(autoincrement())
+  nome              String
+  email             String?
+  telefone          String
+  whatsapp          String?
+  mensagem          String
+  origem            String      @default("site") // site, whatsapp, facebook, etc
+  status            StatusLead  @default(PENDENTE)
+  prioridade        Int         @default(1) // 1-5
+  observacoes       String?
+  respostaIa        String?
+  criadoEm          DateTime    @default(now())
+  atualizadoEm      DateTime    @updatedAt
+
+  // Relacionamentos
+  corretor          Usuario?    @relation("LeadCorretor", fields: [corretorId], references: [id])
+  corretorId        Int?
+  cliente           Usuario?    @relation("LeadCliente", fields: [clienteId], references: [id])
+  clienteId         Int?
+  imovel            Imovel?     @relation(fields: [imovelId], references: [id])
+  imovelId          Int?
+  visitas           Visita[]
+  mensagens         Mensagem[]
+  atividades        Atividade[]
+
+  @@map("leads")
+}
+
+model Visita {
+  id                Int         @id @default(autoincrement())
+  dataHora          DateTime
+  status            String      @default("agendada") // agendada, confirmada, realizada, cancelada
+  observacoes       String?
+  feedback          String?
+  nota              Int?        // 1-5
+  criadoEm          DateTime    @default(now())
+  atualizadoEm      DateTime    @updatedAt
+
+  // Relacionamentos
+  cliente           Usuario     @relation(fields: [clienteId], references: [id])
+  clienteId         Int
+  imovel            Imovel      @relation(fields: [imovelId], references: [id])
+  imovelId          Int
+  lead              Lead?       @relation(fields: [leadId], references: [id])
+  leadId            Int?
+
+  @@map("visitas")
+}
+
+model Contrato {
+  id                Int         @id @default(autoincrement())
+  numero            String      @unique
+  tipo              String      // venda, aluguel
+  valor             Decimal
+  entrada           Decimal?
+  parcelas          Int?
+  valorParcela      Decimal?
+  dataInicio        DateTime
+  dataFim           DateTime?
+  status            String      @default("ativo") // ativo, finalizado, cancelado
+  arquivo           String?     // URL do PDF
+  observacoes       String?
+  criadoEm          DateTime    @default(now())
+  atualizadoEm      DateTime    @updatedAt
+
+  // Relacionamentos
+  cliente           Usuario     @relation(fields: [clienteId], references: [id])
+  clienteId         Int
+  imovel            Imovel      @relation(fields: [imovelId], references: [id])
+  imovelId          Int
+  comissoes         Comissao[]
+
+  @@map("contratos")
+}
+
+model Comissao {
+  id                Int         @id @default(autoincrement())
+  valor             Decimal
+  percentual        Decimal
+  status            String      @default("pendente") // pendente, pago, cancelado
+  dataPagamento     DateTime?
+  observacoes       String?
+  criadoEm          DateTime    @default(now())
+
+  // Relacionamentos
+  corretor          Usuario     @relation(fields: [corretorId], references: [id])
+  corretorId        Int
+  contrato          Contrato    @relation(fields: [contratoId], references: [id])
+  contratoId        Int
+
+  @@map("comissoes")
+}
+
+model Favorito {
+  id                Int         @id @default(autoincrement())
+  criadoEm          DateTime    @default(now())
+
+  // Relacionamentos
+  usuario           Usuario     @relation(fields: [usuarioId], references: [id])
+  usuarioId         Int
+  imovel            Imovel      @relation(fields: [imovelId], references: [id])
+  imovelId          Int
+
+  @@unique([usuarioId, imovelId])
+  @@map("favoritos")
+}
+
+model Avaliacao {
+  id                Int         @id @default(autoincrement())
+  nota              Int         // 1-5
+  comentario        String?
+  criadoEm          DateTime    @default(now())
+
+  // Relacionamentos
+  usuario           Usuario     @relation(fields: [usuarioId], references: [id])
+  usuarioId         Int
+  imovel            Imovel      @relation(fields: [imovelId], references: [id])
+  imovelId          Int
+
+  @@unique([usuarioId, imovelId])
+  @@map("avaliacoes")
+}
+
+model Mensagem {
+  id                Int         @id @default(autoincrement())
+  conteudo          String
+  lida              Boolean     @default(false)
+  arquivos          String[]    // URLs de arquivos anexos
+  criadoEm          DateTime    @default(now())
+
+  // Relacionamentos
+  remetente         Usuario     @relation(fields: [remetenteId], references: [id])
+  remetenteId       Int
+  lead              Lead?       @relation(fields: [leadId], references: [id])
+  leadId            Int?
+
+  @@map("mensagens")
+}
+
+model Atividade {
+  id                Int         @id @default(autoincrement())
+  tipo              String      // login, visualizacao, agendamento, etc
+  descricao         String
+  ip                String?
+  userAgent         String?
+  dados             Json?       // Dados adicionais
+  criadoEm          DateTime    @default(now())
+
+  // Relacionamentos
+  usuario           Usuario     @relation(fields: [usuarioId], references: [id])
+  usuarioId         Int
+  imovel            Imovel?     @relation(fields: [imovelId], references: [id])
+  imovelId          Int?
+  lead              Lead?       @relation(fields: [leadId], references: [id])
+  leadId            Int?
+
+  @@map("atividades")
+}
+
+model HistoricoPreco {
+  id                Int         @id @default(autoincrement())
+  precoAnterior     Decimal
+  precoNovo         Decimal
+  motivo            String?
+  criadoEm          DateTime    @default(now())
+
+  // Relacionamentos
+  imovel            Imovel      @relation(fields: [imovelId], references: [id])
+  imovelId          Int
+
+  @@map("historico_precos")
+}
+
+model Campanha {
+  id                Int         @id @default(autoincrement())
+  nome              String
+  descricao         String?
+  tipo              String      // email, whatsapp, facebook, google
+  status            String      @default("ativa") // ativa, pausada, finalizada
+  orcamento         Decimal?
+  gasto             Decimal     @default(0)
+  alcance           Int         @default(0)
+  cliques           Int         @default(0)
+  conversoes        Int         @default(0)
+  dataInicio        DateTime
+  dataFim           DateTime?
+  configuracao      Json?       // Configurações específicas da campanha
+  criadoEm          DateTime    @default(now())
+  atualizadoEm      DateTime    @updatedAt
+
+  // Relacionamentos
+  criador           Usuario     @relation(fields: [criadorId], references: [id])
+  criadorId         Int
+
+  @@map("campanhas")
+}
+
+model Sessao {
+  id                String      @id @default(cuid())
+  token             String      @unique
+  expiresAt         DateTime
+  userAgent         String?
+  ip                String?
+  ativo             Boolean     @default(true)
+  criadoEm          DateTime    @default(now())
+
+  // Relacionamentos
+  usuario           Usuario     @relation(fields: [usuarioId], references: [id])
+  usuarioId         Int
+
+  @@map("sessoes")
+}
+
+model Configuracao {
+  id                Int         @id @default(autoincrement())
+  chave             String      @unique
+  valor             String
+  descricao         String?
+  tipo              String      @default("string") // string, number, boolean, json
+  categoria         String      @default("geral")
+  atualizadoEm      DateTime    @updatedAt
+
+  @@map("configuracoes")
+}
+
+model LogSistema {
+  id                Int         @id @default(autoincrement())
+  nivel             String      // info, warning, error, debug
+  categoria         String      // auth, imovel, lead, sistema
+  mensagem          String
+  dados             Json?
+  ip                String?
+  userAgent         String?
+  usuarioId         Int?
+  criadoEm          DateTime    @default(now())
+
+  @@map("logs_sistema")
+}
