@@ -5,6 +5,47 @@ import { authenticateToken, authorizeRole } from "../middleware/auth";
 const router = express.Router();
 const prisma = new PrismaClient();
 
+// Listar imóveis em destaque (público)
+router.get("/destaque", async (req, res) => {
+  try {
+    const imoveis = await prisma.imovel.findMany({
+      where: {
+        status: "DISPONIVEL",
+      },
+      take: 6,
+      orderBy: {
+        criadoEm: "desc",
+      },
+      include: {
+        corretor: {
+          select: {
+            nome: true,
+            telefone: true,
+            whatsapp: true,
+          },
+        },
+      },
+    });
+
+    // Converter fotos de JSON string para array
+    const imoveisFormatados = imoveis.map((imovel) => ({
+      ...imovel,
+      fotos: imovel.fotos ? JSON.parse(imovel.fotos) : [],
+      caracteristicas: imovel.caracteristicas
+        ? JSON.parse(imovel.caracteristicas)
+        : [],
+    }));
+
+    res.json(imoveisFormatados);
+  } catch (error) {
+    console.error("Erro ao buscar imóveis destaque:", error);
+    res.status(500).json({
+      success: false,
+      message: "Erro interno do servidor",
+    });
+  }
+});
+
 // Listar imóveis com filtros (público)
 router.get("/", async (req, res) => {
   try {
