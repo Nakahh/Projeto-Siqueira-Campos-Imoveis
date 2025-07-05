@@ -1,56 +1,47 @@
-# Multi-stage build para produção
-FROM node:18-alpine AS base
+# Dockerfile - Siqueira Campos Imóveis
+# Ambiente de Desenvolvimento
+# Desenvolvido por KRYONIX Tecnologia
 
-# Instalar dependências necessárias
-RUN apk add --no-cache libc6-compat
+FROM node:18-alpine
+
+# Metadados
+LABEL maintainer="KRYONIX Tecnologia <contato@kryonix.com.br>"
+LABEL description="Sistema Siqueira Campos Imóveis - Desenvolvimento"
+LABEL version="1.0.0"
+
+# Instalar dependências do sistema
+RUN apk add --no-cache \
+    bash \
+    curl \
+    git \
+    sqlite \
+    openssl
+
+# Definir diretório de trabalho
 WORKDIR /app
 
-# Copiar arquivos de configuração
+# Copiar arquivos de dependências
 COPY package*.json ./
 COPY prisma ./prisma/
 
 # Instalar dependências
-FROM base AS deps
-RUN npm ci --only=production && npm cache clean --force
-
-# Build da aplicação
-FROM base AS builder
-COPY . .
 RUN npm ci
+
+# Gerar Prisma Client
 RUN npx prisma generate
-RUN npm run build
 
-# Imagem de produção
-FROM node:18-alpine AS runner
-WORKDIR /app
+# Copiar código fonte
+COPY . .
 
-# Criar usuário não-root
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
-
-# Copiar arquivos necessários
-COPY --from=deps /app/node_modules ./node_modules
-COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/prisma ./prisma
-COPY --from=builder /app/package*.json ./
-COPY --from=builder /app/public ./public
-
-# Criar diretório de uploads
-RUN mkdir -p /app/uploads && chown -R nextjs:nodejs /app/uploads
-
-# Mudar para usuário não-root
-USER nextjs
+# Criar diretórios necessários
+RUN mkdir -p uploads logs backups
 
 # Expor porta
-EXPOSE 3000
-
-# Variáveis de ambiente
-ENV NODE_ENV=production
-ENV PORT=3000
+EXPOSE 3001
 
 # Health check
-HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
-  CMD node healthcheck.js
+HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
+    CMD curl -f http://localhost:3001/api/health || exit 1
 
-# Comando de inicialização
-CMD ["node", "dist/server/node-build.mjs"]
+# Comando padrão
+CMD ["npm", "run", "start"]
