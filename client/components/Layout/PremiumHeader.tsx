@@ -316,13 +316,17 @@ export function PremiumHeader() {
                       {/* Mobile Menu Header */}
                       <div className="flex items-center justify-between mb-8 pb-4 border-b border-brand-brown-200 dark:border-brand-brown-700">
                         <div className="flex items-center space-x-3">
-                          <div className="w-10 h-10 bg-gradient-to-br from-brand-brown-600 to-brand-brown-800 rounded-lg flex items-center justify-center">
-                            <Home className="h-5 w-5 text-brand-beige-100" />
-                          </div>
+                          <img
+                            src="https://cdn.builder.io/api/v1/assets/175866fa236440d4a5b360ca5b1302b3/siqueira-campos-para-fundo-claro-0c3be3?format=webp&width=400"
+                            alt="Siqueira Campos Imóveis"
+                            className="h-8 w-auto dark:hidden"
+                          />
+                          <img
+                            src="https://cdn.builder.io/api/v1/assets/175866fa236440d4a5b360ca5b1302b3/siqueira-campos-para-fundo-escuro-2b3ef2?format=webp&width=400"
+                            alt="Siqueira Campos Imóveis"
+                            className="h-8 w-auto hidden dark:block"
+                          />
                           <div>
-                            <h2 className="font-bold text-brand-brown-800 dark:text-brand-beige-200">
-                              Siqueira Campos
-                            </h2>
                             <p className="text-xs text-brand-brown-600 dark:text-brand-beige-400">
                               Premium Real Estate
                             </p>
