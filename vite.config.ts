@@ -13,7 +13,13 @@ export default defineConfig({
       name: "express-middleware",
       configureServer(server) {
         const app = createServer();
-        server.middlewares.use("/api", app);
+        server.middlewares.use((req, res, next) => {
+          if (req.url?.startsWith("/api")) {
+            app(req, res, next);
+          } else {
+            next();
+          }
+        });
       },
     },
   ],
