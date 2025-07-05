@@ -6,7 +6,8 @@ import { createServer } from "./server";
 export default defineConfig({
   plugins: [
     react({
-      fastRefresh: false, // Disable fast refresh to prevent reloads
+      fastRefresh: true, // Enable fast refresh but configure properly
+      jsxImportSource: "@emotion/react",
     }),
     {
       name: "express-middleware",
@@ -15,7 +16,9 @@ export default defineConfig({
         server.middlewares.use((req, res, next) => {
           if (
             req.url?.startsWith("/@") ||
-            req.url?.includes("/node_modules/")
+            req.url?.includes("/node_modules/") ||
+            req.url?.includes(".css") ||
+            req.url?.includes("?html-proxy")
           ) {
             return next();
           }
@@ -29,8 +32,15 @@ export default defineConfig({
     host: "::",
     port: parseInt(process.env.PORT || "8080"),
     strictPort: false,
-    hmr: false, // Completely disable HMR
-    watch: null, // Disable file watching
+    hmr: {
+      port: 24678, // Use a different port for HMR
+      overlay: false, // Disable error overlay
+    },
+    watch: {
+      usePolling: false,
+      interval: 1000,
+      ignored: ["**/node_modules/**", "**/dist/**", "**/.git/**"],
+    },
     fs: {
       allow: [".."],
     },
