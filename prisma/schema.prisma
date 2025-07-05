@@ -312,6 +312,50 @@ model HistoricoPreco {
   @@map("historico_precos")
 }
 
+model Artigo {
+  id                Int         @id @default(autoincrement())
+  titulo            String
+  slug              String      @unique
+  conteudo          String      // Conteúdo HTML do artigo
+  resumo            String?     // Resumo/excerpt
+  imagemDestaque    String?     // URL da imagem de destaque
+  tags              String?     // JSON array de tags
+  status            String      @default("RASCUNHO") // RASCUNHO, PUBLICADO, ARQUIVADO
+  visualizacoes     Int         @default(0)
+  destaque          Boolean     @default(false)
+  publicadoEm       DateTime?
+  criadoEm          DateTime    @default(now())
+  atualizadoEm      DateTime    @updatedAt
+
+  // Relacionamentos
+  autor             Usuario     @relation(fields: [autorId], references: [id])
+  autorId           Int
+
+  @@map("artigos")
+}
+
+model Depoimento {
+  id                Int         @id @default(autoincrement())
+  nome              String
+  email             String?
+  foto              String?     // URL da foto do cliente
+  conteudo          String      // Conteúdo do depoimento
+  nota              Int         // Nota de 1 a 5
+  aprovado          Boolean     @default(false)
+  destaque          Boolean     @default(false)
+  cidade            String?
+  criadoEm          DateTime    @default(now())
+  atualizadoEm      DateTime    @updatedAt
+
+  // Relacionamentos
+  cliente           Usuario?    @relation(fields: [clienteId], references: [id])
+  clienteId         Int?
+  imovel            Imovel?     @relation(fields: [imovelId], references: [id])
+  imovelId          Int?
+
+  @@map("depoimentos")
+}
+
 model Campanha {
   id                Int         @id @default(autoincrement())
   nome              String
