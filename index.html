@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#8B4513" />
 
-    <!-- SEO Meta Tags -->
     <meta
       name="description"
       content="Sistema completo de gestão imobiliária - Siqueira Campos Imóveis"
@@ -16,7 +15,6 @@
     />
     <meta name="author" content="KRYONIX Tecnologia" />
 
-    <!-- PWA Meta Tags -->
     <link rel="manifest" href="/manifest.json" />
     <meta name="mobile-web-app-capable" content="yes" />
 
@@ -25,7 +23,6 @@
 
   <body>
     <div id="root">
-      <!-- Professional loading state -->
       <div
         id="loading-state"
         style="
@@ -66,52 +63,43 @@
 
           <div
             style="
-              background: rgba(255, 255, 255, 0.2);
-              border-radius: 0.5rem;
-              padding: 1.5rem;
-              margin-bottom: 2rem;
+              width: 100%;
+              height: 6px;
+              background: rgba(255, 255, 255, 0.3);
+              border-radius: 3px;
+              margin-bottom: 1rem;
+              overflow: hidden;
             "
           >
             <div
               style="
                 width: 100%;
-                height: 6px;
-                background: rgba(255, 255, 255, 0.3);
+                height: 100%;
+                background: linear-gradient(90deg, #ffe4b5, #ffffff);
                 border-radius: 3px;
-                margin-bottom: 1rem;
-                overflow: hidden;
+                animation: pulse 2s ease-in-out infinite;
               "
-            >
-              <div
-                style="
-                  width: 100%;
-                  height: 100%;
-                  background: linear-gradient(90deg, #ffe4b5, #ffffff);
-                  border-radius: 3px;
-                "
-              ></div>
-            </div>
-            <p style="color: #ffe4b5; margin: 0; font-size: 0.9rem">
-              🚀 Carregando sistema enterprise...
-            </p>
+            ></div>
           </div>
-
-          <div
-            style="
-              font-size: 0.85rem;
-              color: rgba(255, 255, 255, 0.8);
-              line-height: 1.5;
-            "
-          >
-            <p>✅ Sistema multi-dashboard enterprise</p>
-            <p>✅ Arquitetura robusta e profissional</p>
-            <p>✅ Performance otimizada</p>
-            <p>✅ Segurança enterprise-grade</p>
-          </div>
+          <p style="color: #ffe4b5; margin: 0; font-size: 0.9rem">
+            🚀 Carregando sistema...
+          </p>
         </div>
       </div>
     </div>
 
     <script type="module" src="/client/main.tsx"></script>
+
+    <style>
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.5;
+        }
+      }
+    </style>
   </body>
 </html>
