@@ -161,8 +161,11 @@ class IntelligentCache {
   }
 
   private startCleanup(): void {
-    // Clean expired items every minute
+    // Clean expired items every 5 minutes instead of every minute
+    // and only if there are items in cache
     this.cleanupInterval = setInterval(() => {
+      if (this.cache.size === 0) return;
+
       const now = Date.now();
       const keysToDelete: string[] = [];
 
@@ -179,7 +182,7 @@ class IntelligentCache {
           `[CACHE] Cleanup: removed ${keysToDelete.length} expired items`,
         );
       }
-    }, 60000); // 1 minute
+    }, 300000); // 5 minutes instead of 1 minute
   }
 
   private loadFromStorage(): void {

@@ -6,20 +6,19 @@ import { createServer } from "./server";
 export default defineConfig({
   plugins: [
     react({
-      fastRefresh: false, // Disable fast refresh to prevent reloads
+      fastRefresh: false, // COMPLETELY DISABLE fast refresh
+      jsxRuntime: "automatic",
     }),
     {
       name: "express-middleware",
       configureServer(server) {
         const app = createServer();
         server.middlewares.use((req, res, next) => {
-          if (
-            req.url?.startsWith("/@") ||
-            req.url?.includes("/node_modules/")
-          ) {
-            return next();
+          if (req.url?.startsWith("/api")) {
+            app(req, res, next);
+          } else {
+            next();
           }
-          app(req, res, next);
         });
       },
     },
@@ -29,10 +28,12 @@ export default defineConfig({
     host: "::",
     port: parseInt(process.env.PORT || "8080"),
     strictPort: false,
-    hmr: false, // Completely disable HMR
-    watch: null, // Disable file watching
+    hmr: false, // COMPLETELY DISABLE HMR
+    watch: null, // COMPLETELY DISABLE file watching
+    middlewareMode: false,
     fs: {
       allow: [".."],
+      strict: false,
     },
   },
 

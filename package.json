@@ -39,6 +39,7 @@
   },
   "dependencies": {
     "@prisma/client": "^6.11.1",
+    "@radix-ui/react-visually-hidden": "^1.2.3",
     "axios": "^1.6.2",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.6",

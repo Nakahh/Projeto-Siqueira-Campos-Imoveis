@@ -46,11 +46,13 @@ export function ChatWidget() {
       });
       setShowForm(false);
     }
-  }, [user]);
+  }, [user?.id]); // Apenas quando o ID do usuário mudar
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+    if (messages.length > 0) {
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages.length]); // Apenas quando o número de mensagens mudar
 
   const initialMessage: Message = {
     id: "1",
@@ -64,7 +66,7 @@ export function ChatWidget() {
     if (isOpen && messages.length === 0) {
       setMessages([initialMessage]);
     }
-  }, [isOpen]);
+  }, [isOpen, messages.length]); // Adicionar messages.length como dependência
 
   const sendMessage = async () => {
     if (!inputValue.trim()) return;

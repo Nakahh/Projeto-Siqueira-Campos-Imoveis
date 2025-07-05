@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
-import "./global.css";
+import "./static.css";
 import { performanceMonitor } from "./utils/performance";
 
 console.log("🏠 Siqueira Campos Imóveis - KRYONIX Technology v2.0");
@@ -27,22 +27,31 @@ const initializeApp = () => {
 
   const root = ReactDOM.createRoot(rootElement);
 
-  root.render(
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>,
-  );
+  root.render(<App />);
 
-  // Mark render complete
+  // Mark render complete - only once
+  let renderMarked = false;
   setTimeout(() => {
-    performanceMonitor.markRenderComplete();
-    performanceMonitor.markInteractive();
+    if (!renderMarked) {
+      performanceMonitor.markRenderComplete();
+      performanceMonitor.markInteractive();
+      renderMarked = true;
+    }
   }, 100);
+};
+
+// Ensure single initialization
+let appInitialized = false;
+
+const safeInitializeApp = () => {
+  if (appInitialized) return;
+  appInitialized = true;
+  initializeApp();
 };
 
 // Simple DOM ready check
 if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", initializeApp);
+  document.addEventListener("DOMContentLoaded", safeInitializeApp);
 } else {
-  initializeApp();
+  safeInitializeApp();
 }

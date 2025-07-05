@@ -24,8 +24,11 @@ class PerformanceMonitor {
   private startTime: number;
   private metrics: PerformanceMetrics;
   private errorLogs: ErrorLog[] = [];
+  private initialized: boolean = false;
 
   constructor() {
+    if (this.initialized) return; // Prevenir múltiplas inicializações
+
     this.startTime = performance.now();
     this.metrics = {
       loadTime: 0,
@@ -34,6 +37,7 @@ class PerformanceMonitor {
       errors: [],
     };
     this.setupErrorTracking();
+    this.initialized = true;
   }
 
   static getInstance(): PerformanceMonitor {
@@ -120,14 +124,25 @@ class PerformanceMonitor {
   }
 
   private sendMetrics(type: string, data: any): void {
+    // Only send important metrics to avoid spam
+    const importantTypes = [
+      "load_complete",
+      "render_complete",
+      "interactive",
+      "error",
+    ];
+
     // In a real application, you would send this to your monitoring service
-    // For now, we'll log to console in development
-    if (process.env.NODE_ENV === "development") {
+    // For now, we'll log to console in development only for important metrics
+    if (
+      process.env.NODE_ENV === "development" &&
+      importantTypes.includes(type)
+    ) {
       console.log(`[SIQUEIRA METRICS] ${type}:`, data);
     }
 
-    // Store in sessionStorage for debugging
-    if (typeof window !== "undefined") {
+    // Store in sessionStorage for debugging (throttled)
+    if (typeof window !== "undefined" && importantTypes.includes(type)) {
       const existingMetrics = JSON.parse(
         sessionStorage.getItem("siqueira_metrics") || "[]",
       );
@@ -137,9 +152,9 @@ class PerformanceMonitor {
         timestamp: Date.now(),
       });
 
-      // Keep only last 100 metrics
-      if (existingMetrics.length > 100) {
-        existingMetrics.splice(0, existingMetrics.length - 100);
+      // Keep only last 50 metrics instead of 100
+      if (existingMetrics.length > 50) {
+        existingMetrics.splice(0, existingMetrics.length - 50);
       }
 
       sessionStorage.setItem(

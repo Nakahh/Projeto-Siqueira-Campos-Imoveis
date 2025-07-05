@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
+import { NotificationCenter } from "@/components/Notifications/NotificationCenter";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import {
   DropdownMenu,
@@ -204,6 +205,9 @@ export function Header() {
 
           {/* Right Side Actions */}
           <div className="flex items-center space-x-2">
+            {/* Notification Center */}
+            {user && <NotificationCenter />}
+
             {/* Theme Toggle */}
             <Button
               variant="ghost"
