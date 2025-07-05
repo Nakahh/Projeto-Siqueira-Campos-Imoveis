@@ -84,6 +84,8 @@ model Usuario {
   comissoes         Comissao[]
   campanhas         Campanha[]
   sessoes           Sessao[]
+  artigos           Artigo[]
+  depoimentos       Depoimento[]
 
   @@map("usuarios")
 }
