@@ -8,20 +8,21 @@ const prisma = new PrismaClient({
 async function main() {
   console.log("🌱 Iniciando seed do banco de dados...");
 
-  // Limpar dados existentes
-  await prisma.atividade.deleteMany();
-  await prisma.favorito.deleteMany();
-  await prisma.visualizacao.deleteMany();
-  await prisma.comissao.deleteMany();
-  await prisma.contrato.deleteMany();
-  await prisma.visita.deleteMany();
-  await prisma.atividadeLead.deleteMany();
-  await prisma.lead.deleteMany();
-  await prisma.caracteristicaImovel.deleteMany();
-  await prisma.imovel.deleteMany();
-  await prisma.mensagem.deleteMany();
-  await prisma.usuario.deleteMany();
-  await prisma.configuracao.deleteMany();
+  // Limpar dados existentes (ordem reversa devido às foreign keys)
+  try {
+    await prisma.comissao.deleteMany().catch(() => {});
+    await prisma.contrato.deleteMany().catch(() => {});
+    await prisma.visita.deleteMany().catch(() => {});
+    await prisma.favorito.deleteMany().catch(() => {});
+    await prisma.visualizacao.deleteMany().catch(() => {});
+    await prisma.lead.deleteMany().catch(() => {});
+    await prisma.imovel.deleteMany().catch(() => {});
+    await prisma.mensagem.deleteMany().catch(() => {});
+    await prisma.atividade.deleteMany().catch(() => {});
+    await prisma.usuario.deleteMany().catch(() => {});
+  } catch (error) {
+    console.log("⚠️ Aviso: Erro ao limpar dados (normal na primeira execução)");
+  }
 
   console.log("🗑️ Dados existentes limpos");
 
