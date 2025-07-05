@@ -3,32 +3,114 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#8B4513" />
+    <meta
+      name="description"
+      content="Sistema completo de gestão imobiliária - Siqueira Campos Imóveis"
+    />
+    <meta
+      name="keywords"
+      content="imóveis, casa, apartamento, venda, aluguel, Goiânia"
+    />
+    <meta name="author" content="KRYONIX Tecnologia" />
+
+    <!-- PWA Meta Tags -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="apple-mobile-web-app-title" content="SCI" />
+
+    <!-- SEO Meta Tags -->
+    <meta property="og:title" content="Siqueira Campos Imóveis" />
+    <meta
+      property="og:description"
+      content="Sistema completo de gestão imobiliária"
+    />
+    <meta property="og:type" content="website" />
+
     <title>Siqueira Campos Imóveis</title>
-  </head>
-  <body>
-    <div id="root">
-      <div style="padding: 2rem; text-align: center">
-        <h1 style="color: #8b4513; font-size: 2rem">
-          🏠 Siqueira Campos Imóveis
-        </h1>
-        <p style="color: #666; font-size: 1.2rem">Carregando sistema...</p>
-      </div>
-    </div>
+
+    <!-- Enhanced Debug Script -->
     <script>
-      console.log("🔍 HTML carregado, verificando JavaScript...");
+      console.log("🚀 Siqueira Campos Imóveis - Sistema Iniciando...");
+      console.log("🔧 Environment:", {
+        url: window.location.href,
+        flyApp: "641f970e3cb94a99831b41ae1b5bfad7-f3283dff08ad4bee8424e9955",
+        userAgent: navigator.userAgent,
+      });
 
-      // Debug detalhado
-      console.log("✅ Root element:", document.getElementById("root"));
-      console.log("✅ Location:", window.location.href);
-      console.log("✅ User Agent:", navigator.userAgent);
+      // Block problematic fetch calls before React loads
+      const originalFetch = window.fetch;
+      window.fetch = function (url, options) {
+        const urlString = typeof url === "string" ? url : url.toString();
 
-      // Carregar React com tratamento de erro
-      const script = document.createElement("script");
-      script.type = "module";
-      script.src = "/client/main.tsx";
-      script.onload = () => console.log("✅ Script React carregado");
-      script.onerror = (e) => console.error("❌ Erro ao carregar React:", e);
-      document.head.appendChild(script);
+        // Block the specific problematic domain
+        if (
+          urlString.includes(
+            "641f970e3cb94a99831b41ae1b5bfad7-f3283dff08ad4bee8424e9955.fly.dev",
+          )
+        ) {
+          console.warn(
+            "🚫 Blocked problematic external connection:",
+            urlString,
+          );
+          return Promise.reject(
+            new Error("External connection blocked to prevent issues"),
+          );
+        }
+
+        console.log("📡 Fetch call:", urlString);
+        return originalFetch.apply(this, arguments);
+      };
+
+      console.log("✅ Fetch override installed");
+    </script>
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/client/main.tsx"></script>
+
+    <!-- Professional Service Worker with Enhanced Error Handling -->
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", function () {
+          navigator.serviceWorker
+            .register("/sw.js")
+            .then(function (registration) {
+              console.log(
+                "✅ Service Worker registrado com sucesso:",
+                registration,
+              );
+            })
+            .catch(function (error) {
+              console.warn(
+                "⚠️ Service Worker registration failed (normal for development):",
+                error,
+              );
+              // Don't block the application if service worker fails
+            });
+        });
+
+        // Clean up any problematic service workers
+        navigator.serviceWorker
+          .getRegistrations()
+          .then(function (registrations) {
+            registrations.forEach(function (registration) {
+              if (registration.scope.includes("fly.dev")) {
+                console.log(
+                  "🧹 Removing problematic service worker:",
+                  registration.scope,
+                );
+                registration.unregister();
+              }
+            });
+          });
+      }
     </script>
   </body>
 </html>
