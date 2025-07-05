@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { MainLayout } from "@/components/Layout/MainLayout";
 import DepoimentosSection from "@/components/Home/DepoimentosSection";
@@ -56,7 +56,11 @@ export default function Index() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    loadImoveisDestaque();
+  }, [loadImoveisDestaque]);
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat("pt-BR", {
