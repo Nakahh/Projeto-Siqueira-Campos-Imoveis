@@ -185,34 +185,104 @@ export default function Index() {
           </div>
         </section>
 
-        {/* Features Section */}
-        <section className="py-16 bg-gray-50 dark:bg-gray-900">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-                Por que escolher a Siqueira Campos?
+        {/* Premium Features Section */}
+        <section className="py-20 bg-gradient-to-br from-brand-brown-900 via-brand-brown-800 to-brand-brown-900 text-white relative overflow-hidden">
+          {/* Background Pattern */}
+          <div className="absolute inset-0 opacity-10">
+            <div
+              className="absolute inset-0"
+              style={{
+                backgroundImage:
+                  'url("data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.1"%3E%3Ccircle cx="30" cy="30" r="1"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+              }}
+            ></div>
+          </div>
+
+          <div className="relative container mx-auto px-4">
+            <div className="text-center mb-16">
+              <div className="flex items-center justify-center mb-6">
+                <Crown className="h-8 w-8 text-yellow-400 mr-3" />
+                <Star className="h-6 w-6 text-yellow-300" />
+                <Star className="h-8 w-8 text-yellow-400 mx-2" />
+                <Star className="h-6 w-6 text-yellow-300" />
+                <Crown className="h-8 w-8 text-yellow-400 ml-3" />
+              </div>
+              <h2 className="text-4xl md:text-5xl font-bold mb-6">
+                Por que somos a
+                <span className="block bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent">
+                  #1 Premium em Goiânia
+                </span>
               </h2>
-              <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-                Somos líderes no mercado imobiliário de Goiânia com mais de 10
-                anos de experiência
+              <p className="text-xl text-brand-beige-200 max-w-3xl mx-auto leading-relaxed">
+                Mais de 15 anos transformando sonhos em realidade com
+                excelência, inovação e resultados extraordinários
               </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {features.map((feature, index) => (
-                <Card key={index} className="text-center p-6">
-                  <CardContent className="pt-6">
-                    <div className="w-16 h-16 bg-brand-brown-100 dark:bg-brand-brown-800 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <feature.icon className="h-8 w-8 text-brand-brown-700" />
+              {[
+                {
+                  icon: Crown,
+                  title: "Experiência Premium",
+                  description:
+                    "Atendimento VIP personalizado com consultores especialistas em imóveis de alto padrão",
+                  stats: "98% Satisfação",
+                },
+                {
+                  icon: Shield,
+                  title: "Segurança Total",
+                  description:
+                    "Processos certificados e garantia completa em toda documentação e transações",
+                  stats: "100% Seguro",
+                },
+                {
+                  icon: Award,
+                  title: "Resultados Comprovados",
+                  description:
+                    "Mais de 5.000 famílias realizaram o sonho da casa própria conosco",
+                  stats: "5.000+ Famílias",
+                },
+              ].map((feature, index) => (
+                <Card
+                  key={index}
+                  className="bg-white/10 backdrop-blur-lg border border-white/20 hover:bg-white/20 transition-all duration-300 group hover:scale-105"
+                >
+                  <CardContent className="p-8 text-center">
+                    <div className="w-20 h-20 bg-gradient-to-br from-yellow-400/20 to-yellow-600/20 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:from-yellow-400/30 group-hover:to-yellow-600/30 transition-all">
+                      <feature.icon className="h-10 w-10 text-yellow-400" />
                     </div>
-                    <h3 className="text-xl font-semibold mb-2">
+                    <div className="mb-4">
+                      <Badge className="bg-yellow-500/20 text-yellow-300 border border-yellow-500/30 mb-3">
+                        {feature.stats}
+                      </Badge>
+                    </div>
+                    <h3 className="text-2xl font-bold mb-4 text-white">
                       {feature.title}
                     </h3>
-                    <p className="text-gray-600 dark:text-gray-400">
+                    <p className="text-brand-beige-200 leading-relaxed">
                       {feature.description}
                     </p>
                   </CardContent>
                 </Card>
+              ))}
+            </div>
+
+            {/* Premium Stats */}
+            <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8">
+              {[
+                { number: "1.200+", label: "Imóveis Premium" },
+                { number: "15+", label: "Anos de Mercado" },
+                { number: "5.000+", label: "Clientes Satisfeitos" },
+                { number: "98%", label: "Taxa de Sucesso" },
+              ].map((stat, index) => (
+                <div key={index} className="text-center">
+                  <div className="text-4xl md:text-5xl font-bold text-yellow-400 mb-2">
+                    {stat.number}
+                  </div>
+                  <div className="text-brand-beige-300 font-medium">
+                    {stat.label}
+                  </div>
+                </div>
               ))}
             </div>
           </div>
