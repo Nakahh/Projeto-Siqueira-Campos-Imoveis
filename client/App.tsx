@@ -175,7 +175,7 @@ class AppErrorBoundary extends React.Component<
   }
 }
 
-// Main App Component - FULLY RESTORED AND OPTIMIZED
+// Main App Component
 export default function App() {
   return (
     <AppErrorBoundary>
