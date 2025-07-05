@@ -266,7 +266,7 @@ model Mensagem {
   id                Int         @id @default(autoincrement())
   conteudo          String
   lida              Boolean     @default(false)
-  arquivos          String[]    // URLs de arquivos anexos
+  arquivos          String?     // JSON string de URLs de arquivos anexos
   criadoEm          DateTime    @default(now())
 
   // Relacionamentos
