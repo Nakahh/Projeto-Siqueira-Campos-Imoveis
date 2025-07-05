@@ -19,6 +19,7 @@ import whatsappRoutes from "./routes/whatsapp";
 import uploadRoutes from "./routes/upload";
 import financeiroRoutes from "./routes/financeiro";
 import marketingRoutes from "./routes/marketing";
+import statusRoutes from "./routes/status";
 
 dotenv.config();
 
