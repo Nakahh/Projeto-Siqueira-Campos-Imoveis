@@ -33,10 +33,14 @@ const initializeApp = () => {
     </React.StrictMode>,
   );
 
-  // Mark render complete
+  // Mark render complete - only once
+  let renderMarked = false;
   setTimeout(() => {
-    performanceMonitor.markRenderComplete();
-    performanceMonitor.markInteractive();
+    if (!renderMarked) {
+      performanceMonitor.markRenderComplete();
+      performanceMonitor.markInteractive();
+      renderMarked = true;
+    }
   }, 100);
 };
 
