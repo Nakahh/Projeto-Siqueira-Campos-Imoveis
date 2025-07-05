@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { cachedFetch } from "@/utils/cache";
 import { Link } from "react-router-dom";
-import { MainLayout } from "@/components/Layout/MainLayout";
+import { PremiumHeader } from "@/components/Layout/PremiumHeader";
+import { PremiumChatWidget } from "@/components/Chat/PremiumChatWidget";
+import { PremiumFAQ } from "@/components/FAQ/PremiumFAQ";
 import DepoimentosSection from "@/components/Home/DepoimentosSection";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -120,74 +122,70 @@ export default function Index() {
   ];
 
   return (
-    <MainLayout>
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-brand-brown-900 to-brand-brown-700 text-white">
-        <div
-          className="absolute inset-0 bg-cover bg-center opacity-20"
-          style={{
-            backgroundImage:
-              "url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2073&q=80')",
-          }}
-        />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-          <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              Encontre o Imóvel
-              <span className="text-brand-beige-400"> dos Seus Sonhos</span>
-            </h1>
-            <p className="text-xl md:text-2xl mb-8 text-brand-beige-200 max-w-3xl mx-auto">
-              A maior e melhor imobiliária de Goiânia, com mais de 1000 imóveis
-              disponíveis para venda e locação
-            </p>
+    <div className="min-h-screen bg-background">
+      {/* Premium Header with Hero */}
+      <PremiumHeader />
 
-            {/* Barra de Pesquisa */}
-            <div className="max-w-2xl mx-auto">
-              <div className="flex flex-col md:flex-row gap-4 bg-white p-4 rounded-lg shadow-xl">
-                <div className="flex-1">
-                  <Input
-                    type="text"
-                    placeholder="Busque por bairro, cidade ou tipo de imóvel..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full"
-                  />
-                </div>
-                <Button
-                  size="lg"
-                  className="bg-brand-brown-700 hover:bg-brand-brown-800"
-                  asChild
-                >
-                  <Link
-                    to={`/imoveis${searchTerm ? `?search=${searchTerm}` : ""}`}
-                  >
-                    <Search className="mr-2 h-4 w-4" />
-                    Buscar Imóveis
-                  </Link>
-                </Button>
-              </div>
-            </div>
-
-            {/* Links rápidos */}
-            <div className="flex flex-wrap justify-center gap-4 mt-8">
-              {["Casas", "Apartamentos", "Terrenos", "Comercial"].map(
-                (tipo) => (
+      <main className="pt-0">
+        {/* Premium Search Bar */}
+        <section className="relative py-20 bg-gradient-to-br from-white via-brand-brown-50 to-brand-beige-50 dark:from-brand-brown-900 dark:via-brand-brown-800 dark:to-brand-brown-900">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto">
+              <div className="bg-white/90 dark:bg-brand-brown-800/90 backdrop-blur-lg p-8 rounded-3xl shadow-2xl border border-brand-brown-200/50 dark:border-brand-brown-700/50">
+                <h2 className="text-2xl font-bold text-center text-brand-brown-800 dark:text-brand-beige-200 mb-6">
+                  Busca Inteligente Premium
+                </h2>
+                <div className="flex flex-col md:flex-row gap-4">
+                  <div className="flex-1">
+                    <Input
+                      type="text"
+                      placeholder="Digite o que procura: 'apartamento 3 quartos Setor Bueno'..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      className="h-14 text-lg border-brand-brown-200 dark:border-brand-brown-700 focus:border-brand-brown-500 rounded-xl bg-white/50 dark:bg-brand-brown-700/50"
+                    />
+                  </div>
                   <Button
-                    key={tipo}
-                    variant="outline"
-                    className="border-brand-beige-400 text-brand-beige-400 hover:bg-brand-beige-400 hover:text-brand-brown-900"
+                    size="lg"
+                    className="h-14 px-8 bg-gradient-to-r from-brand-brown-700 to-brand-brown-800 hover:from-brand-brown-800 hover:to-brand-brown-900 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all"
                     asChild
                   >
-                    <Link to={`/imoveis?tipo=${tipo.toLowerCase()}`}>
-                      {tipo}
+                    <Link
+                      to={`/imoveis${searchTerm ? `?search=${searchTerm}` : ""}`}
+                    >
+                      <Search className="mr-2 h-5 w-5" />
+                      Buscar Premium
                     </Link>
                   </Button>
-                ),
-              )}
+                </div>
+
+                {/* Quick Categories */}
+                <div className="flex flex-wrap justify-center gap-3 mt-8">
+                  {[
+                    { label: "Casas de Luxo", icon: "🏖" },
+                    { label: "Apartamentos Premium", icon: "🌆" },
+                    { label: "Terrenos Exclusivos", icon: "🌳" },
+                    { label: "Comercial VIP", icon: "🏢" },
+                  ].map((tipo) => (
+                    <Button
+                      key={tipo.label}
+                      variant="outline"
+                      className="border-brand-brown-300 text-brand-brown-700 hover:bg-brand-brown-100 dark:border-brand-brown-600 dark:text-brand-beige-200 dark:hover:bg-brand-brown-800 rounded-full px-6 font-medium"
+                      asChild
+                    >
+                      <Link
+                        to={`/imoveis?tipo=${tipo.label.toLowerCase()}`}
+                      >
+                        <span className="mr-2">{tipo.icon}</span>
+                        {tipo.label}
+                      </Link>
+                    </Button>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
       {/* Features Section */}
       <section className="py-16 bg-gray-50 dark:bg-gray-900">
