@@ -13,22 +13,7 @@ export default defineConfig({
       name: "express-middleware",
       configureServer(server) {
         const app = createServer();
-        server.middlewares.use((req, res, next) => {
-          if (
-            req.url?.startsWith("/@") ||
-            req.url?.includes("/node_modules/") ||
-            req.url?.includes("vite/") ||
-            req.url?.includes("__vite") ||
-            req.url?.endsWith(".css") ||
-            req.url?.includes("?html-proxy") ||
-            req.url?.includes("?direct") ||
-            req.url?.includes("?worker") ||
-            req.url?.includes("?raw")
-          ) {
-            return next();
-          }
-          app(req, res, next);
-        });
+        server.middlewares.use("/api", app);
       },
     },
   ],
