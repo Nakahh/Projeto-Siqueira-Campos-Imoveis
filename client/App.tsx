@@ -30,11 +30,22 @@ const Sobre = lazy(() => import("@/pages/Sobre"));
 const Desenvolvedor = lazy(() => import("@/pages/Desenvolvedor"));
 const Status = lazy(() => import("@/pages/Status"));
 
-// Ultra-Premium loading component with luxury effects
+// TESTE PREMIUM - Ultra-Premium loading component with luxury effects
 const LoadingFallback = memo(() => (
-  <div className="min-h-screen flex items-center justify-center relative overflow-hidden">
+  <div
+    className="min-h-screen flex items-center justify-center relative overflow-hidden"
+    style={{
+      background: "linear-gradient(135deg, #fdf8f6, #fef7e0, #ffffff)",
+      fontFamily: "ui-sans-serif, system-ui, sans-serif",
+    }}
+  >
     {/* Premium Background with Animated Gradients */}
-    <div className="absolute inset-0 bg-gradient-to-br from-brand-brown-50 via-brand-beige-50 to-white dark:from-brand-brown-900 dark:via-brand-brown-800 dark:to-brand-brown-900"></div>
+    <div
+      className="absolute inset-0"
+      style={{
+        background: "linear-gradient(135deg, #fdf8f6, #fef7e0, #ffffff)",
+      }}
+    ></div>
 
     {/* Floating Particles Animation */}
     <div className="absolute inset-0 overflow-hidden opacity-30">
