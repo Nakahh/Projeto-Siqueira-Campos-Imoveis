@@ -40,9 +40,18 @@ const initializeApp = () => {
   }, 100);
 };
 
+// Ensure single initialization
+let appInitialized = false;
+
+const safeInitializeApp = () => {
+  if (appInitialized) return;
+  appInitialized = true;
+  initializeApp();
+};
+
 // Simple DOM ready check
 if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", initializeApp);
+  document.addEventListener("DOMContentLoaded", safeInitializeApp);
 } else {
-  initializeApp();
+  safeInitializeApp();
 }
