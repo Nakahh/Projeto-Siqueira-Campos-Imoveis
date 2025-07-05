@@ -4,15 +4,24 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#8B4513" />
+
+    <!-- Performance optimizations -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="dns-prefetch" href="//images.unsplash.com" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- SEO Meta Tags -->
     <meta
       name="description"
-      content="Sistema completo de gestão imobiliária - Siqueira Campos Imóveis"
+      content="Sistema completo de gestão imobiliária - Siqueira Campos Imóveis. Encontre seu imóvel ideal em Goiânia com segurança e profissionalismo."
     />
     <meta
       name="keywords"
-      content="imóveis, casa, apartamento, venda, aluguel, Goiânia"
+      content="imóveis, casa, apartamento, venda, aluguel, Goiânia, Siqueira Campos, gestão imobiliária"
     />
     <meta name="author" content="KRYONIX Tecnologia" />
+    <meta name="robots" content="index, follow" />
 
     <!-- PWA Meta Tags -->
     <link rel="manifest" href="/manifest.json" />
@@ -22,35 +31,51 @@
       name="apple-mobile-web-app-status-bar-style"
       content="black-translucent"
     />
-    <meta name="apple-mobile-web-app-title" content="SCI" />
+    <meta name="apple-mobile-web-app-title" content="Siqueira Campos" />
 
-    <!-- SEO Meta Tags -->
+    <!-- Social Media Meta Tags -->
     <meta property="og:title" content="Siqueira Campos Imóveis" />
     <meta
       property="og:description"
-      content="Sistema completo de gestão imobiliária"
+      content="Sistema completo de gestão imobiliária profissional"
     />
     <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
 
-    <title>Siqueira Campos Imóveis</title>
+    <title>Siqueira Campos Imóveis - Sistema Profissional</title>
 
-    <!-- Professional Debug System -->
+    <!-- Enhanced Performance & Debug System -->
     <script>
+      // Performance tracking
+      window.SiqueiraPerf = {
+        start: Date.now(),
+        marks: {},
+      };
+
+      // Mark performance points
+      const mark = (name) => {
+        window.SiqueiraPerf.marks[name] =
+          Date.now() - window.SiqueiraPerf.start;
+      };
+
+      mark("html-parsed");
+
       console.log(
-        "🚀 Sistema Siqueira Campos Imóveis - Inicializando Debug Profissional",
+        "🚀 Sistema Siqueira Campos Imóveis v2.0 - KRYONIX Technology",
       );
 
-      // Advanced environment detection
+      // Enhanced environment detection
       window.SiqueiraDebug = {
         startTime: Date.now(),
         logs: [],
         errors: [],
+        performance: window.SiqueiraPerf,
         environment: {
           url: window.location.href,
           userAgent: navigator.userAgent,
           viewport: { width: window.innerWidth, height: window.innerHeight },
-          flyApp: "641f970e3cb94a99831b41ae1b5bfad7-f3283dff08ad4bee8424e9955",
           timestamp: new Date().toISOString(),
+          isDev: window.location.hostname === "localhost",
         },
       };
 
@@ -64,35 +89,47 @@
           stack: new Error().stack,
         };
         window.SiqueiraDebug.logs.push(entry);
-        console[level](`[${entry.timestamp}ms] ${message}`, data || "");
+
+        // Only log in development
+        if (window.SiqueiraDebug.environment.isDev) {
+          console[level](`[${entry.timestamp}ms] ${message}`, data || "");
+        }
       };
 
       log(
         "info",
-        "🏠 Sistema Siqueira Campos Imóveis v1.0.0 - KRYONIX Technology",
+        "🏠 Sistema Siqueira Campos Imóveis v2.0 - KRYONIX Technology",
       );
       log("info", "🔍 Ambiente detectado", window.SiqueiraDebug.environment);
 
-      // Override fetch with professional monitoring
+      // Enhanced fetch monitoring
       const originalFetch = window.fetch;
       window.fetch = function (url, options) {
         const urlString = typeof url === "string" ? url : url.toString();
+        const startTime = Date.now();
 
-        log("info", "📡 Fetch intercepted", { url: urlString, options });
+        log("info", "📡 Fetch iniciado", { url: urlString, options });
 
-        // Block problematic external connections
-        if (
-          urlString.includes(
-            "641f970e3cb94a99831b41ae1b5bfad7-f3283dff08ad4bee8424e9955.fly.dev",
-          )
-        ) {
-          log("warn", "🚫 Blocked problematic external connection", urlString);
-          return Promise.reject(
-            new Error("External connection blocked for system stability"),
-          );
-        }
-
-        return originalFetch.apply(this, arguments);
+        return originalFetch.apply(this, arguments).then(
+          (response) => {
+            const duration = Date.now() - startTime;
+            log("info", "📡 Fetch concluído", {
+              url: urlString,
+              status: response.status,
+              duration: `${duration}ms`,
+            });
+            return response;
+          },
+          (error) => {
+            const duration = Date.now() - startTime;
+            log("error", "📡 Fetch falhou", {
+              url: urlString,
+              error: error.message,
+              duration: `${duration}ms`,
+            });
+            throw error;
+          },
+        );
       };
 
       // Enhanced error tracking
@@ -103,6 +140,7 @@
           lineno: event.lineno,
           colno: event.colno,
           error: event.error,
+          timestamp: Date.now(),
         };
         window.SiqueiraDebug.errors.push(errorInfo);
         log("error", "❌ JavaScript Error Detected", errorInfo);
@@ -112,18 +150,25 @@
         const errorInfo = {
           reason: event.reason,
           promise: event.promise,
+          timestamp: Date.now(),
         };
         window.SiqueiraDebug.errors.push(errorInfo);
         log("error", "❌ Unhandled Promise Rejection", errorInfo);
       });
 
-      log("info", "✅ Debug system initialized");
+      mark("debug-initialized");
+      log("info", "✅ Enhanced debug system initialized");
     </script>
+
+    <!-- Preload critical resources -->
+    <link rel="modulepreload" href="/client/main.tsx" />
+    <link rel="modulepreload" href="/client/App.tsx" />
+    <link rel="stylesheet" href="/client/global.css" />
   </head>
 
   <body>
     <div id="root">
-      <!-- Professional loading state while maintaining full system complexity -->
+      <!-- Enhanced professional loading state -->
       <div
         id="loading-state"
         style="
@@ -152,13 +197,14 @@
             padding: 3rem;
             max-width: 600px;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 0.8s ease-out;
           "
         >
           <h1 style="font-size: 3rem; margin-bottom: 1rem; font-weight: bold">
             🏠 Siqueira Campos Imóveis
           </h1>
           <p style="font-size: 1.3rem; margin-bottom: 1rem; color: #ffe4b5">
-            Sistema Profissional de Gestão Imobiliária
+            Sistema Profissional de Gestão Imobiliária v2.0
           </p>
           <p style="font-size: 1.1rem; margin-bottom: 2rem">
             Desenvolvido por <strong>KRYONIX Tecnologia</strong>
@@ -176,9 +222,9 @@
             <div
               style="
                 width: 100%;
-                height: 4px;
+                height: 6px;
                 background: rgba(255, 255, 255, 0.3);
-                border-radius: 2px;
+                border-radius: 3px;
                 margin-bottom: 1rem;
                 overflow: hidden;
               "
@@ -189,28 +235,33 @@
                   width: 0%;
                   height: 100%;
                   background: linear-gradient(90deg, #ffe4b5, #ffffff);
-                  border-radius: 2px;
+                  border-radius: 3px;
                   transition: width 0.3s ease;
+                  animation: progressPulse 2s infinite;
                 "
               ></div>
             </div>
-            <p id="loading-text" style="color: #ffe4b5; margin: 0">
-              🔧 Inicializando sistema React...
+            <p
+              id="loading-text"
+              style="color: #ffe4b5; margin: 0; font-size: 0.9rem"
+            >
+              🔧 Inicializando sistema React v2.0...
             </p>
           </div>
 
           <div
             id="system-info"
             style="
-              font-size: 0.9rem;
-              color: rgba(255, 255, 255, 0.7);
-              line-height: 1.4;
+              font-size: 0.85rem;
+              color: rgba(255, 255, 255, 0.8);
+              line-height: 1.5;
             "
           >
-            <p>✅ Sistema multi-dashboard ativo</p>
-            <p>✅ PWA profissional configurado</p>
-            <p>✅ Segurança enterprise habilitada</p>
-            <p>✅ API REST robusta funcionando</p>
+            <p>✅ Sistema multi-dashboard enterprise ativo</p>
+            <p>✅ PWA profissional v2.0 configurado</p>
+            <p>✅ Segurança enterprise aprimorada</p>
+            <p>✅ API REST otimizada funcionando</p>
+            <p>✅ Performance monitoring ativo</p>
           </div>
         </div>
       </div>
@@ -218,8 +269,10 @@
 
     <script type="module" src="/client/main.tsx"></script>
 
-    <!-- Professional Service Worker Management -->
+    <!-- Enhanced Service Worker Management -->
     <script>
+      mark("scripts-loading");
+
       let loadingProgress = 0;
       const updateProgress = (percentage, text) => {
         loadingProgress = Math.min(percentage, 100);
@@ -235,14 +288,14 @@
 
       updateProgress(10, "🔧 Carregando recursos do sistema...");
 
-      // Monitor script loading
+      // Enhanced script loading monitoring
       const scripts = document.querySelectorAll("script[src]");
       let scriptsLoaded = 0;
 
       scripts.forEach((script) => {
         script.addEventListener("load", () => {
           scriptsLoaded++;
-          const progress = 10 + (scriptsLoaded / scripts.length) * 40;
+          const progress = 10 + (scriptsLoaded / scripts.length) * 50;
           updateProgress(
             progress,
             `📦 Carregando componentes (${scriptsLoaded}/${scripts.length})...`,
@@ -257,9 +310,9 @@
         });
       });
 
-      // Professional Service Worker with full error handling
+      // Enhanced Service Worker with comprehensive error handling
       if ("serviceWorker" in navigator) {
-        updateProgress(60, "🔄 Configurando Service Worker...");
+        updateProgress(70, "🔄 Configurando Service Worker...");
 
         window.addEventListener("load", function () {
           navigator.serviceWorker
@@ -270,7 +323,7 @@
                 "✅ Service Worker registered successfully",
                 registration,
               );
-              updateProgress(80, "✅ Service Worker ativo");
+              updateProgress(85, "✅ Service Worker ativo");
             })
             .catch((error) => {
               log(
@@ -278,59 +331,97 @@
                 "⚠️ Service Worker registration failed (normal for development)",
                 error,
               );
-              updateProgress(80, "⚠️ Service Worker opcional (modo dev)");
+              updateProgress(85, "⚠️ Service Worker opcional (modo dev)");
             });
         });
-
-        // Clean problematic service workers
-        navigator.serviceWorker.getRegistrations().then((registrations) => {
-          registrations.forEach((registration) => {
-            if (
-              registration.scope.includes("641f970e3cb94a99831b41ae1b5bfad7")
-            ) {
-              log(
-                "info",
-                "🧹 Removing problematic service worker",
-                registration.scope,
-              );
-              registration.unregister();
-            }
-          });
-        });
       } else {
-        updateProgress(80, "⚠️ Service Worker não suportado");
+        updateProgress(85, "⚠️ Service Worker não suportado");
       }
 
-      // Timeout fallback for loading state
-      setTimeout(() => {
+      // Enhanced timeout fallback
+      const maxLoadingTime = 15000; // 15 seconds
+      const fallbackTimeout = setTimeout(() => {
         const loadingState = document.getElementById("loading-state");
         if (loadingState && loadingState.style.display !== "none") {
-          updateProgress(100, "🔄 Finalizando carregamento...");
+          updateProgress(
+            100,
+            "⏰ Carregamento timeout - clique para continuar",
+          );
           log("warn", "⏰ Loading timeout - showing fallback interface");
 
-          setTimeout(() => {
-            updateProgress(100, "✅ Sistema carregado - clique para continuar");
-            const loadingText = document.getElementById("loading-text");
-            if (loadingText) {
-              loadingText.innerHTML = `
-                <button onclick="window.location.reload()" style="
-                  padding: 1rem 2rem;
-                  background: white;
-                  color: #8B4513;
-                  border: none;
-                  border-radius: 0.5rem;
-                  font-size: 1.1rem;
-                  font-weight: bold;
-                  cursor: pointer;
-                  margin-top: 1rem;
-                ">🔄 Acessar Sistema</button>
-              `;
-            }
-          }, 1000);
+          const loadingText = document.getElementById("loading-text");
+          if (loadingText) {
+            loadingText.innerHTML = `
+              <button onclick="window.location.reload()" style="
+                padding: 1rem 2rem;
+                background: white;
+                color: #8B4513;
+                border: none;
+                border-radius: 0.5rem;
+                font-size: 1rem;
+                font-weight: bold;
+                cursor: pointer;
+                margin-top: 1rem;
+                transition: all 0.3s ease;
+              ">🔄 Recarregar Sistema</button>
+            `;
+          }
         }
-      }, 10000);
+      }, maxLoadingTime);
 
-      log("info", "✅ Professional loading system initialized");
+      // Clear timeout when app loads successfully
+      window.addEventListener("load", () => {
+        clearTimeout(fallbackTimeout);
+        mark("page-loaded");
+      });
+
+      mark("loading-system-initialized");
+      log("info", "✅ Enhanced loading system v2.0 initialized");
     </script>
+
+    <!-- CSS animations for enhanced UX -->
+    <style>
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes progressPulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.7;
+        }
+      }
+
+      /* Performance optimizations */
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        -webkit-text-size-adjust: 100%;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+      }
+
+      #root {
+        min-height: 100vh;
+      }
+    </style>
   </body>
 </html>
