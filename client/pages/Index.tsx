@@ -26,6 +26,9 @@ import {
   Shield,
   Clock,
   Phone,
+  Crown,
+  Award,
+  Sparkles,
 } from "lucide-react";
 
 interface Imovel {
