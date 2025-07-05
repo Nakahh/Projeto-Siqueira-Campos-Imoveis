@@ -73,8 +73,6 @@ export default defineConfig(({ mode }) => {
       react({
         // Enhanced React refresh
         fastRefresh: isDev,
-        // JSX runtime optimization
-        jsxImportSource: "@emotion/react",
         babel: {
           plugins: isDev ? [] : [],
         },
