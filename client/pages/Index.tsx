@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
+import { cachedFetch } from "@/utils/cache";
 import { Link } from "react-router-dom";
 import { MainLayout } from "@/components/Layout/MainLayout";
 import DepoimentosSection from "@/components/Home/DepoimentosSection";
@@ -22,6 +23,7 @@ import {
   TrendingUp,
   Shield,
   Clock,
+  Phone,
 } from "lucide-react";
 
 interface Imovel {
@@ -45,21 +47,25 @@ export default function Index() {
   const [imoveisDestaque, setImoveisDestaque] = useState<Imovel[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    loadImoveisDestaque();
-  }, []);
-
-  const loadImoveisDestaque = async () => {
+  const loadImoveisDestaque = useCallback(async () => {
     try {
-      const response = await fetch("/api/imoveis/destaque");
-      const data = await response.json();
+      const data = await cachedFetch<Imovel[]>("/api/imoveis/destaque", {
+        cacheOptions: {
+          ttl: 2 * 60 * 1000, // Cache for 2 minutes
+          persistToStorage: true,
+        },
+      });
       setImoveisDestaque(data);
     } catch (error) {
       console.error("Erro ao carregar imóveis:", error);
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    loadImoveisDestaque();
+  }, [loadImoveisDestaque]);
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat("pt-BR", {

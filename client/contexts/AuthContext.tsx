@@ -1,4 +1,11 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  useCallback,
+  useRef,
+} from "react";
 
 export interface User {
   id: number;
@@ -23,6 +30,7 @@ interface AuthContextType {
   logout: () => void;
   isLoading: boolean;
   isAuthenticated: boolean;
+  refreshUser: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -30,20 +38,11 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const initialized = useRef(false);
 
   const isAuthenticated = !!user;
 
-  useEffect(() => {
-    // Verificar se há um token salvo e validá-lo
-    const token = localStorage.getItem("auth_token");
-    if (token) {
-      validateToken(token);
-    } else {
-      setIsLoading(false);
-    }
-  }, []);
-
-  const validateToken = async (token: string) => {
+  const validateToken = useCallback(async (token: string): Promise<boolean> => {
     try {
       const response = await fetch("/api/auth/validate", {
         headers: {
@@ -54,19 +53,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (response.ok) {
         const userData = await response.json();
         setUser(userData);
+        return true;
       } else {
         localStorage.removeItem("auth_token");
+        setUser(null);
+        return false;
       }
     } catch (error) {
-      console.error("Erro ao validar token:", error);
-      localStorage.removeItem("auth_token");
-    } finally {
-      setIsLoading(false);
+      console.error("Token validation error:", error);
+      return false;
     }
-  };
+  }, []);
 
-  const login = async (email: string, senha: string) => {
-    try {
+  const login = useCallback(
+    async (email: string, senha: string): Promise<void> => {
       const response = await fetch("/api/auth/login", {
         method: "POST",
         headers: {
@@ -83,40 +83,54 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const { token, user: userData } = await response.json();
       localStorage.setItem("auth_token", token);
       setUser(userData);
-    } catch (error) {
-      throw error;
-    }
-  };
+    },
+    [],
+  );
 
-  const loginWithGoogle = async () => {
-    try {
-      // Redirecionar para o endpoint de autenticação do Google
-      window.location.href = "/api/auth/google";
-    } catch (error) {
-      throw error;
-    }
-  };
+  const loginWithGoogle = useCallback(async (): Promise<void> => {
+    window.location.href = "/api/auth/google";
+  }, []);
 
-  const logout = () => {
+  const logout = useCallback(() => {
     localStorage.removeItem("auth_token");
     setUser(null);
-    window.location.href = "/login";
+    window.location.replace("/login");
+  }, []);
+
+  const refreshUser = useCallback(async (): Promise<void> => {
+    const token = localStorage.getItem("auth_token");
+    if (token) {
+      await validateToken(token);
+    }
+  }, [validateToken]);
+
+  // Simple initialization - only run once
+  useEffect(() => {
+    if (initialized.current) return;
+    initialized.current = true;
+
+    const initAuth = async () => {
+      const token = localStorage.getItem("auth_token");
+      if (token) {
+        await validateToken(token);
+      }
+      setIsLoading(false);
+    };
+
+    initAuth();
+  }, [validateToken]);
+
+  const value = {
+    user,
+    login,
+    loginWithGoogle,
+    logout,
+    isLoading,
+    isAuthenticated,
+    refreshUser,
   };
 
-  return (
-    <AuthContext.Provider
-      value={{
-        user,
-        login,
-        loginWithGoogle,
-        logout,
-        isLoading,
-        isAuthenticated,
-      }}
-    >
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
 export function useAuth() {

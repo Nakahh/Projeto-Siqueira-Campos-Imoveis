@@ -1,39 +1,67 @@
-import { defineConfig, Plugin } from "vite";
+import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { createServer } from "./server";
 
-// https://vitejs.dev/config/
-export default defineConfig(({ mode }) => ({
+export default defineConfig({
+  plugins: [
+    react({
+      fastRefresh: false, // Disable fast refresh to prevent reloads
+    }),
+    {
+      name: "express-middleware",
+      configureServer(server) {
+        const app = createServer();
+        server.middlewares.use((req, res, next) => {
+          if (
+            req.url?.startsWith("/@") ||
+            req.url?.includes("/node_modules/")
+          ) {
+            return next();
+          }
+          app(req, res, next);
+        });
+      },
+    },
+  ],
+
   server: {
     host: "::",
     port: parseInt(process.env.PORT || "8080"),
     strictPort: false,
-    hmr: {
-      port: parseInt(process.env.PORT || "8080"),
+    hmr: false, // Completely disable HMR
+    watch: null, // Disable file watching
+    fs: {
+      allow: [".."],
     },
   },
-  build: {
-    outDir: "dist/spa",
-  },
-  plugins: [react(), expressPlugin()],
+
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./client"),
       "@shared": path.resolve(__dirname, "./shared"),
     },
   },
-}));
 
-function expressPlugin(): Plugin {
-  return {
-    name: "express-plugin",
-    apply: "serve", // Only apply during development (serve mode)
-    configureServer(server) {
-      const app = createServer();
+  optimizeDeps: {
+    include: ["react", "react-dom", "react-router-dom"],
+    force: false,
+  },
 
-      // Add Express app as middleware to Vite dev server
-      server.middlewares.use(app);
+  build: {
+    outDir: "dist/spa",
+    sourcemap: false,
+    minify: "esbuild",
+    rollupOptions: {
+      input: path.resolve(__dirname, "index.html"),
     },
-  };
-}
+  },
+
+  css: {
+    devSourcemap: false,
+  },
+
+  esbuild: {
+    target: "es2020",
+  },
+});
