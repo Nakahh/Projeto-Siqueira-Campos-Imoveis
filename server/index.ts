@@ -134,7 +134,7 @@ app.use("/api/financeiro", financeiroRoutes);
 app.use("/api/marketing", marketingRoutes);
 app.use("/api/status", statusRoutes);
 
-// Rota para servir arquivos estáticos (uploads)
+// Rota para servir arquivos est��ticos (uploads)
 app.use("/uploads", express.static("uploads"));
 
 // Middleware de tratamento de erros
@@ -239,5 +239,9 @@ app.listen(PORT, () => {
   }
 });
 
-export const createServer = () => app;
+export const createServer = () => {
+  // Não iniciar o servidor HTTP aqui para evitar conflito com Vite
+  return app;
+};
+
 export default app;
