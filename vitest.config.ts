@@ -7,11 +7,12 @@ export default defineConfig({
   test: {
     globals: true,
     environment: "jsdom",
-    setupFiles: ["./src/test/setup.ts"],
+    setupFiles: ["./vitest.setup.ts"],
     include: [
       "**/__tests__/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}",
       "**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}",
     ],
+    exclude: ["node_modules/", "dist/", "**/*.d.ts", "**/server/**"],
     coverage: {
       provider: "v8",
       reporter: ["text", "json", "html"],
@@ -27,7 +28,6 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": resolve(__dirname, "./client"),
-      "@/server": resolve(__dirname, "./server"),
     },
   },
 });
