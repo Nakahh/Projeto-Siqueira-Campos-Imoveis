@@ -5,134 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#8B4513" />
 
+    <!-- SEO Meta Tags -->
+    <meta
+      name="description"
+      content="Sistema completo de gestão imobiliária - Siqueira Campos Imóveis"
+    />
+    <meta
+      name="keywords"
+      content="imóveis, casa, apartamento, venda, aluguel, Goiânia"
+    />
+    <meta name="author" content="KRYONIX Tecnologia" />
+
+    <!-- PWA Meta Tags -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="mobile-web-app-capable" content="yes" />
+
     <title>Siqueira Campos Imóveis - Sistema Profissional</title>
-
-    <!-- ULTIMATE EMERGENCY DIAGNOSTIC SYSTEM -->
-    <script>
-      // IMMEDIATE LOOP DETECTION AND ELIMINATION SYSTEM
-      console.log("🚨 [EMERGENCY] Starting ultimate diagnostic system...");
-
-      // Completely disable any automatic reloading mechanisms
-      if (window.location.reload) {
-        const originalReload = window.location.reload;
-        window.location.reload = function (...args) {
-          console.error("🛑 [BLOCKED] Reload attempt blocked!");
-          console.trace("Reload attempt stack trace:");
-          return; // Block all reload attempts
-        };
-      }
-
-      // Block all navigation
-      if (window.history) {
-        const originalPushState = window.history.pushState;
-        const originalReplaceState = window.history.replaceState;
-
-        window.history.pushState = function (...args) {
-          console.log("🔄 [MONITORED] pushState called with:", args);
-          return originalPushState.apply(this, args);
-        };
-
-        window.history.replaceState = function (...args) {
-          console.log("🔄 [MONITORED] replaceState called with:", args);
-          return originalReplaceState.apply(this, args);
-        };
-      }
-
-      // Monitor ALL timers
-      const originalSetTimeout = window.setTimeout;
-      const originalSetInterval = window.setInterval;
-
-      window.setTimeout = function (callback, delay, ...args) {
-        console.log(`⏰ [MONITORED] setTimeout set for ${delay}ms`);
-        console.trace("setTimeout stack trace:");
-
-        // Block any suspicious short intervals that could cause reloads
-        if (delay < 5000 && typeof callback === "function") {
-          const callbackStr = callback.toString();
-          if (
-            callbackStr.includes("reload") ||
-            callbackStr.includes("location") ||
-            callbackStr.includes("href")
-          ) {
-            console.error("🛑 [BLOCKED] Suspicious setTimeout blocked!");
-            return;
-          }
-        }
-
-        return originalSetTimeout.call(this, callback, delay, ...args);
-      };
-
-      window.setInterval = function (callback, delay, ...args) {
-        console.log(`⏰ [MONITORED] setInterval set for ${delay}ms`);
-        console.trace("setInterval stack trace:");
-
-        // Block any intervals that could cause reloads
-        if (delay < 10000 && typeof callback === "function") {
-          const callbackStr = callback.toString();
-          if (
-            callbackStr.includes("reload") ||
-            callbackStr.includes("location") ||
-            callbackStr.includes("href")
-          ) {
-            console.error("🛑 [BLOCKED] Suspicious setInterval blocked!");
-            return;
-          }
-        }
-
-        return originalSetInterval.call(this, callback, delay, ...args);
-      };
-
-      // Monitor fetch requests to see if something is polling
-      const originalFetch = window.fetch;
-      window.fetch = function (url, options) {
-        console.log(`📡 [MONITORED] Fetch to: ${url}`);
-        return originalFetch.apply(this, arguments);
-      };
-
-      // Disable all meta refresh
-      const metaTags = document.querySelectorAll('meta[http-equiv="refresh"]');
-      metaTags.forEach((tag) => {
-        tag.remove();
-        console.log("🛑 [BLOCKED] Meta refresh tag removed");
-      });
-
-      // Monitor DOM mutations that could add refresh meta tags
-      const observer = new MutationObserver(function (mutations) {
-        mutations.forEach(function (mutation) {
-          if (mutation.type === "childList") {
-            mutation.addedNodes.forEach(function (node) {
-              if (node.nodeType === 1) {
-                // Element node
-                if (
-                  node.tagName === "META" &&
-                  node.getAttribute("http-equiv") === "refresh"
-                ) {
-                  node.remove();
-                  console.log("🛑 [BLOCKED] Dynamic meta refresh tag blocked");
-                }
-              }
-            });
-          }
-        });
-      });
-
-      observer.observe(document, { childList: true, subtree: true });
-
-      console.log("✅ [DIAGNOSTIC] Ultimate protection system active");
-    </script>
   </head>
 
   <body>
     <div id="root">
-      <!-- EMERGENCY DIAGNOSTIC INTERFACE -->
+      <!-- Professional loading state -->
       <div
+        id="loading-state"
         style="
           display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: center;
           min-height: 100vh;
-          background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
+          background: linear-gradient(135deg, #8b4513 0%, #d2b48c 100%);
           color: white;
           font-family:
             system-ui,
@@ -148,208 +50,68 @@
             backdrop-filter: blur(10px);
             border-radius: 1rem;
             padding: 3rem;
-            max-width: 800px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
           "
         >
-          <h1
-            style="
-              font-size: 2.5rem;
-              margin-bottom: 1rem;
-              font-weight: bold;
-              color: #10b981;
-            "
-          >
-            🚨 MODO DIAGNÓSTICO ATIVO
+          <h1 style="font-size: 3rem; margin-bottom: 1rem; font-weight: bold">
+            🏠 Siqueira Campos Imóveis
           </h1>
-          <h2 style="font-size: 1.8rem; margin-bottom: 1rem; color: #d1fae5">
-            Siqueira Campos Imóveis - Sistema de Emergência
-          </h2>
-          <p style="font-size: 1.1rem; margin-bottom: 2rem; color: #a7f3d0">
+          <p style="font-size: 1.3rem; margin-bottom: 1rem; color: #ffe4b5">
+            Sistema Profissional de Gestão Imobiliária
+          </p>
+          <p style="font-size: 1.1rem; margin-bottom: 2rem">
             Desenvolvido por <strong>KRYONIX Tecnologia</strong>
           </p>
 
           <div
             style="
-              background: rgba(16, 185, 129, 0.1);
-              border: 1px solid rgba(16, 185, 129, 0.3);
+              background: rgba(255, 255, 255, 0.2);
               border-radius: 0.5rem;
-              padding: 2rem;
+              padding: 1.5rem;
               margin-bottom: 2rem;
-              text-align: left;
             "
           >
-            <h3 style="color: #6ee7b7; margin-bottom: 1rem; font-size: 1.3rem">
-              🔍 Status do Sistema
-            </h3>
             <div
-              id="diagnostic-info"
               style="
-                font-family: monospace;
-                font-size: 0.9rem;
-                line-height: 1.6;
+                width: 100%;
+                height: 6px;
+                background: rgba(255, 255, 255, 0.3);
+                border-radius: 3px;
+                margin-bottom: 1rem;
+                overflow: hidden;
               "
             >
-              <p>✅ Proteção anti-reload: ATIVA</p>
-              <p>✅ Monitoramento de timers: ATIVO</p>
-              <p>✅ Bloqueio de meta-refresh: ATIVO</p>
-              <p>✅ Monitoramento de fetch: ATIVO</p>
-              <p>✅ Observer de DOM mutations: ATIVO</p>
-              <p id="load-count">
-                🔄 Carregamentos da página: <span id="load-counter">1</span>
-              </p>
+              <div
+                style="
+                  width: 100%;
+                  height: 100%;
+                  background: linear-gradient(90deg, #ffe4b5, #ffffff);
+                  border-radius: 3px;
+                "
+              ></div>
             </div>
-          </div>
-
-          <div
-            style="
-              background: rgba(239, 68, 68, 0.1);
-              border: 1px solid rgba(239, 68, 68, 0.3);
-              border-radius: 0.5rem;
-              padding: 2rem;
-              margin-bottom: 2rem;
-              text-align: left;
-            "
-          >
-            <h3 style="color: #fca5a5; margin-bottom: 1rem; font-size: 1.3rem">
-              ⚠️ Investigação em Andamento
-            </h3>
-            <div style="font-size: 0.9rem; line-height: 1.6">
-              <p>
-                <strong>Problema detectado:</strong> Loop infinito de
-                requisições GET para "/"
-              </p>
-              <p><strong>Frequência:</strong> A cada 2 segundos</p>
-              <p><strong>Hipóteses testadas:</strong></p>
-              <ul style="margin-left: 2rem">
-                <li>❌ Vite HMR (Hot Module Replacement)</li>
-                <li>❌ React useEffect loops</li>
-                <li>❌ AuthContext infinite renders</li>
-                <li>❌ React Router navigation loops</li>
-                <li>❌ Meta refresh tags</li>
-                <li>❌ JavaScript timers</li>
-              </ul>
-              <p>
-                <strong>Investigando agora:</strong> Causa raiz externa ou
-                configuração de servidor
-              </p>
-            </div>
-          </div>
-
-          <div
-            style="
-              display: flex;
-              gap: 1rem;
-              justify-content: center;
-              flex-wrap: wrap;
-            "
-          >
-            <button
-              onclick="
-                console.log('🔄 Manual page reload requested');
-                window.location.href = window.location.href;
-              "
-              style="
-                padding: 1rem 2rem;
-                background: #10b981;
-                color: white;
-                border: none;
-                border-radius: 0.5rem;
-                font-size: 1rem;
-                font-weight: bold;
-                cursor: pointer;
-                transition: all 0.3s ease;
-              "
-            >
-              🔄 Reload Manual
-            </button>
-
-            <button
-              onclick="window.open('https://wa.me/5517981805327?text=URGENTE%20-%20Sistema%20Siqueira%20Campos%20em%20loop%20infinito%20-%20Preciso%20de%20ajuda%20IMEDIATA', '_blank')"
-              style="
-                padding: 1rem 2rem;
-                background: #ef4444;
-                color: white;
-                border: none;
-                border-radius: 0.5rem;
-                font-size: 1rem;
-                font-weight: bold;
-                cursor: pointer;
-                transition: all 0.3s ease;
-              "
-            >
-              🆘 Emergência KRYONIX
-            </button>
-
-            <button
-              onclick="
-                console.clear();
-                console.log('📊 Diagnostic data:');
-                console.log('Window object:', window);
-                console.log('Document object:', document);
-                console.log('Location object:', location);
-                console.log('History object:', history);
-                alert('Dados de diagnóstico enviados para console');
-              "
-              style="
-                padding: 1rem 2rem;
-                background: rgba(255, 255, 255, 0.1);
-                color: white;
-                border: 1px solid rgba(255, 255, 255, 0.3);
-                border-radius: 0.5rem;
-                font-size: 1rem;
-                font-weight: bold;
-                cursor: pointer;
-                transition: all 0.3s ease;
-              "
-            >
-              🔍 Debug Console
-            </button>
-          </div>
-
-          <div
-            style="
-              margin-top: 2rem;
-              padding-top: 2rem;
-              border-top: 1px solid rgba(255, 255, 255, 0.2);
-            "
-          >
-            <p style="font-size: 0.9rem; color: rgba(255, 255, 255, 0.7)">
-              🔬 Sistema de diagnóstico KRYONIX ativo. Monitorando TODAS as
-              possíveis causas do loop.
+            <p style="color: #ffe4b5; margin: 0; font-size: 0.9rem">
+              🚀 Carregando sistema enterprise...
             </p>
+          </div>
+
+          <div
+            style="
+              font-size: 0.85rem;
+              color: rgba(255, 255, 255, 0.8);
+              line-height: 1.5;
+            "
+          >
+            <p>✅ Sistema multi-dashboard enterprise</p>
+            <p>✅ Arquitetura robusta e profissional</p>
+            <p>✅ Performance otimizada</p>
+            <p>✅ Segurança enterprise-grade</p>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- BLOCK ALL SCRIPT LOADING TO ISOLATE THE ISSUE -->
-    <!-- <script type="module" src="/client/main.tsx"></script> -->
-
-    <script>
-      // Update load counter
-      let loadCount = parseInt(
-        localStorage.getItem("emergency-load-count") || "1",
-      );
-      loadCount++;
-      localStorage.setItem("emergency-load-count", loadCount.toString());
-
-      document.getElementById("load-counter").textContent = loadCount;
-
-      if (loadCount > 3) {
-        document.getElementById("load-count").innerHTML =
-          `🚨 Carregamentos da página: <span style="color: #ef4444; font-weight: bold;">${loadCount} (LOOP CONFIRMADO)</span>`;
-      }
-
-      console.log(
-        `🚨 [EMERGENCY] Page load #${loadCount} - All protections active`,
-      );
-      console.log(
-        "📊 [DIAGNOSTIC] If you can see this message repeatedly, the loop is NOT caused by JavaScript in this page",
-      );
-      console.log(
-        "🔍 [INVESTIGATION] The loop must be caused by external factors or server configuration",
-      );
-    </script>
+    <script type="module" src="/client/main.tsx"></script>
   </body>
 </html>
