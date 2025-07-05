@@ -1376,6 +1376,110 @@ body {
   }
 }
 
+/* Essential Tailwind Classes for Premium Design */
+.backdrop-blur-xl {
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+.backdrop-blur-lg {
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.backdrop-blur-sm {
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.bg-clip-text {
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.text-transparent {
+  color: transparent;
+}
+
+.shadow-2xl {
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.shadow-3xl {
+  box-shadow: 0 35px 60px -12px rgba(0, 0, 0, 0.3);
+}
+
+.rounded-3xl {
+  border-radius: 1.5rem;
+}
+
+.rounded-2xl {
+  border-radius: 1rem;
+}
+
+.rounded-xl {
+  border-radius: 0.75rem;
+}
+
+.border-white\/30 {
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.border-white\/20 {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.bg-white\/90 {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+.bg-white\/20 {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.bg-white\/10 {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Brand Color Classes */
+.bg-brand-brown-50 {
+  background-color: var(--brand-brown-50);
+}
+
+.bg-brand-brown-800 {
+  background-color: var(--brand-brown-800);
+}
+
+.bg-brand-brown-900 {
+  background-color: var(--brand-brown-900);
+}
+
+.text-brand-brown-800 {
+  color: var(--brand-brown-800);
+}
+
+.text-brand-beige-200 {
+  color: var(--brand-beige-200);
+}
+
+.text-yellow-400 {
+  color: rgb(250 204 21);
+}
+
+.bg-yellow-400 {
+  background-color: rgb(250 204 21);
+}
+
+.from-yellow-400 {
+  --tw-gradient-from: rgb(250 204 21);
+  --tw-gradient-to: rgba(250, 204, 21, 0);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.to-amber-500 {
+  --tw-gradient-to: rgb(245 158 11);
+}
+
 /* Accessibility */
 @media (prefers-reduced-motion: reduce) {
   .animate-shimmer,
