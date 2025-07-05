@@ -2,10 +2,12 @@ import type { Config } from "tailwindcss";
 
 export default {
   darkMode: ["class"],
-  content: ["./client/**/*.{ts,tsx}", "./index.html"],
+  content: [],
   prefix: "",
-  mode: "production", // Force production mode to avoid JIT issues
   important: true,
+  experimental: {
+    optimizeUniversalDefaults: true,
+  },
   safelist: [
     // Brand colors
     "bg-brand-brown-50",
