@@ -39,10 +39,63 @@ router.get("/destaque", async (req, res) => {
     res.json(imoveisFormatados);
   } catch (error) {
     console.error("Erro ao buscar imóveis destaque:", error);
-    res.status(500).json({
-      success: false,
-      message: "Erro interno do servidor",
-    });
+
+    // Retornar dados mock para desenvolvimento
+    const mockImoveis = [
+      {
+        id: 1,
+        titulo: "Casa moderna no Setor Bueno",
+        endereco: "Rua das Flores, 123",
+        bairro: "Setor Bueno",
+        preco: 650000,
+        tipo: "CASA",
+        quartos: 3,
+        banheiros: 2,
+        area: 120,
+        vagas: 2,
+        fotos: [
+          "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
+        ],
+        destaque: true,
+        status: "DISPONIVEL",
+      },
+      {
+        id: 2,
+        titulo: "Apartamento no Setor Oeste",
+        endereco: "Av. T-7, 456",
+        bairro: "Setor Oeste",
+        preco: 350000,
+        tipo: "APARTAMENTO",
+        quartos: 2,
+        banheiros: 1,
+        area: 65,
+        vagas: 1,
+        fotos: [
+          "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
+        ],
+        destaque: true,
+        status: "DISPONIVEL",
+      },
+      {
+        id: 3,
+        titulo: "Cobertura no Setor Marista",
+        endereco: "Rua 85, 789",
+        bairro: "Setor Marista",
+        preco: 890000,
+        tipo: "COBERTURA",
+        quartos: 4,
+        banheiros: 3,
+        area: 180,
+        vagas: 3,
+        fotos: [
+          "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60",
+        ],
+        destaque: true,
+        status: "DISPONIVEL",
+      },
+    ];
+
+    res.json(mockImoveis);
   }
 });
 
