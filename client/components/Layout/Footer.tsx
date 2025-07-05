@@ -23,7 +23,7 @@ import {
   Send,
 } from "lucide-react";
 
-export default function Footer() {
+export function Footer() {
   const currentYear = new Date().getFullYear();
 
   const handleNewsletterSubmit = (e: React.FormEvent) => {
