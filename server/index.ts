@@ -226,11 +226,10 @@ process.on("SIGINT", async () => {
   process.exit(0);
 });
 
-// Porta configurada para produção - em desenvolvimento o Vite gerencia
-const PORT = process.env.PORT || 3001;
-
-// Só iniciar servidor se não estiver em modo Vite (desenvolvimento)
-if (process.env.NODE_ENV === "production" || !process.env.VITE_DEV_SERVER) {
+// Em desenvolvimento, o Vite gerencia o servidor
+// Em produção, iniciar servidor Express standalone
+if (process.env.NODE_ENV === "production") {
+  const PORT = process.env.PORT || 3001;
   app.listen(PORT, () => {
     console.log(`🚀 Servidor rodando na porta ${PORT}`);
     console.log(`📍 Ambiente: ${process.env.NODE_ENV}`);
