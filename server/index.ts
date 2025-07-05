@@ -95,27 +95,32 @@ app.use(
   }),
 );
 
-// Configuração dinâmica de CORS baseada no ambiente
+// Configuração robusta de CORS para Sistema Siqueira Campos
 const getAllowedOrigins = () => {
   const origins = [];
 
-  // Adicionar origens do .env
-  if (process.env.CORS_ORIGIN) {
-    origins.push(...process.env.CORS_ORIGIN.split(","));
-  }
-
-  // Adicionar origem atual automaticamente (para Fly.dev)
-  if (process.env.FLY_APP_NAME) {
-    origins.push(`https://${process.env.FLY_APP_NAME}.fly.dev`);
-  }
-
-  // Origens padrão para desenvolvimento
+  // Sempre permitir desenvolvimento local
   origins.push(
     "http://localhost:8080",
     "http://localhost:3000",
     "http://localhost:5173",
+    "http://127.0.0.1:8080",
   );
 
+  // Adicionar origens personalizadas do .env
+  if (process.env.CORS_ORIGIN) {
+    const customOrigins = process.env.CORS_ORIGIN.split(",").filter(
+      (origin) => !origin.includes("641f970e3cb94a99831b41ae1b5bfad7"), // Bloquear URL problemática
+    );
+    origins.push(...customOrigins);
+  }
+
+  // Em produção, adicionar domínio oficial
+  if (process.env.NODE_ENV === "production") {
+    origins.push("https://siqueicamposimoveis.com.br");
+  }
+
+  console.log("🛡️ CORS Origins configuradas:", origins);
   return origins;
 };
 
@@ -123,6 +128,8 @@ app.use(
   cors({
     origin: getAllowedOrigins(),
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   }),
 );
 
