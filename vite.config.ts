@@ -7,8 +7,11 @@ import { createServer } from "./server";
 export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
-    port: 8080,
-    strictPort: true,
+    port: parseInt(process.env.PORT || "8080"),
+    strictPort: false,
+    hmr: {
+      port: parseInt(process.env.PORT || "8080"),
+    },
   },
   build: {
     outDir: "dist/spa",
