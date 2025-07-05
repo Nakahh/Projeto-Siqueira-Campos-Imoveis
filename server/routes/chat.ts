@@ -1,8 +1,10 @@
 import express from "express";
 import { z } from "zod";
 import OpenAI from "openai";
+import { PrismaClient } from "@prisma/client";
 
 const router = express.Router();
+const prisma = new PrismaClient();
 
 // Configurar OpenAI
 const openai = new OpenAI({
@@ -35,17 +37,35 @@ const empresaContext = {
   experiencia: "Mais de 10 anos no mercado imobiliário goiano",
 
   regioes: [
-    "Setor Oeste", "Jardim Goiás", "Setor Marista", "Setor Campinas",
-    "Centro", "Setor Bueno", "Vila Nova", "Setor Sul", "Setor Pedro Ludovico",
-    "Park Lozandes", "Setor Coimbra", "Cidade Jardim", "Goiânia 2",
-    "Região Noroeste", "Setor Universitário", "Setor Aeroporto"
+    "Setor Oeste",
+    "Jardim Goiás",
+    "Setor Marista",
+    "Setor Campinas",
+    "Centro",
+    "Setor Bueno",
+    "Vila Nova",
+    "Setor Sul",
+    "Setor Pedro Ludovico",
+    "Park Lozandes",
+    "Setor Coimbra",
+    "Cidade Jardim",
+    "Goiânia 2",
+    "Região Noroeste",
+    "Setor Universitário",
+    "Setor Aeroporto",
   ],
 
   tiposImoveis: [
-    "Apartamentos de 1 a 4 quartos", "Casas térreas e sobrados",
-    "Casas de condomínio", "Salas comerciais", "Lojas",
-    "Galpões industriais", "Terrenos residenciais", "Terrenos comerciais",
-    "Chácaras de recreio", "Lofts e estúdios"
+    "Apartamentos de 1 a 4 quartos",
+    "Casas térreas e sobrados",
+    "Casas de condomínio",
+    "Salas comerciais",
+    "Lojas",
+    "Galpões industriais",
+    "Terrenos residenciais",
+    "Terrenos comerciais",
+    "Chácaras de recreio",
+    "Lofts e estúdios",
   ],
 
   faixasPreco: {
@@ -53,29 +73,24 @@ const empresaContext = {
     popular: "R$ 200.000 - R$ 400.000 (mais procurado)",
     medio: "R$ 400.000 - R$ 700.000 (bom padrão)",
     alto: "R$ 700.000 - R$ 1.500.000 (alto padrão)",
-    luxo: "Acima de R$ 1.500.000 (imóveis de luxo)"
+    luxo: "Acima de R$ 1.500.000 (imóveis de luxo)",
   },
 
-  servicos: [
-    "Venda de imóveis residenciais e comerciais",
-    "Locação residencial e comercial",
-    "Avaliação gratuita de imóveis",
-    "Consultoria em investimentos imobiliários",
-    "Acompanhamento jurídico completo",
-    "Assessoria em financiamento",
-    "Administração predial",
-    "Regularização de documentos"
-  ],
-
   caracteristicasRegionais: {
-    "Setor Oeste": "Região nobre, apartamentos de alto padrão, excelente infraestrutura, próximo a shoppings",
-    "Jardim Goiás": "Área residencial em expansão, casas e sobrados, ótimo para famílias, condomínios fechados",
-    "Setor Marista": "Tradicional, próximo a universidades, mix de apartamentos e casas, boa valorização",
-    "Centro": "Região comercial, apartamentos compactos, boa mobilidade urbana, ideal para investimento",
-    "Setor Campinas": "Tradicional, variedade de imóveis, bem localizado, fácil acesso ao centro",
-    "Setor Bueno": "Consolidado, apartamentos de médio padrão, boa infraestrutura",
-    "Vila Nova": "Residencial, casas térreas, tranquilo, preços acessíveis"
-  }
+    "Setor Oeste":
+      "Região nobre, apartamentos de alto padrão, excelente infraestrutura, próximo a shoppings",
+    "Jardim Goiás":
+      "Área residencial em expansão, casas e sobrados, ótimo para famílias, condomínios fechados",
+    "Setor Marista":
+      "Tradicional, próximo a universidades, mix de apartamentos e casas, boa valorização",
+    Centro:
+      "Região comercial, apartamentos compactos, boa mobilidade urbana, ideal para investimento",
+    "Setor Campinas":
+      "Tradicional, variedade de imóveis, bem localizado, fácil acesso ao centro",
+    "Setor Bueno":
+      "Consolidado, apartamentos de médio padrão, boa infraestrutura",
+    "Vila Nova": "Residencial, casas térreas, tranquilo, preços acessíveis",
+  },
 };
 
 // Sistema de prompt para a IA
@@ -86,18 +101,18 @@ const getSystemPrompt = () => {
 - Proprietário: ${empresaContext.proprietario}
 - ${empresaContext.experiencia}
 - WhatsApp: ${empresaContext.whatsapp}
-- Instagram: ${empresaContext.instagram}
+- Instagram: ${empresaContext.instagram}  
 - Email: ${empresaContext.email}
 
 🗺️ REGIÕES QUE ATENDEMOS EM GOIÂNIA:
 ${empresaContext.regioes.join(" • ")}
 
 🏠 TIPOS DE IMÓVEIS DISPONÍVEIS:
-${empresaContext.tiposImoveis.map(t => `• ${t}`).join('\n')}
+${empresaContext.tiposImoveis.map((t) => `• ${t}`).join("\n")}
 
 💰 FAIXAS DE PREÇO (2024):
 • Entrada: ${empresaContext.faixasPreco.entrada}
-• Popular: ${empresaContext.faixasPreco.popular}
+• Popular: ${empresaContext.faixasPreco.popular}  
 • Médio: ${empresaContext.faixasPreco.medio}
 • Alto: ${empresaContext.faixasPreco.alto}
 • Luxo: ${empresaContext.faixasPreco.luxo}
@@ -106,14 +121,14 @@ ${empresaContext.tiposImoveis.map(t => `• ${t}`).join('\n')}
 1. 🤝 Atender com excelência clientes interessados em comprar, vender ou alugar
 2. 📋 Coletar informações essenciais: nome, telefone, tipo de imóvel, orçamento, região
 3. 💡 Sugerir imóveis e regiões compatíveis com o perfil do cliente
-4. 📅 Agendar visitas aos imóveis de interesse
+4. 📅 Agendar visitas aos imóveis de interesse  
 5. 👥 Conectar com nossos corretores especialistas
 6. 💰 Orientar sobre financiamento e processos
 
 📍 CONHECIMENTO DAS REGIÕES:
-${Object.entries(empresaContext.caracteristicasRegionais).map(([regiao, desc]) =>
-  `• ${regiao}: ${desc}`
-).join('\n')}
+${Object.entries(empresaContext.caracteristicasRegionais)
+  .map(([regiao, desc]) => `• ${regiao}: ${desc}`)
+  .join("\n")}
 
 🎨 DIRETRIZES DE ATENDIMENTO:
 - Seja sempre cordial, prestativa e proativa
@@ -129,304 +144,337 @@ ${Object.entries(empresaContext.caracteristicasRegionais).map(([regiao, desc]) =
 💪 NOSSOS DIFERENCIAIS:
 • Mais de 10 anos de experiência em Goiânia
 • Equipe especializada por região da cidade
-• Atendimento personalizado e humanizado
+• Atendimento personalizado e humanizado  
 • Processo 100% transparente e seguro
 • Suporte completo da visita à escritura
 • Parcerias com principais bancos para financiamento
 • Avaliação gratuita de imóveis
 
 Sempre busque qualificar o cliente e conectá-lo com nossa equipe! Seja a ponte entre o sonho do cliente e o imóvel ideal! 🏡✨`;
-- Coberturas
-- Kitnets e Lofts
-
-SERVIÇOS OFERECIDOS:
-- Venda de imóveis
-- Locação de imóveis
-- Avaliação gratuita
-- Consultoria imobiliária
-- Financiamento imobiliário
-- Documentação completa
-
-COMPORTAMENTO:
-- Seja sempre cordial, profissional e prestativa
-- Use linguagem clara e acessível
-- Faça perguntas para entender melhor as necessidades
-- Ofereça soluções personalizadas
-- Mantenha foco em gerar leads qualificados
-- Se não souber uma informação específica, seja honesta e ofereça contato direto
-
-QUANDO ENCAMINHAR PARA CORRETOR:
-- Cliente demonstra interesse real em comprar/alugar
-- Solicita visita a imóvel específico
-- Quer informações sobre financiamento
-- Precisa de avaliação de imóvel
-- Tem dúvidas técnicas específicas
-
-MENSAGENS IMPORTANTES:
-- Sempre mencione que temos corretores especializados disponíveis
-- Ofereça contato via WhatsApp para urgências: (62) 9 8556-3505
-- Mantenha o tom profissional mas amigável
-- Use emojis moderadamente para humanizar a conversa
-
-Responda de forma útil, direta e sempre dentro do contexto imobiliário da Siqueira Campos Imóveis.`;
 };
 
-// POST /api/chat - Processar mensagem do chat
-router.post("/", async (req, res) => {
+// Buscar imóveis relacionados para contexto
+const buscarImoveisParaContexto = async (mensagem: string) => {
   try {
-    const { message, userInfo, context, leadId } = chatSchema.parse(req.body);
+    // Identificar tipo de busca na mensagem
+    const tiposBusca = {
+      apartamento: ["apartamento", "ap", "flat", "studio"],
+      casa: ["casa", "sobrado", "residencia"],
+      comercial: ["comercial", "sala", "loja", "escritorio"],
+    };
 
-    // Preparar contexto da conversa
-    let contextMessage = `Cliente escreveu: "${message}"`;
-
-    if (userInfo) {
-      contextMessage += `\n\nInformações do cliente:`;
-      if (userInfo.nome) contextMessage += `\n- Nome: ${userInfo.nome}`;
-      if (userInfo.telefone)
-        contextMessage += `\n- Telefone: ${userInfo.telefone}`;
-      if (userInfo.email) contextMessage += `\n- Email: ${userInfo.email}`;
-    }
-
-    // Se há um lead associado, buscar mais contexto
-    if (leadId && req.prisma) {
-      const lead = await req.prisma.lead.findUnique({
-        where: { id: leadId },
-        include: {
-          imovel: {
-            select: {
-              titulo: true,
-              endereco: true,
-              preco: true,
-              tipo: true,
-            },
-          },
-        },
-      });
-
-      if (lead && lead.imovel) {
-        contextMessage += `\n\nImóvel de interesse:
-- ${lead.imovel.titulo}
-- ${lead.imovel.endereco}
-- Tipo: ${lead.imovel.tipo}
-- Preço: R$ ${lead.imovel.preco.toLocaleString()}`;
+    let tipoFiltro = null;
+    for (const [tipo, palavras] of Object.entries(tiposBusca)) {
+      if (
+        palavras.some((palavra) => mensagem.toLowerCase().includes(palavra))
+      ) {
+        tipoFiltro = tipo.toUpperCase();
+        break;
       }
     }
 
-    // Gerar resposta com OpenAI
-    const completion = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
-      messages: [
-        {
-          role: "system",
-          content: getSystemPrompt(),
-        },
-        {
-          role: "user",
-          content: contextMessage,
-        },
-      ],
-      max_tokens: 500,
-      temperature: 0.7,
-    });
+    // Buscar imóveis no banco
+    const where: any = {
+      ativo: true,
+      status: "DISPONIVEL",
+    };
 
-    const response = completion.choices[0]?.message?.content;
-
-    if (!response) {
-      throw new Error("Não foi possível gerar resposta");
+    if (tipoFiltro) {
+      where.tipo =
+        tipoFiltro === "APARTAMENTO"
+          ? "APARTAMENTO"
+          : tipoFiltro === "CASA"
+            ? "CASA"
+            : "COMERCIAL";
     }
 
-    // Analisar se deve criar/atualizar lead
-    const shouldCreateLead = analyzeLeadIntent(message, response);
+    const imoveis = await prisma.imovel.findMany({
+      where,
+      take: 5,
+      orderBy: { createdAt: "desc" },
+      select: {
+        id: true,
+        titulo: true,
+        tipo: true,
+        preco: true,
+        cidade: true,
+        bairro: true,
+        quartos: true,
+        area: true,
+      },
+    });
 
-    let leadData = null;
+    return imoveis;
+  } catch (error) {
+    console.error("Erro ao buscar imóveis para contexto:", error);
+    return [];
+  }
+};
 
-    if (shouldCreateLead && userInfo?.nome && userInfo?.telefone) {
-      // Verificar se já existe lead para este telefone hoje
-      const existingLead = await req.prisma?.lead.findFirst({
-        where: {
-          telefone: userInfo.telefone,
-          criadoEm: {
-            gte: new Date(new Date().setHours(0, 0, 0, 0)),
-          },
-        },
-      });
+// Endpoint principal do chat
+router.post("/", async (req, res) => {
+  try {
+    const validatedData = chatSchema.parse(req.body);
+    const { message, userInfo, context } = validatedData;
 
-      if (!existingLead) {
-        // Criar novo lead
-        leadData = await req.prisma?.lead.create({
-          data: {
-            nome: userInfo.nome,
-            telefone: userInfo.telefone,
-            email: userInfo.email,
-            mensagem: message,
-            origem: "chat_website",
-            status: "PENDENTE",
-            respostaIa: response,
+    // Buscar imóveis relacionados
+    const imoveisRelacionados = await buscarImoveisParaContexto(message);
+
+    // Criar contexto adicional com imóveis
+    let contexturaImoveis = "";
+    if (imoveisRelacionados.length > 0) {
+      contexturaImoveis = `\n\n📋 IMÓVEIS DISPONÍVEIS RELACIONADOS:\n${imoveisRelacionados
+        .map(
+          (imovel) =>
+            `• ${imovel.titulo} - ${imovel.tipo} - R$ ${imovel.preco?.toLocaleString("pt-BR")} - ${imovel.bairro}, ${imovel.cidade} ${imovel.quartos ? `- ${imovel.quartos}Q` : ""} ${imovel.area ? `- ${imovel.area}m²` : ""}`,
+        )
+        .join("\n")}`;
+    }
+
+    // Preparar mensagens para a IA
+    const messages = [
+      {
+        role: "system" as const,
+        content: getSystemPrompt() + contexturaImoveis,
+      },
+      {
+        role: "user" as const,
+        content: message,
+      },
+    ];
+
+    // Chamada para OpenAI
+    const completion = await openai.chat.completions.create({
+      model: "gpt-3.5-turbo",
+      messages,
+      max_tokens: 500,
+      temperature: 0.7,
+      presence_penalty: 0.6,
+      frequency_penalty: 0.3,
+    });
+
+    const aiResponse = completion.choices[0]?.message?.content;
+
+    if (!aiResponse) {
+      throw new Error("Sem resposta da IA");
+    }
+
+    // Verificar se precisa criar/atualizar lead
+    const precisaLead =
+      message.toLowerCase().includes("interesse") ||
+      message.toLowerCase().includes("quero") ||
+      message.toLowerCase().includes("gostaria") ||
+      (userInfo?.telefone && userInfo?.nome);
+
+    let leadId = validatedData.leadId;
+
+    if (precisaLead && userInfo?.telefone) {
+      try {
+        // Buscar lead existente pelo telefone
+        let lead = await prisma.lead.findFirst({
+          where: {
+            telefone: { contains: userInfo.telefone.slice(-8) },
           },
         });
 
-        // Enviar lead para N8N (webhook)
-        if (process.env.N8N_WEBHOOK_URL) {
+        if (!lead) {
+          // Buscar corretor disponível
+          const corretorDisponivel = await prisma.usuario.findFirst({
+            where: {
+              tipo: { in: ["CORRETOR", "ASSISTENTE"] },
+              ativo: true,
+              whatsappAtivo: true,
+            },
+            orderBy: { createdAt: "asc" },
+          });
+
+          // Criar nova lead
+          lead = await prisma.lead.create({
+            data: {
+              nome: userInfo.nome || "Cliente Chat",
+              telefone: userInfo.telefone,
+              email: userInfo.email,
+              mensagem: message,
+              origem: "CHAT_IA",
+              status: "NOVA",
+              corretorId: corretorDisponivel?.id,
+            },
+          });
+
+          leadId = lead.id;
+
+          // Registrar atividade
+          await prisma.atividadeLead.create({
+            data: {
+              leadId: lead.id,
+              tipo: "CHAT_IA",
+              descricao: `Conversa iniciada via chat IA: ${message.substring(0, 100)}`,
+            },
+          });
+        } else {
+          leadId = lead.id;
+
+          // Atualizar lead existente
+          await prisma.lead.update({
+            where: { id: lead.id },
+            data: {
+              mensagem: message,
+              updatedAt: new Date(),
+            },
+          });
+
+          // Adicionar nova atividade
+          await prisma.atividadeLead.create({
+            data: {
+              leadId: lead.id,
+              tipo: "CHAT_IA",
+              descricao: `Nova mensagem via chat: ${message.substring(0, 100)}`,
+            },
+          });
+        }
+
+        // Verificar se deve notificar corretor via N8N
+        if (lead.corretorId && process.env.N8N_WEBHOOK_URL) {
           try {
-            await fetch(`${process.env.N8N_WEBHOOK_URL}/lead-site`, {
+            const webhookData = {
+              leadId: lead.id,
+              nome: lead.nome,
+              telefone: lead.telefone,
+              mensagem: message,
+              origem: "CHAT_IA",
+              corretorId: lead.corretorId,
+              timestamp: new Date().toISOString(),
+            };
+
+            // Enviar para N8N (não aguardar resposta)
+            fetch(process.env.N8N_WEBHOOK_URL, {
               method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                nome: userInfo.nome,
-                telefone: userInfo.telefone,
-                mensagem: message,
-                leadId: leadData?.id,
-              }),
-            });
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(webhookData),
+            }).catch((err) => console.error("Erro webhook N8N:", err));
           } catch (webhookError) {
-            console.error("Erro ao enviar para N8N:", webhookError);
+            console.error("Erro ao enviar webhook:", webhookError);
           }
         }
+      } catch (leadError) {
+        console.error("Erro ao gerenciar lead:", leadError);
       }
     }
 
-    // Log da conversa
-    if (req.prisma && userInfo?.telefone) {
-      await req.prisma.atividade.create({
-        data: {
-          tipo: "chat_ia",
-          descricao: `Chat com IA - ${userInfo.nome || "Anônimo"}`,
-          dados: {
-            message,
-            response,
-            userInfo,
-            leadCreated: !!leadData,
-          },
-          ip: req.ip,
-          userAgent: req.get("User-Agent"),
-        },
+    // Resposta final
+    res.json({
+      response: aiResponse,
+      leadId,
+      suggestions:
+        imoveisRelacionados.length > 0
+          ? [
+              "Ver mais detalhes dos imóveis",
+              "Agendar uma visita",
+              "Falar com um corretor",
+              "Simular financiamento",
+            ]
+          : [
+              "Me conte mais sobre suas preferências",
+              "Qual região tem interesse?",
+              "Qual sua faixa de orçamento?",
+              "Prefere casa ou apartamento?",
+            ],
+    });
+  } catch (error) {
+    console.error("Erro no chat:", error);
+
+    if (error instanceof z.ZodError) {
+      return res.status(400).json({
+        error: "Dados inválidos",
+        details: error.errors,
       });
     }
 
-    res.json({
-      response,
-      leadCreated: !!leadData,
-      leadId: leadData?.id,
-    });
-  } catch (error) {
-    if (error instanceof z.ZodError) {
-      return res.status(400).json({ error: error.errors[0].message });
-    }
-
-    console.error("Erro no chat:", error);
-
-    // Resposta de fallback
-    res.json({
+    res.status(500).json({
+      error: "Erro interno do servidor",
       response:
-        "Desculpe, estou com dificuldades técnicas no momento. Por favor, entre em contato diretamente pelo WhatsApp (62) 9 8556-3505 ou continue navegando em nosso site para conhecer nossos imóveis.",
-      leadCreated: false,
+        "Desculpe, ocorreu um erro. Por favor, tente novamente ou entre em contato pelo WhatsApp (62) 9 8556-3505.",
     });
   }
 });
 
-// Função para analisar se deve criar um lead
-function analyzeLeadIntent(message: string, aiResponse: string): boolean {
-  const leadKeywords = [
-    "quero",
-    "gostaria",
-    "interesse",
-    "comprar",
-    "alugar",
-    "financiar",
-    "visita",
-    "ver",
-    "conhecer",
-    "apartamento",
-    "casa",
-    "terreno",
-    "comercial",
-    "quanto custa",
-    "preço",
-    "valor",
-    "disponível",
-    "contato",
-    "corretor",
-    "agendar",
-  ];
-
-  const messageWords = message.toLowerCase();
-  const hasIntent = leadKeywords.some((keyword) =>
-    messageWords.includes(keyword),
-  );
-
-  // Também analisar se a IA sugeriu contato com corretor
-  const aiSuggestedContact = aiResponse
-    .toLowerCase()
-    .includes("corretor" || "contato" || "whatsapp" || "agendar");
-
-  return hasIntent || aiSuggestedContact;
-}
-
-// GET /api/chat/history/:telefone - Histórico de conversas
-router.get("/history/:telefone", async (req, res) => {
+// Buscar histórico de conversa
+router.get("/historico/:telefone", async (req, res) => {
   try {
     const { telefone } = req.params;
 
-    if (!req.prisma) {
-      return res.status(500).json({ error: "Banco de dados indisponível" });
-    }
-
-    const historico = await req.prisma.atividade.findMany({
+    const lead = await prisma.lead.findFirst({
       where: {
-        tipo: "chat_ia",
-        dados: {
-          path: ["userInfo", "telefone"],
-          equals: telefone,
+        telefone: { contains: telefone.slice(-8) },
+      },
+      include: {
+        atividades: {
+          where: { tipo: "CHAT_IA" },
+          orderBy: { createdAt: "asc" },
+          take: 20,
         },
       },
-      orderBy: { criadoEm: "asc" },
-      take: 50, // Limitar últimas 50 mensagens
     });
 
-    const conversas = historico.map((atividade) => ({
-      id: atividade.id,
-      timestamp: atividade.criadoEm,
-      message: atividade.dados?.message,
-      response: atividade.dados?.response,
-      userInfo: atividade.dados?.userInfo,
-    }));
+    if (!lead) {
+      return res.json({ historico: [] });
+    }
 
-    res.json(conversas);
+    res.json({
+      leadId: lead.id,
+      nome: lead.nome,
+      historico: lead.atividades.map((atividade) => ({
+        id: atividade.id,
+        mensagem: atividade.descricao,
+        timestamp: atividade.createdAt,
+      })),
+    });
   } catch (error) {
     console.error("Erro ao buscar histórico:", error);
     res.status(500).json({ error: "Erro interno do servidor" });
   }
 });
 
-// POST /api/chat/feedback - Feedback sobre a resposta da IA
-router.post("/feedback", async (req, res) => {
+// Endpoint para sugestões baseadas no contexto
+router.post("/sugestoes", async (req, res) => {
   try {
-    const { messageId, rating, comment } = req.body;
+    const { contexto, orcamento, regiao, tipo } = req.body;
 
-    if (!req.prisma) {
-      return res.status(500).json({ error: "Banco de dados indisponível" });
+    const where: any = {
+      ativo: true,
+      status: "DISPONIVEL",
+    };
+
+    if (tipo) where.tipo = tipo.toUpperCase();
+    if (regiao) where.bairro = { contains: regiao, mode: "insensitive" };
+    if (orcamento) {
+      where.preco = {
+        lte: orcamento * 1.2, // 20% de flexibilidade
+        gte: orcamento * 0.8,
+      };
     }
 
-    // Salvar feedback
-    await req.prisma.atividade.create({
-      data: {
-        tipo: "chat_feedback",
-        descricao: `Feedback do chat - Nota: ${rating}`,
-        dados: {
-          messageId,
-          rating,
-          comment,
-        },
-        ip: req.ip,
-        userAgent: req.get("User-Agent"),
+    const sugestoes = await prisma.imovel.findMany({
+      where,
+      take: 6,
+      orderBy: { createdAt: "desc" },
+      select: {
+        id: true,
+        titulo: true,
+        tipo: true,
+        preco: true,
+        cidade: true,
+        bairro: true,
+        quartos: true,
+        banheiros: true,
+        area: true,
+        imagens: true,
       },
     });
 
-    res.json({ message: "Feedback registrado com sucesso" });
+    res.json({ sugestoes });
   } catch (error) {
-    console.error("Erro ao salvar feedback:", error);
+    console.error("Erro ao buscar sugestões:", error);
     res.status(500).json({ error: "Erro interno do servidor" });
   }
 });
