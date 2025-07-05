@@ -570,6 +570,10 @@ export default function MarketingDashboard() {
               </Card>
             </div>
           </TabsContent>
+
+          <TabsContent value="artigos" className="space-y-6">
+            <Artigos />
+          </TabsContent>
         </Tabs>
       </div>
     </MainLayout>
