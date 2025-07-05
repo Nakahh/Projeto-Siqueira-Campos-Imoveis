@@ -61,6 +61,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
     } catch (error) {
       console.error("Token validation error:", error);
+      localStorage.removeItem("auth_token"); // Limpar token inválido
+      setUser(null);
       return false;
     }
   }, []);
