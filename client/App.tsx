@@ -23,6 +23,7 @@ import SimuladorFinanciamento from "@/pages/SimuladorFinanciamento";
 import Blog from "@/pages/Blog";
 import Sobre from "@/pages/Sobre";
 import Desenvolvedor from "@/pages/Desenvolvedor";
+import Status from "@/pages/Status";
 
 // Componente para rotas protegidas
 function ProtectedRoute({

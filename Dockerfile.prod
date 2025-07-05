@@ -1,0 +1,90 @@
+# Dockerfile de Produção Otimizado - Siqueira Campos Imóveis
+# Multi-stage build para otimização de tamanho e segurança
+
+# Estágio 1: Construção
+FROM node:18-alpine AS builder
+
+# Instalar dependências de sistema
+RUN apk add --no-cache \
+    python3 \
+    make \
+    g++ \
+    cairo-dev \
+    jpeg-dev \
+    pango-dev \
+    musl-dev \
+    giflib-dev \
+    pixman-dev \
+    pangomm-dev \
+    libjpeg-turbo-dev \
+    freetype-dev
+
+WORKDIR /app
+
+# Copiar arquivos de dependências
+COPY package*.json ./
+COPY prisma ./prisma/
+
+# Instalar dependências
+RUN npm ci --only=production --no-audit --no-fund
+
+# Gerar Prisma Client
+RUN npx prisma generate
+
+# Copiar código fonte
+COPY . .
+
+# Build da aplicação
+RUN npm run build
+
+# Estágio 2: Produção
+FROM node:18-alpine AS production
+
+# Criar usuário não-root
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S nextjs -u 1001
+
+# Instalar dependências de runtime
+RUN apk add --no-cache \
+    dumb-init \
+    curl \
+    bash \
+    postgresql-client
+
+WORKDIR /app
+
+# Copiar arquivos necessários do estágio de build
+COPY --from=builder --chown=nextjs:nodejs /app/dist ./dist
+COPY --from=builder --chown=nextjs:nodejs /app/node_modules ./node_modules
+COPY --from=builder --chown=nextjs:nodejs /app/prisma ./prisma
+COPY --from=builder --chown=nextjs:nodejs /app/package*.json ./
+COPY --from=builder --chown=nextjs:nodejs /app/public ./public
+
+# Criar diretórios necessários
+RUN mkdir -p /app/uploads /app/logs /app/backups && \
+    chown -R nextjs:nodejs /app
+
+# Scripts de inicialização
+COPY scripts/docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+# Health check
+COPY healthcheck.js ./
+HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
+    CMD node healthcheck.js
+
+# Configurar usuário
+USER nextjs
+
+# Exposer porta
+EXPOSE 3001
+
+# Variáveis de ambiente de produção
+ENV NODE_ENV=production
+ENV PORT=3001
+
+# Entrypoint
+ENTRYPOINT ["dumb-init", "--", "docker-entrypoint.sh"]
+
+# Comando padrão
+CMD ["node", "dist/server/node-build.mjs"]
