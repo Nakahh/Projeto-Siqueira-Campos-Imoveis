@@ -39,21 +39,5 @@
     <div id="root"></div>
 
     <script type="module" src="/client/main.tsx"></script>
-
-    <!-- PWA Service Worker -->
-    <script>
-      if ("serviceWorker" in navigator) {
-        window.addEventListener("load", function () {
-          navigator.serviceWorker
-            .register("/sw.js")
-            .then(function (registration) {
-              console.log("SW registered: ", registration);
-            })
-            .catch(function (registrationError) {
-              console.log("SW registration failed: ", registrationError);
-            });
-        });
-      }
-    </script>
   </body>
 </html>
