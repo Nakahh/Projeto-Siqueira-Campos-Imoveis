@@ -250,6 +250,135 @@ async function main() {
 
   console.log("🎯 Leads criados com sucesso!");
 
+  // Criar artigos de exemplo
+  const artigos = await Promise.all([
+    prisma.artigo.create({
+      data: {
+        titulo: "Mercado Imobiliário em Goiânia: Tendências 2024",
+        slug: "mercado-imobiliario-goiania-tendencias-2024",
+        conteudo: `
+          <h2>O mercado imobiliário de Goiânia está em constante evolução</h2>
+          <p>Com o crescimento da cidade e o desenvolvimento de novas regiões, o mercado imobiliário de Goiânia apresenta excelentes oportunidades tanto para investidores quanto para quem busca o primeiro imóvel.</p>
+
+          <h3>Principais bairros em valorização:</h3>
+          <ul>
+            <li>Setor Bueno - Região consolidada com boa infraestrutura</li>
+            <li>Jardim Goiás - Área nobre em expansão</li>
+            <li>Setor Oeste - Tradicional e bem localizado</li>
+            <li>Região Sul - Novos empreendimentos e facilidades</li>
+          </ul>
+
+          <p>A Siqueira Campos Imóveis acompanha de perto essas tendências para oferecer as melhores oportunidades aos nossos clientes.</p>
+        `,
+        resumo:
+          "Descubra as principais tendências do mercado imobiliário de Goiânia para 2024 e as melhores oportunidades de investimento.",
+        imagemDestaque: "/uploads/blog/mercado-goiania-2024.jpg",
+        tags: JSON.stringify([
+          "mercado",
+          "goiânia",
+          "investimento",
+          "tendências",
+        ]),
+        status: "PUBLICADO",
+        publicadoEm: new Date(),
+        autorId: marketing.id,
+      },
+    }),
+    prisma.artigo.create({
+      data: {
+        titulo: "Dicas para Escolher o Imóvel Ideal",
+        slug: "dicas-escolher-imovel-ideal",
+        conteudo: `
+          <h2>Como escolher o imóvel perfeito para sua família</h2>
+          <p>A escolha de um imóvel é uma das decisões mais importantes da vida. Separamos algumas dicas essenciais para te ajudar nesse processo.</p>
+
+          <h3>1. Defina seu orçamento</h3>
+          <p>Antes de começar a busca, tenha claro qual valor você pode investir, considerando entrada e financiamento.</p>
+
+          <h3>2. Localização é fundamental</h3>
+          <p>Avalie a proximidade com trabalho, escolas, hospitais e transporte público.</p>
+
+          <h3>3. Analise a infraestrutura</h3>
+          <p>Verifique a qualidade das ruas, iluminação, segurança e serviços básicos da região.</p>
+
+          <h3>4. Visite em diferentes horários</h3>
+          <p>Conheça o bairro em diferentes períodos do dia para ter uma visão completa.</p>
+        `,
+        resumo:
+          "Guia completo com dicas essenciais para escolher o imóvel ideal para sua família.",
+        imagemDestaque: "/uploads/blog/dicas-imovel-ideal.jpg",
+        tags: JSON.stringify(["dicas", "compra", "família", "orientações"]),
+        status: "PUBLICADO",
+        publicadoEm: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), // 7 dias atrás
+        autorId: marketing.id,
+      },
+    }),
+  ]);
+
+  console.log("📝 Artigos criados com sucesso!");
+
+  // Criar depoimentos de exemplo
+  const depoimentos = await Promise.all([
+    prisma.depoimento.create({
+      data: {
+        nome: "João Silva",
+        email: "joao@cliente.com",
+        foto: "/uploads/depoimentos/joao.jpg",
+        conteudo:
+          "Excelente atendimento! A equipe da Siqueira Campos me ajudou a encontrar o apartamento perfeito. Todo o processo foi muito tranquilo e profissional.",
+        nota: 5,
+        cidade: "Goiânia - GO",
+        aprovado: true,
+        destaque: true,
+        clienteId: clientes[0].id,
+        imovelId: imoveis[1].id,
+      },
+    }),
+    prisma.depoimento.create({
+      data: {
+        nome: "Maria Santos",
+        email: "maria@cliente.com",
+        foto: "/uploads/depoimentos/maria.jpg",
+        conteudo:
+          "Recomendo muito! Profissionais competentes e atenciosos. Conseguiram vender minha casa rapidamente pelo valor justo.",
+        nota: 5,
+        cidade: "Goiânia - GO",
+        aprovado: true,
+        destaque: true,
+        clienteId: clientes[1].id,
+        imovelId: imoveis[0].id,
+      },
+    }),
+    prisma.depoimento.create({
+      data: {
+        nome: "Pedro Costa",
+        email: "pedro@cliente.com",
+        conteudo:
+          "Ótimo trabalho da equipe! Me ajudaram desde a primeira visita até a assinatura do contrato. Muito obrigado pela dedicação.",
+        nota: 5,
+        cidade: "Aparecida de Goiânia - GO",
+        aprovado: true,
+        destaque: false,
+        clienteId: clientes[2].id,
+      },
+    }),
+    prisma.depoimento.create({
+      data: {
+        nome: "Ana Oliveira",
+        email: "ana@cliente.com",
+        conteudo:
+          "Serviço impecável! Encontrei exatamente o que procurava. A Ana foi muito atenciosa e me mostrou várias opções até achar a ideal.",
+        nota: 5,
+        cidade: "Goiânia - GO",
+        aprovado: true,
+        destaque: true,
+        clienteId: clientes[3].id,
+      },
+    }),
+  ]);
+
+  console.log("⭐ Depoimentos criados com sucesso!");
+
   console.log("✅ Seed executado com sucesso!");
   console.log(`
 📊 Resumo dos dados criados:
