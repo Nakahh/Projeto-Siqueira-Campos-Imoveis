@@ -46,11 +46,7 @@ export default function Index() {
   const [imoveisDestaque, setImoveisDestaque] = useState<Imovel[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    loadImoveisDestaque();
-  }, []);
-
-  const loadImoveisDestaque = async () => {
+  const loadImoveisDestaque = useCallback(async () => {
     try {
       const response = await fetch("/api/imoveis/destaque");
       const data = await response.json();
