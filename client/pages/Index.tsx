@@ -22,6 +22,7 @@ import {
   TrendingUp,
   Shield,
   Clock,
+  Phone,
 } from "lucide-react";
 
 interface Imovel {
