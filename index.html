@@ -1,14 +1,59 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hello world project</title>
+    <meta name="theme-color" content="#8B4513" />
+    <meta
+      name="description"
+      content="Sistema completo de gestão imobiliária - Siqueira Campos Imóveis"
+    />
+    <meta
+      name="keywords"
+      content="imóveis, casa, apartamento, venda, aluguel, Goiânia"
+    />
+    <meta name="author" content="KRYONIX Tecnologia" />
+
+    <!-- PWA Meta Tags -->
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="apple-mobile-web-app-title" content="SCI" />
+
+    <!-- SEO Meta Tags -->
+    <meta property="og:title" content="Siqueira Campos Imóveis" />
+    <meta
+      property="og:description"
+      content="Sistema completo de gestão imobiliária"
+    />
+    <meta property="og:type" content="website" />
+
+    <title>Siqueira Campos Imóveis</title>
   </head>
 
   <body>
     <div id="root"></div>
 
     <script type="module" src="/client/App.tsx"></script>
+
+    <!-- PWA Service Worker -->
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", function () {
+          navigator.serviceWorker
+            .register("/sw.js")
+            .then(function (registration) {
+              console.log("SW registered: ", registration);
+            })
+            .catch(function (registrationError) {
+              console.log("SW registration failed: ", registrationError);
+            });
+        });
+      }
+    </script>
   </body>
 </html>

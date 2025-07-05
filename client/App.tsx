@@ -103,6 +103,7 @@ export default function App() {
             <Route path="/blog" element={<Blog />} />
             <Route path="/sobre" element={<Sobre />} />
             <Route path="/desenvolvedor" element={<Desenvolvedor />} />
+            <Route path="/status" element={<Status />} />
 
             {/* Redirecionamento para dashboard apropriado */}
             <Route

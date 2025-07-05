@@ -132,6 +132,7 @@ app.use("/api/whatsapp", whatsappRoutes);
 app.use("/api/upload", uploadRoutes);
 app.use("/api/financeiro", financeiroRoutes);
 app.use("/api/marketing", marketingRoutes);
+app.use("/api/status", statusRoutes);
 
 // Rota para servir arquivos estáticos (uploads)
 app.use("/uploads", express.static("uploads"));
