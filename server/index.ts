@@ -239,4 +239,5 @@ app.listen(PORT, () => {
   }
 });
 
+export const createServer = () => app;
 export default app;
