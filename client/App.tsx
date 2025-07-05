@@ -175,108 +175,12 @@ class AppErrorBoundary extends React.Component<
   }
 }
 
-// Main App Component
+// SIMPLIFIED App Component for debugging
 export default function App() {
   return (
-    <AppErrorBoundary>
-      <ThemeProvider
-        attribute="class"
-        defaultTheme="light"
-        enableSystem
-        disableTransitionOnChange
-      >
-        <AppStateProvider>
-          <AuthProvider>
-            <BrowserRouter>
-              <Suspense fallback={<LoadingFallback />}>
-                <Routes>
-                  {/* Public Routes */}
-                  <Route path="/" element={<Index />} />
-                  <Route path="/login" element={<Login />} />
-                  <Route path="/imoveis" element={<Imoveis />} />
-                  <Route path="/imoveis/:id" element={<ImovelDetalhes />} />
-                  <Route path="/contato" element={<Contato />} />
-                  <Route
-                    path="/simulador-financiamento"
-                    element={<SimuladorFinanciamento />}
-                  />
-                  <Route path="/blog" element={<Blog />} />
-                  <Route path="/sobre" element={<Sobre />} />
-                  <Route path="/desenvolvedor" element={<Desenvolvedor />} />
-                  <Route path="/status" element={<Status />} />
-
-                  {/* Dashboard Redirect */}
-                  <Route
-                    path="/dashboard"
-                    element={
-                      <ProtectedRoute>
-                        <DashboardRedirect />
-                      </ProtectedRoute>
-                    }
-                  />
-
-                  {/* Admin Dashboard */}
-                  <Route
-                    path="/admin/dashboard"
-                    element={
-                      <ProtectedRoute requiredRoles={["ADMIN"]}>
-                        <AdminDashboard />
-                      </ProtectedRoute>
-                    }
-                  />
-
-                  {/* Corretor Dashboard */}
-                  <Route
-                    path="/corretor/dashboard"
-                    element={
-                      <ProtectedRoute
-                        requiredRoles={["CORRETOR", "ASSISTENTE", "ADMIN"]}
-                      >
-                        <CorretorDashboard />
-                      </ProtectedRoute>
-                    }
-                  />
-
-                  {/* Cliente Dashboard */}
-                  <Route
-                    path="/cliente/dashboard"
-                    element={
-                      <ProtectedRoute requiredRoles={["CLIENTE", "ADMIN"]}>
-                        <ClienteDashboard />
-                      </ProtectedRoute>
-                    }
-                  />
-
-                  {/* Marketing Dashboard */}
-                  <Route
-                    path="/marketing/dashboard"
-                    element={
-                      <ProtectedRoute requiredRoles={["MARKETING", "ADMIN"]}>
-                        <MarketingDashboard />
-                      </ProtectedRoute>
-                    }
-                  />
-
-                  {/* Desenvolvedor Dashboard */}
-                  <Route
-                    path="/dev/dashboard"
-                    element={
-                      <ProtectedRoute
-                        requiredRoles={["DESENVOLVEDOR", "ADMIN"]}
-                      >
-                        <DesenvolvedorDashboard />
-                      </ProtectedRoute>
-                    }
-                  />
-
-                  {/* 404 */}
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
-              </Suspense>
-            </BrowserRouter>
-          </AuthProvider>
-        </AppStateProvider>
-      </ThemeProvider>
-    </AppErrorBoundary>
+    <div>
+      <h1>Siqueira Campos Imóveis</h1>
+      <p>Sistema funcionando sem loops!</p>
+    </div>
   );
 }
