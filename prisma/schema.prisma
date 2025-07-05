@@ -116,8 +116,8 @@ model Imovel {
   iptu              Decimal?
   condominio        Decimal?
   observacoes       String?
-  caracteristicas   String[]        // Array de características
-  fotos             String[]        // URLs das fotos
+  caracteristicas   String?         // JSON string de características
+  fotos             String?         // JSON string de URLs das fotos
   video             String?
   tour360           String?
   views             Int             @default(0)
