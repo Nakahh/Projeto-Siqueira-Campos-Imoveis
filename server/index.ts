@@ -23,6 +23,32 @@ dotenv.config();
 const app = express();
 const prisma = new PrismaClient();
 
+// Health check endpoint
+app.get("/health", async (req, res) => {
+  try {
+    // Test database connection
+    await prisma.$queryRaw`SELECT 1`;
+    res.status(200).json({
+      status: "ok",
+      timestamp: new Date().toISOString(),
+      services: {
+        database: "connected",
+        server: "running",
+      },
+    });
+  } catch (error) {
+    res.status(503).json({
+      status: "error",
+      timestamp: new Date().toISOString(),
+      services: {
+        database: "disconnected",
+        server: "running",
+      },
+      error: error.message,
+    });
+  }
+});
+
 // Middlewares de segurança
 app.use(
   helmet({
