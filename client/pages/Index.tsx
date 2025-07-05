@@ -48,10 +48,12 @@ export default function Index() {
   const [isLoading, setIsLoading] = useState(true);
 
   const loadImoveisDestaque = useCallback(async () => {
+    if (!isLoading) return; // Previne chamadas desnecessárias
+
     try {
       const data = await cachedFetch<Imovel[]>("/api/imoveis/destaque", {
         cacheOptions: {
-          ttl: 2 * 60 * 1000, // Cache for 2 minutes
+          ttl: 5 * 60 * 1000, // Cache for 5 minutes (aumentado de 2 para 5)
           persistToStorage: true,
         },
       });
@@ -61,11 +63,11 @@ export default function Index() {
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [isLoading]);
 
   useEffect(() => {
     loadImoveisDestaque();
-  }, [loadImoveisDestaque]);
+  }, []); // Remover dependency para evitar loop
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat("pt-BR", {
