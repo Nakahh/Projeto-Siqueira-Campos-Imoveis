@@ -20,6 +20,8 @@ import uploadRoutes from "./routes/upload";
 import financeiroRoutes from "./routes/financeiro";
 import marketingRoutes from "./routes/marketing";
 import statusRoutes from "./routes/status";
+import artigosRoutes from "./routes/artigos";
+import depoimentosRoutes from "./routes/depoimentos";
 
 dotenv.config();
 
