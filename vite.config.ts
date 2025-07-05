@@ -3,26 +3,25 @@ import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { createServer } from "./server";
 
-// ENTERPRISE VITE CONFIGURATION - SIQUEIRA CAMPOS IMÓVEIS
-// KRYONIX Technology - Anti-Loop Protection & Maximum Performance
+// ULTIMATE ENTERPRISE VITE CONFIGURATION - SIQUEIRA CAMPOS IMÓVEIS
+// KRYONIX Technology - BULLETPROOF Anti-Loop & Maximum Performance System
 export default defineConfig(({ mode }) => {
   const isDev = mode === "development";
   const isProd = mode === "production";
 
-  console.log(`🚀 [VITE] Configurando ambiente: ${mode}`);
+  console.log(`🚀 [SIQUEIRA VITE] Configurando ambiente ${mode.toUpperCase()}`);
 
   const config: UserConfig = {
-    // Enhanced server configuration with HMR loop prevention
+    // BULLETPROOF Server Configuration
     server: {
       host: "::",
       port: parseInt(process.env.PORT || "8080"),
       strictPort: false,
 
-      // CRITICAL: HMR Configuration to prevent loops
+      // CRITICAL: Complete HMR Configuration to ELIMINATE loops
       hmr: {
         port: parseInt(process.env.PORT || "8080"),
-        overlay: isDev,
-        // Prevent HMR loop by configuring proper client settings
+        overlay: false, // Disable overlay to prevent cascading errors
         clientPort: parseInt(process.env.PORT || "8080"),
       },
 
@@ -32,10 +31,10 @@ export default defineConfig(({ mode }) => {
         strict: false,
       },
 
-      // Watch optimizations to prevent excessive reloads
+      // ULTRA-OPTIMIZED Watch Configuration to prevent loops
       watch: {
         usePolling: false,
-        interval: 1000,
+        interval: 2000, // Increased to prevent rapid fire changes
         ignored: [
           "**/node_modules/**",
           "**/dist/**",
@@ -43,6 +42,12 @@ export default defineConfig(({ mode }) => {
           "**/coverage/**",
           "**/tmp/**",
           "**/temp/**",
+          "**/public/react-test.html", // Ignore problematic files
+          "**/public/test.html",
+          "**/dist/spa/react-test.html",
+          "**/dist/spa/test.html",
+          "**/dist/server/react-test.html",
+          "**/dist/server/test.html",
         ],
       },
 
@@ -50,7 +55,7 @@ export default defineConfig(({ mode }) => {
       origin: `http://localhost:${parseInt(process.env.PORT || "8080")}`,
     },
 
-    // Build optimizations
+    // Enhanced build configuration
     build: {
       outDir: "dist/spa",
       sourcemap: isDev,
@@ -58,6 +63,9 @@ export default defineConfig(({ mode }) => {
       target: "es2020",
 
       rollupOptions: {
+        input: {
+          main: path.resolve(__dirname, "index.html"),
+        },
         output: {
           manualChunks: {
             vendor: ["react", "react-dom"],
@@ -71,11 +79,13 @@ export default defineConfig(({ mode }) => {
       chunkSizeWarningLimit: 1000,
     },
 
-    // Critical: Dependency optimization to prevent HMR issues
+    // ULTRA-OPTIMIZED Dependency Configuration
     optimizeDeps: {
+      // Core dependencies for immediate optimization
       include: [
         "react",
         "react-dom",
+        "react-dom/client",
         "react-router-dom",
         "react/jsx-runtime",
         "react/jsx-dev-runtime",
@@ -84,41 +94,49 @@ export default defineConfig(({ mode }) => {
         "lucide-react",
         "clsx",
         "tailwind-merge",
+        "next-themes",
       ],
 
-      // Force dependency re-optimization in dev to prevent stale modules
-      force: isDev,
+      // FORCE fresh optimization to prevent stale modules
+      force: true,
 
-      // Exclude problematic dependencies that can cause HMR loops
-      exclude: ["fsevents"],
+      // Exclude problematic dependencies
+      exclude: [
+        "fsevents",
+        "@esbuild/linux-x64",
+        "@esbuild/darwin-x64",
+        "@esbuild/win32-x64",
+      ],
 
-      // Pre-bundle dependencies to prevent HMR cascades
+      // Enhanced esbuild options
       esbuildOptions: {
         target: "es2020",
+        keepNames: true,
+        minify: false,
       },
     },
 
-    // Enhanced plugin configuration with loop prevention
+    // ENTERPRISE Plugin Stack
     plugins: [
-      // React plugin with optimized settings
+      // Enhanced React plugin
       react({
         fastRefresh: isDev,
         babel: {
-          plugins: isDev ? [] : [],
+          plugins: [],
         },
       }),
 
-      // Enhanced Express plugin with HMR protection
-      expressServerPlugin(),
+      // BULLETPROOF Express integration
+      bulletproofExpressPlugin(),
 
-      // Development enhancements with loop protection
-      ...(isDev ? [developmentEnhancementsPlugin()] : []),
+      // Development enhancements
+      ...(isDev ? [enterpriseDevelopmentPlugin()] : []),
 
       // Production optimizations
-      ...(isProd ? [productionOptimizationsPlugin()] : []),
+      ...(isProd ? [enterpriseProductionPlugin()] : []),
     ],
 
-    // Path resolution
+    // Enhanced path resolution
     resolve: {
       alias: {
         "@": path.resolve(__dirname, "./client"),
@@ -144,15 +162,17 @@ export default defineConfig(({ mode }) => {
       __BUILD_TIME__: JSON.stringify(new Date().toISOString()),
     },
 
-    // ESBuild configuration
+    // Enhanced ESBuild configuration
     esbuild: {
       target: "es2020",
+      keepNames: true,
       logOverride: {
         "this-is-undefined-in-esm": "silent",
+        "commonjs-variable-in-esm": "silent",
       },
     },
 
-    // Preview configuration for production testing
+    // Preview configuration
     preview: {
       port: 8080,
       host: "::",
@@ -162,16 +182,16 @@ export default defineConfig(({ mode }) => {
   return config;
 });
 
-// Enhanced Express server plugin with comprehensive HMR protection
-function expressServerPlugin(): Plugin {
+// BULLETPROOF Express Server Plugin
+function bulletproofExpressPlugin(): Plugin {
   return {
-    name: "express-server-plugin-enhanced",
+    name: "bulletproof-express-plugin",
     apply: "serve",
     configureServer(server) {
       try {
         const app = createServer();
 
-        // Enhanced error handling middleware
+        // Enhanced error handling
         app.use((err: any, req: any, res: any, next: any) => {
           console.error("[EXPRESS ERROR]", err);
 
@@ -186,101 +206,125 @@ function expressServerPlugin(): Plugin {
           }
         });
 
-        // HMR-safe middleware integration
+        // CRITICAL: Bulletproof middleware integration
         server.middlewares.use((req, res, next) => {
-          // Skip HMR and Vite internal requests
+          // Skip ALL Vite internal requests to prevent interference
           if (
             req.url?.includes("/@vite") ||
             req.url?.includes("/@react-refresh") ||
             req.url?.includes("/@fs/") ||
-            req.url?.includes("/node_modules/")
+            req.url?.includes("/node_modules/") ||
+            req.url?.includes("/__vite") ||
+            req.url?.includes(".map") ||
+            req.url?.includes("/@id/") ||
+            req.url?.includes("/client/")
           ) {
             return next();
           }
 
-          // Pass to Express app
+          // Pass to Express app only for real routes
           app(req, res, next);
         });
 
-        console.log("✅ Express server plugin configured with HMR protection");
+        console.log("✅ BULLETPROOF Express server configured successfully");
       } catch (error) {
-        console.error("❌ Error configuring Express server plugin:", error);
+        console.error("❌ Error configuring Express server:", error);
       }
     },
   };
 }
 
-// Development enhancements with HMR loop prevention
-function developmentEnhancementsPlugin(): Plugin {
-  let lastReloadTime = 0;
-  const reloadCooldown = 2000; // 2 seconds minimum between reloads
+// ENTERPRISE Development Enhancement Plugin
+function enterpriseDevelopmentPlugin(): Plugin {
+  let lastHotUpdateTime = 0;
+  const hotUpdateCooldown = 3000; // 3 seconds minimum between hot updates
+  const loggedMessages = new Set<string>();
 
   return {
-    name: "development-enhancements-protected",
+    name: "enterprise-development-plugin",
     apply: "serve",
 
     configureServer(server) {
-      // Enhanced development logging with spam protection
+      // Professional development logging
       server.middlewares.use((req, res, next) => {
         const start = Date.now();
 
         res.on("finish", () => {
           const duration = Date.now() - start;
-          const isAsset =
-            req.url?.includes("/assets/") ||
-            req.url?.includes("/node_modules/") ||
+          const isViteInternal =
             req.url?.includes("/@vite") ||
-            req.url?.includes("/@react-refresh");
+            req.url?.includes("/node_modules/") ||
+            req.url?.includes("/@react-refresh") ||
+            req.url?.includes("/@fs/") ||
+            req.url?.includes(".map");
 
-          // Only log non-asset requests and slow requests
-          if (!isAsset || duration > 100) {
-            console.log(
-              `[${res.statusCode}] ${req.method} ${req.url} - ${duration}ms`,
-            );
+          // Only log important requests or slow ones
+          if (!isViteInternal && (duration > 50 || res.statusCode !== 200)) {
+            const logKey = `${req.method} ${req.url} ${res.statusCode}`;
+            if (!loggedMessages.has(logKey)) {
+              console.log(
+                `[${res.statusCode}] ${req.method} ${req.url} - ${duration}ms`,
+              );
+              loggedMessages.add(logKey);
+              // Clear log cache periodically
+              setTimeout(() => loggedMessages.delete(logKey), 10000);
+            }
           }
         });
 
         next();
       });
 
-      console.log("✅ Development enhancements with HMR protection activated");
+      console.log("✅ ENTERPRISE development enhancements activated");
     },
 
     handleHotUpdate(ctx) {
       const now = Date.now();
 
-      // Prevent excessive hot reloads
-      if (now - lastReloadTime < reloadCooldown) {
+      // AGGRESSIVE hot update throttling to prevent loops
+      if (now - lastHotUpdateTime < hotUpdateCooldown) {
         console.log(
-          `🔄 Hot reload throttled: ${ctx.file.replace(process.cwd(), "")}`,
+          `🔄 Hot update THROTTLED: ${ctx.file.replace(process.cwd(), "")}`,
+        );
+        return []; // Return empty array to prevent update
+      }
+
+      lastHotUpdateTime = now;
+
+      // Only allow hot updates for specific file types
+      const allowedExtensions = [".ts", ".tsx", ".js", ".jsx", ".css"];
+      const fileExtension = path.extname(ctx.file);
+
+      if (!allowedExtensions.includes(fileExtension)) {
+        console.log(
+          `🔄 Hot update BLOCKED for non-allowed file: ${ctx.file.replace(process.cwd(), "")}`,
         );
         return [];
       }
 
-      lastReloadTime = now;
-      console.log(`🔄 Hot reload: ${ctx.file.replace(process.cwd(), "")}`);
-
-      // Return modules for normal HMR processing
+      console.log(
+        `🔄 Hot update ALLOWED: ${ctx.file.replace(process.cwd(), "")}`,
+      );
       return ctx.modules;
     },
   };
 }
 
-// Production optimizations plugin
-function productionOptimizationsPlugin(): Plugin {
+// ENTERPRISE Production Optimization Plugin
+function enterpriseProductionPlugin(): Plugin {
   return {
-    name: "production-optimizations",
+    name: "enterprise-production-plugin",
     apply: "build",
     generateBundle(options, bundle) {
       const chunks = Object.values(bundle).filter(
         (chunk) => chunk.type === "chunk",
       );
-      console.log(`📦 Generated ${chunks.length} chunks for production`);
+      console.log(`📦 ENTERPRISE: Generated ${chunks.length} chunks`);
 
       chunks.forEach((chunk) => {
         if (chunk.type === "chunk") {
           console.log(
-            `   ${chunk.fileName}: ${(chunk.code.length / 1024).toFixed(2)}KB`,
+            `   📦 ${chunk.fileName}: ${(chunk.code.length / 1024).toFixed(2)}KB`,
           );
         }
       });
