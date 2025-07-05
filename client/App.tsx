@@ -30,128 +30,379 @@ const Sobre = lazy(() => import("@/pages/Sobre"));
 const Desenvolvedor = lazy(() => import("@/pages/Desenvolvedor"));
 const Status = lazy(() => import("@/pages/Status"));
 
-// TESTE PREMIUM - Ultra-Premium loading component with luxury effects
+// 🌟 ULTRA-PREMIUM LOADING COMPONENT 🌟
 const LoadingFallback = memo(() => (
   <div
-    className="min-h-screen flex items-center justify-center relative overflow-hidden"
     style={{
-      background: "linear-gradient(135deg, #fdf8f6, #fef7e0, #ffffff)",
-      fontFamily: "ui-sans-serif, system-ui, sans-serif",
+      minHeight: "100vh",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      position: "relative",
+      overflow: "hidden",
+      background:
+        "linear-gradient(135deg, #fdf8f6 0%, #fef7e0 50%, #ffffff 100%)",
+      fontFamily:
+        'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
     }}
   >
-    {/* Premium Background with Animated Gradients */}
+    {/* ✨ Background Pattern */}
     <div
-      className="absolute inset-0"
       style={{
-        background: "linear-gradient(135deg, #fdf8f6, #fef7e0, #ffffff)",
+        position: "absolute",
+        inset: "0",
+        opacity: "0.1",
+        backgroundImage:
+          "radial-gradient(circle at 25% 25%, #d4af37 0%, transparent 70%), radial-gradient(circle at 75% 75%, #f59e0b 0%, transparent 70%)",
       }}
     ></div>
 
-    {/* Floating Particles Animation */}
-    <div className="absolute inset-0 overflow-hidden opacity-30">
-      {[...Array(12)].map((_, i) => (
+    {/* 🎯 Floating Particles */}
+    <div
+      style={{
+        position: "absolute",
+        inset: "0",
+        overflow: "hidden",
+        opacity: "0.4",
+      }}
+    >
+      {[...Array(10)].map((_, i) => (
         <div
           key={i}
-          className="absolute w-2 h-2 bg-gradient-to-r from-yellow-400/40 to-amber-500/40 rounded-full animate-pulse"
           style={{
+            position: "absolute",
+            width: `${6 + Math.random() * 8}px`,
+            height: `${6 + Math.random() * 8}px`,
+            background:
+              i % 2 === 0
+                ? "linear-gradient(135deg, #fbbf24, #f59e0b)"
+                : "linear-gradient(135deg, #d4af37, #b8860b)",
+            borderRadius: "50%",
             left: `${Math.random() * 100}%`,
             top: `${Math.random() * 100}%`,
-            animationDelay: `${Math.random() * 3}s`,
-            animationDuration: `${2 + Math.random() * 3}s`,
+            animation: `float${i} ${3 + Math.random() * 2}s ease-in-out infinite`,
+            animationDelay: `${Math.random() * 2}s`,
           }}
         ></div>
       ))}
     </div>
 
-    {/* Main Loading Content */}
-    <div className="relative z-10 text-center p-8">
-      {/* Premium Logo with Glassmorphism */}
-      <div className="relative mb-8">
-        <div className="w-24 h-24 mx-auto bg-white/20 dark:bg-white/10 backdrop-blur-xl rounded-3xl flex items-center justify-center border border-white/30 shadow-2xl">
-          <div className="text-4xl">🏠</div>
-          {/* Sparkle Effects */}
-          <div className="absolute -top-2 -right-2 w-6 h-6 bg-gradient-to-r from-yellow-400 to-amber-500 rounded-full animate-ping"></div>
-          <div className="absolute -bottom-2 -left-2 w-4 h-4 bg-gradient-to-r from-amber-400 to-yellow-500 rounded-full animate-pulse"></div>
+    {/* 🏰 Main Content */}
+    <div
+      style={{
+        position: "relative",
+        zIndex: "10",
+        textAlign: "center",
+        padding: "3rem",
+      }}
+    >
+      {/* 👑 Premium Logo */}
+      <div
+        style={{
+          position: "relative",
+          marginBottom: "3rem",
+        }}
+      >
+        <div
+          style={{
+            width: "120px",
+            height: "120px",
+            margin: "0 auto",
+            background: "rgba(255, 255, 255, 0.25)",
+            backdropFilter: "blur(20px)",
+            borderRadius: "30px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            border: "2px solid rgba(212, 175, 55, 0.3)",
+            boxShadow:
+              "0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 40px rgba(212, 175, 55, 0.2)",
+            fontSize: "3rem",
+            position: "relative",
+          }}
+        >
+          🏠
+          {/* ✨ Sparkles */}
+          <div
+            style={{
+              position: "absolute",
+              top: "-10px",
+              right: "-10px",
+              width: "30px",
+              height: "30px",
+              background: "linear-gradient(135deg, #fbbf24, #f59e0b)",
+              borderRadius: "50%",
+              animation: "sparkle 2s ease-in-out infinite",
+              boxShadow: "0 0 20px rgba(251, 191, 36, 0.6)",
+            }}
+          ></div>
+          <div
+            style={{
+              position: "absolute",
+              bottom: "-8px",
+              left: "-8px",
+              width: "20px",
+              height: "20px",
+              background: "linear-gradient(135deg, #d4af37, #b8860b)",
+              borderRadius: "50%",
+              animation: "sparkle 2s ease-in-out infinite 0.5s",
+              boxShadow: "0 0 15px rgba(212, 175, 55, 0.6)",
+            }}
+          ></div>
         </div>
       </div>
 
-      {/* Premium Loading Ring */}
-      <div className="relative mb-8">
-        <div className="w-20 h-20 mx-auto">
-          {/* Outer ring */}
+      {/* 🎪 Premium Loading Ring */}
+      <div
+        style={{
+          position: "relative",
+          marginBottom: "3rem",
+        }}
+      >
+        <div
+          style={{
+            width: "100px",
+            height: "100px",
+            margin: "0 auto",
+            position: "relative",
+          }}
+        >
+          {/* 🌟 Outer Luxury Ring */}
           <div
-            className="absolute inset-0 rounded-full border-4 border-transparent bg-gradient-to-r from-brand-brown-400 via-amber-400 to-brand-brown-600 animate-spin"
             style={{
+              position: "absolute",
+              inset: "0",
+              borderRadius: "50%",
+              border: "6px solid transparent",
               background:
-                "conic-gradient(from 0deg, #d4af37, #b8860b, #cd853f, #d4af37)",
-              mask: "radial-gradient(farthest-side, transparent calc(100% - 4px), black calc(100% - 4px))",
+                "conic-gradient(from 0deg, #d4af37, #fbbf24, #f59e0b, #d4af37)",
+              mask: "radial-gradient(farthest-side, transparent calc(100% - 6px), black calc(100% - 6px))",
               WebkitMask:
-                "radial-gradient(farthest-side, transparent calc(100% - 4px), black calc(100% - 4px))",
+                "radial-gradient(farthest-side, transparent calc(100% - 6px), black calc(100% - 6px))",
+              animation: "luxurySpin 3s linear infinite",
+              filter: "drop-shadow(0 0 10px rgba(212, 175, 55, 0.5))",
             }}
           ></div>
-          {/* Inner ring */}
+          {/* 💫 Inner Ring */}
           <div
-            className="absolute inset-2 rounded-full border-2 border-transparent bg-gradient-to-r from-amber-300 to-yellow-400 animate-spin opacity-70"
             style={{
-              animationDirection: "reverse",
-              animationDuration: "1.5s",
+              position: "absolute",
+              inset: "15px",
+              borderRadius: "50%",
+              border: "3px solid transparent",
+              background:
+                "conic-gradient(from 180deg, #f59e0b, #fbbf24, #f59e0b)",
+              mask: "radial-gradient(farthest-side, transparent calc(100% - 3px), black calc(100% - 3px))",
+              WebkitMask:
+                "radial-gradient(farthest-side, transparent calc(100% - 3px), black calc(100% - 3px))",
+              animation: "luxurySpin 2s linear infinite reverse",
+              opacity: "0.8",
             }}
           ></div>
-          {/* Center dot */}
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-2 h-2 bg-gradient-to-r from-yellow-400 to-amber-500 rounded-full animate-pulse"></div>
+          {/* 🔥 Center Premium Dot */}
+          <div
+            style={{
+              position: "absolute",
+              inset: "0",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <div
+              style={{
+                width: "12px",
+                height: "12px",
+                background: "radial-gradient(circle, #fbbf24, #f59e0b)",
+                borderRadius: "50%",
+                boxShadow: "0 0 20px rgba(251, 191, 36, 0.8)",
+                animation: "luxuryPulse 2s ease-in-out infinite",
+              }}
+            ></div>
           </div>
         </div>
       </div>
 
-      {/* Premium Brand Text */}
-      <div className="space-y-4">
-        <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-brand-brown-800 via-amber-700 to-brand-brown-900 dark:from-brand-beige-200 dark:via-yellow-300 dark:to-brand-beige-100 bg-clip-text text-transparent mb-3">
+      {/* 🎨 Premium Brand Text */}
+      <div
+        style={{
+          maxWidth: "600px",
+          margin: "0 auto",
+        }}
+      >
+        <h1
+          style={{
+            fontSize: "clamp(2.5rem, 5vw, 4rem)",
+            fontWeight: "bold",
+            background:
+              "linear-gradient(135deg, #8b5a2b, #d4af37, #fbbf24, #8b5a2b)",
+            backgroundSize: "300% 300%",
+            backgroundClip: "text",
+            WebkitBackgroundClip: "text",
+            color: "transparent",
+            marginBottom: "1.5rem",
+            lineHeight: "1.1",
+            animation: "gradientShift 4s ease-in-out infinite",
+            textShadow: "0 0 30px rgba(212, 175, 55, 0.3)",
+          }}
+        >
           Siqueira Campos Imóveis
         </h1>
 
-        <div className="flex items-center justify-center space-x-2 mb-4">
-          <div className="w-2 h-2 bg-gradient-to-r from-yellow-400 to-amber-500 rounded-full"></div>
-          <span className="text-lg font-medium bg-gradient-to-r from-amber-700 to-brand-brown-700 dark:from-amber-300 dark:to-yellow-200 bg-clip-text text-transparent">
+        {/* 💎 Premium Badge */}
+        <div
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "0.75rem",
+            marginBottom: "2rem",
+            padding: "0.75rem 2rem",
+            background:
+              "linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(251, 191, 36, 0.15))",
+            border: "1px solid rgba(212, 175, 55, 0.3)",
+            borderRadius: "50px",
+            backdropFilter: "blur(10px)",
+          }}
+        >
+          <div
+            style={{
+              width: "10px",
+              height: "10px",
+              background: "linear-gradient(135deg, #fbbf24, #f59e0b)",
+              borderRadius: "50%",
+              animation: "luxuryPulse 2s ease-in-out infinite",
+            }}
+          ></div>
+          <span
+            style={{
+              fontSize: "1.25rem",
+              fontWeight: "600",
+              background: "linear-gradient(135deg, #b45309, #8b5a2b)",
+              backgroundClip: "text",
+              WebkitBackgroundClip: "text",
+              color: "transparent",
+              letterSpacing: "0.05em",
+            }}
+          >
             PREMIUM EXPERIENCE
           </span>
-          <div className="w-2 h-2 bg-gradient-to-r from-amber-500 to-yellow-400 rounded-full"></div>
-        </div>
-
-        <p className="text-brand-brown-600 dark:text-brand-beige-300 text-lg font-medium mb-6">
-          Carregando experiência premium...
-        </p>
-
-        {/* Loading Progress Bar */}
-        <div className="w-64 h-2 bg-brand-brown-200/30 dark:bg-brand-brown-700/30 rounded-full mx-auto overflow-hidden">
           <div
-            className="h-full bg-gradient-to-r from-brand-brown-500 via-amber-500 to-yellow-500 rounded-full animate-pulse"
             style={{
-              background:
-                "linear-gradient(90deg, #8b5a2b, #d4af37, #ffd700, #d4af37, #8b5a2b)",
-              backgroundSize: "200% 100%",
-              animation: "shimmer 2s infinite",
+              width: "10px",
+              height: "10px",
+              background: "linear-gradient(135deg, #f59e0b, #fbbf24)",
+              borderRadius: "50%",
+              animation: "luxuryPulse 2s ease-in-out infinite 0.5s",
             }}
           ></div>
         </div>
 
-        {/* Subtle tagline */}
-        <p className="text-sm text-brand-brown-500 dark:text-brand-beige-400 opacity-75 mt-4">
-          Transformando sonhos em realidade desde 2008
+        <p
+          style={{
+            color: "#92664f",
+            fontSize: "1.375rem",
+            fontWeight: "500",
+            marginBottom: "2.5rem",
+            letterSpacing: "0.025em",
+          }}
+        >
+          Carregando experiência premium...
+        </p>
+
+        {/* 🌊 Luxury Progress Bar */}
+        <div
+          style={{
+            width: "320px",
+            height: "12px",
+            background: "rgba(146, 102, 79, 0.2)",
+            borderRadius: "50px",
+            margin: "0 auto",
+            overflow: "hidden",
+            border: "1px solid rgba(212, 175, 55, 0.2)",
+            boxShadow: "inset 0 2px 4px rgba(0, 0, 0, 0.1)",
+          }}
+        >
+          <div
+            style={{
+              height: "100%",
+              background:
+                "linear-gradient(90deg, #8b5a2b, #d4af37, #fbbf24, #f59e0b, #d4af37, #8b5a2b)",
+              borderRadius: "50px",
+              backgroundSize: "300% 100%",
+              animation: "luxuryShimmer 3s ease-in-out infinite",
+              boxShadow: "0 0 20px rgba(212, 175, 55, 0.4)",
+            }}
+          ></div>
+        </div>
+
+        {/* 📜 Luxury Tagline */}
+        <p
+          style={{
+            fontSize: "1rem",
+            color: "#a3765a",
+            opacity: "0.8",
+            marginTop: "2rem",
+            fontStyle: "italic",
+            letterSpacing: "0.025em",
+          }}
+        >
+          ✨ Transformando sonhos em realidade desde 2008 ✨
         </p>
       </div>
     </div>
 
-    {/* CSS animation for shimmer effect */}
-    <style jsx>{`
-      @keyframes shimmer {
-        0% {
-          background-position: -200% 0;
+    {/* 🎭 CSS Animations */}
+    <style>{`
+      @keyframes luxuryShimmer {
+        0% { background-position: -300% 0; }
+        100% { background-position: 300% 0; }
+      }
+      @keyframes luxurySpin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+      @keyframes luxuryPulse {
+        0%, 100% { 
+          transform: scale(1); 
+          opacity: 1;
+          box-shadow: 0 0 20px rgba(251, 191, 36, 0.8);
         }
-        100% {
-          background-position: 200% 0;
+        50% { 
+          transform: scale(1.2); 
+          opacity: 0.8;
+          box-shadow: 0 0 30px rgba(251, 191, 36, 1);
         }
       }
+      @keyframes sparkle {
+        0%, 100% { 
+          transform: scale(1) rotate(0deg); 
+          opacity: 1;
+        }
+        50% { 
+          transform: scale(1.3) rotate(180deg); 
+          opacity: 0.7;
+        }
+      }
+      @keyframes gradientShift {
+        0%, 100% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+      }
+      ${[...Array(10)]
+        .map(
+          (_, i) => `
+        @keyframes float${i} {
+          0%, 100% { 
+            transform: translateY(0px) rotate(0deg) scale(1); 
+            opacity: 0.6;
+          }
+          50% { 
+            transform: translateY(-${15 + Math.random() * 15}px) rotate(${180 + Math.random() * 180}deg) scale(1.1); 
+            opacity: 1;
+          }
+        }
+      `,
+        )
+        .join("")}
     `}</style>
   </div>
 ));
@@ -255,25 +506,82 @@ class AppErrorBoundary extends React.Component<
   render() {
     if (this.state.hasError) {
       return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-red-50 to-red-100">
-          <div className="text-center max-w-md mx-auto p-8">
-            <h1 className="text-3xl font-bold mb-4 text-red-800">
+        <div
+          style={{
+            minHeight: "100vh",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            background: "linear-gradient(135deg, #fef2f2, #fee2e2)",
+            fontFamily: "ui-sans-serif, system-ui, sans-serif",
+          }}
+        >
+          <div
+            style={{
+              textAlign: "center",
+              maxWidth: "500px",
+              margin: "0 auto",
+              padding: "3rem",
+            }}
+          >
+            <h1
+              style={{
+                fontSize: "3rem",
+                fontWeight: "bold",
+                marginBottom: "1rem",
+                color: "#dc2626",
+              }}
+            >
               🏠 Siqueira Campos Imóveis
             </h1>
-            <p className="mb-6 text-red-700">
+            <p
+              style={{
+                marginBottom: "1.5rem",
+                color: "#b91c1c",
+                fontSize: "1.25rem",
+              }}
+            >
               Sistema Profissional de Gestão Imobiliária
             </p>
-            <div className="bg-red-200 border border-red-300 rounded-lg p-4 mb-6">
-              <h3 className="font-semibold mb-2 text-red-800">
+            <div
+              style={{
+                background: "#fee2e2",
+                border: "1px solid #fecaca",
+                borderRadius: "0.75rem",
+                padding: "1.5rem",
+                marginBottom: "1.5rem",
+              }}
+            >
+              <h3
+                style={{
+                  fontWeight: "600",
+                  marginBottom: "0.5rem",
+                  color: "#dc2626",
+                }}
+              >
                 ⚠️ Erro do Sistema
               </h3>
-              <p className="text-sm text-red-700">
+              <p
+                style={{
+                  fontSize: "0.875rem",
+                  color: "#b91c1c",
+                }}
+              >
                 Ocorreu um erro inesperado. Nossa equipe KRYONIX foi notificada.
               </p>
             </div>
             <button
               onClick={() => window.location.reload()}
-              className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
+              style={{
+                background: "#dc2626",
+                color: "white",
+                padding: "0.75rem 1.5rem",
+                borderRadius: "0.5rem",
+                fontWeight: "600",
+                border: "none",
+                cursor: "pointer",
+                fontSize: "1rem",
+              }}
             >
               🔄 Recarregar Sistema
             </button>
