@@ -32,7 +32,7 @@ export function MainLayout({
 
       <Footer />
 
-      {showChat && <ChatWidget />}
+      {/* {showChat && <ChatWidget />} */}
     </div>
   );
 }
