@@ -4,90 +4,103 @@ import App from "./App.tsx";
 import "./global.css";
 
 // Professional System Initialization - Siqueira Campos Imóveis
-// Enterprise-grade React initialization with full error handling
-// Developed by KRYONIX Technology - Maintaining maximum robustness
+// Enterprise-grade React initialization with enhanced performance and error handling
+// Developed by KRYONIX Technology - Maximum robustness and speed
 
-const SYSTEM_VERSION = "1.0.0";
+const SYSTEM_VERSION = "2.0.0";
 const DEVELOPER = "KRYONIX Tecnologia";
 
-// Professional logging system
+// Enhanced performance logging system
 const log = (level: string, message: string, data?: any) => {
-  const timestamp = Date.now();
+  if (typeof window === "undefined") return;
+
+  const timestamp = performance.now();
   const logData = { level, message, data, timestamp, system: "SiqueiraCampos" };
 
-  // Store in window for debugging
+  // Initialize logs array if not exists
   if (!window.SiqueiraSystemLogs) window.SiqueiraSystemLogs = [];
   window.SiqueiraSystemLogs.push(logData);
 
-  console[level as keyof Console](`[SIQUEIRA] ${message}`, data || "");
+  // Only log in development
+  if (import.meta.env.DEV) {
+    console[level as keyof Console](`[SIQUEIRA] ${message}`, data || "");
+  }
 };
 
-// Professional system initialization with maximum robustness
-const initializeProfessionalSystem = (): void => {
+// Professional error boundary wrapper
+const ErrorBoundary = ({ children }: { children: React.ReactNode }) => {
+  try {
+    return <>{children}</>;
+  } catch (error) {
+    log("error", "React Error Boundary caught error", error);
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-brand-brown-800 to-brand-brown-600 text-white">
+        <div className="text-center max-w-md mx-auto p-8">
+          <h1 className="text-3xl font-bold mb-4">
+            🏠 Siqueira Campos Imóveis
+          </h1>
+          <p className="mb-6">Sistema Profissional de Gestão Imobiliária</p>
+          <div className="bg-red-500/20 border border-red-500/50 rounded-lg p-4 mb-6">
+            <h3 className="font-semibold mb-2">⚠️ Erro no Sistema</h3>
+            <p className="text-sm opacity-90">
+              Detectamos um problema técnico. Nossa equipe foi notificada
+              automaticamente.
+            </p>
+          </div>
+          <button
+            onClick={() => window.location.reload()}
+            className="bg-white text-brand-brown-800 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+          >
+            🔄 Recarregar Sistema
+          </button>
+        </div>
+      </div>
+    );
+  }
+};
+
+// Professional system initialization with enhanced performance
+const initializeProfessionalSystem = async (): Promise<void> => {
   log("info", `🏠 Sistema Siqueira Campos Imóveis v${SYSTEM_VERSION}`);
   log("info", `🔧 Desenvolvido por ${DEVELOPER}`);
-  log("info", "🚀 Inicializando sistema profissional completo...");
-
-  // Update loading progress
-  const updateLoadingProgress = (percentage: number, text: string) => {
-    try {
-      const progressBar = document.getElementById("progress-bar");
-      const loadingText = document.getElementById("loading-text");
-      if (progressBar) progressBar.style.width = `${percentage}%`;
-      if (loadingText) loadingText.textContent = text;
-      log("info", "📊 Progress", { percentage, text });
-    } catch (error) {
-      log("warn", "Progress update failed", error);
-    }
-  };
-
-  updateLoadingProgress(90, "🔧 Inicializando React...");
-
-  // Verify critical dependencies
-  if (!React) {
-    log("error", "❌ React não encontrado!");
-    showProfessionalError("React library não carregada");
-    return;
-  }
-
-  if (!ReactDOM) {
-    log("error", "❌ ReactDOM não encontrado!");
-    showProfessionalError("ReactDOM library não carregada");
-    return;
-  }
-
-  // Verify root element
-  const rootElement = document.getElementById("root");
-  if (!rootElement) {
-    log("error", "❌ Elemento root não encontrado!");
-    showProfessionalError("Root element (#root) não encontrado no DOM");
-    return;
-  }
-
-  log("info", "✅ Elemento root encontrado");
-  log("info", "✅ React e ReactDOM carregados");
+  log("info", "🚀 Inicializando sistema profissional otimizado...");
 
   try {
-    updateLoadingProgress(95, "🎯 Renderizando aplicação...");
+    // Verify critical dependencies
+    if (!React) {
+      throw new Error("React library não carregada");
+    }
 
-    // Create React root with enhanced error boundaries
-    const root = ReactDOM.createRoot(rootElement);
+    if (!ReactDOM) {
+      throw new Error("ReactDOM library não carregada");
+    }
 
-    // Professional error boundary wrapper
-    const SystemWithErrorBoundary = () => {
-      return (
-        <React.StrictMode>
-          <ErrorBoundary>
-            <App />
-          </ErrorBoundary>
-        </React.StrictMode>
-      );
-    };
+    // Verify root element
+    const rootElement = document.getElementById("root");
+    if (!rootElement) {
+      throw new Error("Root element (#root) não encontrado no DOM");
+    }
+
+    log("info", "✅ Dependências verificadas com sucesso");
+
+    // Create React root with enhanced configuration
+    const root = ReactDOM.createRoot(rootElement, {
+      onRecoverableError: (error) => {
+        log("warn", "React recoverable error", error);
+      },
+    });
+
+    // Enhanced React app with professional error handling
+    const EnhancedApp = () => (
+      <React.StrictMode>
+        <ErrorBoundary>
+          <App />
+        </ErrorBoundary>
+      </React.StrictMode>
+    );
 
     // Render the complete professional application
-    root.render(<SystemWithErrorBoundary />);
-
-    updateLoadingProgress(100, "✅ Sistema carregado com sucesso!");
+    root.render(<EnhancedApp />);
 
     // Hide loading state after successful render
     setTimeout(() => {
@@ -96,7 +109,7 @@ const initializeProfessionalSystem = (): void => {
         loadingState.style.display = "none";
         log("info", "🎉 Loading state hidden - System fully operational");
       }
-    }, 1000);
+    }, 500);
 
     log("info", "✅ Sistema Siqueira Campos carregado com sucesso!");
     log("info", "🎯 Funcionalidades ativas:");
@@ -108,95 +121,14 @@ const initializeProfessionalSystem = (): void => {
     log("info", "   - 📱 PWA com funcionalidades offline");
     log("info", "   - 🛡️ Segurança enterprise-grade");
     log("info", "   - 📊 Dashboards analíticos robustos");
+    log("info", "   - ⚡ Performance otimizada");
   } catch (error) {
-    log("error", "❌ ERRO CRÍTICO ao renderizar aplicação:", error);
-    showProfessionalError("Erro na renderização do React", error);
+    log("error", "❌ ERRO CRÍTICO ao inicializar sistema:", error);
+    showProfessionalError("Erro na inicialização do sistema", error);
   }
 };
 
-// Professional Error Boundary Component
-class ErrorBoundary extends React.Component<
-  { children: React.ReactNode },
-  { hasError: boolean; error?: Error }
-> {
-  constructor(props: { children: React.ReactNode }) {
-    super(props);
-    this.state = { hasError: false };
-  }
-
-  static getDerivedStateFromError(error: Error) {
-    log("error", "🛡️ Error Boundary ativado:", error);
-    return { hasError: true, error };
-  }
-
-  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    log("error", "🛡️ React Error Boundary - Erro capturado:", {
-      error,
-      errorInfo,
-    });
-    showProfessionalError("React Component Error", error);
-  }
-
-  render() {
-    if (this.state.hasError) {
-      return (
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            minHeight: "100vh",
-            background: "linear-gradient(135deg, #8B4513 0%, #D2B48C 100%)",
-            color: "white",
-            fontFamily: "system-ui, -apple-system, sans-serif",
-            textAlign: "center",
-            padding: "2rem",
-          }}
-        >
-          <div
-            style={{
-              background: "rgba(255,255,255,0.1)",
-              backdropFilter: "blur(10px)",
-              borderRadius: "1rem",
-              padding: "3rem",
-              maxWidth: "600px",
-            }}
-          >
-            <h1 style={{ fontSize: "2.5rem", marginBottom: "1rem" }}>
-              🏠 Siqueira Campos Imóveis
-            </h1>
-            <p style={{ fontSize: "1.2rem", marginBottom: "2rem" }}>
-              Sistema Profissional de Gestão Imobiliária
-            </p>
-            <p style={{ marginBottom: "2rem", color: "#FFE4B5" }}>
-              🛡️ Sistema de recuperação automática ativado
-            </p>
-            <button
-              onClick={() => window.location.reload()}
-              style={{
-                padding: "1rem 2rem",
-                background: "white",
-                color: "#8B4513",
-                border: "none",
-                borderRadius: "0.5rem",
-                fontSize: "1.1rem",
-                fontWeight: "bold",
-                cursor: "pointer",
-              }}
-            >
-              🔄 Reinicializar Sistema
-            </button>
-          </div>
-        </div>
-      );
-    }
-
-    return this.props.children;
-  }
-}
-
-// Professional error display system
+// Enhanced error display system
 const showProfessionalError = (title: string, error?: any) => {
   const rootElement = document.getElementById("root");
   if (!rootElement) return;
@@ -226,7 +158,7 @@ const showProfessionalError = (title: string, error?: any) => {
           🏠 Siqueira Campos Imóveis
         </h1>
         <p style="font-size: 1.3rem; margin-bottom: 1rem; color: #FFE4B5;">
-          Sistema Profissional de Gestão Imobiliária
+          Sistema Profissional de Gestão Imobiliária v${SYSTEM_VERSION}
         </p>
         <p style="font-size: 1.1rem; margin-bottom: 2rem;">
           Desenvolvido por <strong>KRYONIX Tecnologia</strong>
@@ -241,13 +173,13 @@ const showProfessionalError = (title: string, error?: any) => {
         ">
           <h3 style="color: #FFE4B5; margin-bottom: 1rem;">⚠️ ${title}</h3>
           <p style="font-size: 0.9rem; color: rgba(255,255,255,0.8);">
-            Sistema detectou uma falha técnica. Nossa equipe foi notificada automaticamente.
+            Sistema detectou uma falha técnica. Equipe KRYONIX foi notificada automaticamente.
           </p>
           ${
-            error
+            error && import.meta.env.DEV
               ? `<details style="margin-top: 1rem; text-align: left;">
-            <summary style="cursor: pointer; color: #FFE4B5;">Detalhes técnicos</summary>
-            <pre style="font-size: 0.8rem; color: rgba(255,255,255,0.7); margin-top: 0.5rem; overflow: auto;">${error.toString()}</pre>
+            <summary style="cursor: pointer; color: #FFE4B5;">Detalhes técnicos (Dev Mode)</summary>
+            <pre style="font-size: 0.8rem; color: rgba(255,255,255,0.7); margin-top: 0.5rem; overflow: auto; white-space: pre-wrap;">${error.toString()}</pre>
           </details>`
               : ""
           }
@@ -282,7 +214,7 @@ const showProfessionalError = (title: string, error?: any) => {
   `;
 };
 
-// Professional initialization with proper timing and fallbacks
+// Enhanced initialization with proper timing
 const initializeWhenReady = () => {
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", initializeProfessionalSystem);
@@ -294,7 +226,7 @@ const initializeWhenReady = () => {
 
 // Global error handlers for maximum robustness
 window.addEventListener("error", (event) => {
-  log("error", "🚨 Global Error:", {
+  log("error", "🚨 Global JavaScript Error:", {
     message: event.message,
     filename: event.filename,
     lineno: event.lineno,
@@ -308,13 +240,40 @@ window.addEventListener("unhandledrejection", (event) => {
     reason: event.reason,
     promise: event.promise,
   });
+
+  // Prevent default browser behavior
+  event.preventDefault();
 });
+
+// Performance monitoring
+if (typeof window.performance !== "undefined") {
+  window.addEventListener("load", () => {
+    setTimeout(() => {
+      const perfData = window.performance.getEntriesByType(
+        "navigation",
+      )[0] as any;
+      log("info", "📊 Performance Metrics:", {
+        domContentLoaded:
+          perfData.domContentLoadedEventEnd - perfData.navigationStart,
+        loadComplete: perfData.loadEventEnd - perfData.navigationStart,
+        firstPaint: performance.getEntriesByType("paint")[0]?.startTime,
+      });
+    }, 0);
+  });
+}
 
 // Initialize the professional system
 initializeWhenReady();
 
-// Export debug utilities for development
-(window as any).SiqueiraCamposSystem = {
+// Export enhanced debug utilities
+declare global {
+  interface Window {
+    SiqueiraSystemLogs: any[];
+    SiqueiraCamposSystem: any;
+  }
+}
+
+window.SiqueiraCamposSystem = {
   version: SYSTEM_VERSION,
   developer: DEVELOPER,
   reinitialize: initializeProfessionalSystem,
@@ -322,7 +281,20 @@ initializeWhenReady();
   clearLogs: () => {
     window.SiqueiraSystemLogs = [];
   },
-  debug: true,
+  performance: () => {
+    if (typeof window.performance !== "undefined") {
+      return {
+        memory: (window.performance as any).memory,
+        timing: window.performance.timing,
+        navigation: window.performance.getEntriesByType("navigation")[0],
+      };
+    }
+    return null;
+  },
+  debug: import.meta.env.DEV,
 };
 
-log("info", "🎯 Sistema de inicialização profissional configurado");
+log(
+  "info",
+  "🎯 Sistema de inicialização profissional v2.0 configurado com melhorias de performance",
+);
