@@ -144,17 +144,23 @@ export function PremiumHeader() {
               className="flex items-center space-x-3 group transition-transform hover:scale-105"
             >
               <div className="relative">
-                <div className="w-12 h-12 bg-gradient-to-br from-brand-brown-600 to-brand-brown-800 rounded-xl flex items-center justify-center shadow-lg">
-                  <Home className="h-6 w-6 text-brand-beige-100" />
-                </div>
+                {/* Logo da empresa - versão clara para fundo claro */}
+                <img
+                  src="https://cdn.builder.io/api/v1/assets/175866fa236440d4a5b360ca5b1302b3/siqueira-campos-para-fundo-claro-0c3be3?format=webp&width=400"
+                  alt="Siqueira Campos Imóveis"
+                  className="h-10 w-auto dark:hidden"
+                />
+                {/* Logo da empresa - versão escura para fundo escuro */}
+                <img
+                  src="https://cdn.builder.io/api/v1/assets/175866fa236440d4a5b360ca5b1302b3/siqueira-campos-para-fundo-escuro-2b3ef2?format=webp&width=400"
+                  alt="Siqueira Campos Imóveis"
+                  className="h-10 w-auto hidden dark:block"
+                />
                 <div className="absolute -top-1 -right-1 w-4 h-4 bg-yellow-400 rounded-full flex items-center justify-center">
                   <Sparkles className="h-2 w-2 text-brand-brown-900" />
                 </div>
               </div>
               <div className="hidden sm:block">
-                <h1 className="text-xl font-bold bg-gradient-to-r from-brand-brown-800 to-brand-brown-600 bg-clip-text text-transparent">
-                  Siqueira Campos
-                </h1>
                 <p className="text-xs text-brand-brown-600 dark:text-brand-beige-400 font-medium">
                   Premium Real Estate
                 </p>
