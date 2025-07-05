@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
+import { cachedFetch } from "@/utils/cache";
 import { Link } from "react-router-dom";
 import { MainLayout } from "@/components/Layout/MainLayout";
 import DepoimentosSection from "@/components/Home/DepoimentosSection";
@@ -48,8 +49,12 @@ export default function Index() {
 
   const loadImoveisDestaque = useCallback(async () => {
     try {
-      const response = await fetch("/api/imoveis/destaque");
-      const data = await response.json();
+      const data = await cachedFetch<Imovel[]>("/api/imoveis/destaque", {
+        cacheOptions: {
+          ttl: 2 * 60 * 1000, // Cache for 2 minutes
+          persistToStorage: true,
+        },
+      });
       setImoveisDestaque(data);
     } catch (error) {
       console.error("Erro ao carregar imóveis:", error);
