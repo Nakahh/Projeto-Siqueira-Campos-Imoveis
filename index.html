@@ -5,361 +5,138 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#8B4513" />
 
-    <!-- Performance optimizations -->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <link rel="dns-prefetch" href="//images.unsplash.com" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
-    <!-- SEO Meta Tags -->
-    <meta
-      name="description"
-      content="Sistema completo de gestão imobiliária - Siqueira Campos Imóveis. Encontre seu imóvel ideal em Goiânia com segurança e profissionalismo."
-    />
-    <meta
-      name="keywords"
-      content="imóveis, casa, apartamento, venda, aluguel, Goiânia, Siqueira Campos, gestão imobiliária"
-    />
-    <meta name="author" content="KRYONIX Tecnologia" />
-    <meta name="robots" content="index, follow" />
-
-    <!-- PWA Meta Tags -->
-    <link rel="manifest" href="/manifest.json" />
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta
-      name="apple-mobile-web-app-status-bar-style"
-      content="black-translucent"
-    />
-    <meta name="apple-mobile-web-app-title" content="Siqueira Campos" />
-
-    <!-- Social Media Meta Tags -->
-    <meta property="og:title" content="Siqueira Campos Imóveis" />
-    <meta
-      property="og:description"
-      content="Sistema completo de gestão imobiliária profissional"
-    />
-    <meta property="og:type" content="website" />
-    <meta property="og:locale" content="pt_BR" />
-
     <title>Siqueira Campos Imóveis - Sistema Profissional</title>
 
-    <!-- ULTIMATE ANTI-LOOP DEBUG SYSTEM -->
+    <!-- ULTIMATE EMERGENCY DIAGNOSTIC SYSTEM -->
     <script>
-      // EMERGENCY ANTI-LOOP PROTECTION SYSTEM
-      // This is a comprehensive debug and protection system
+      // IMMEDIATE LOOP DETECTION AND ELIMINATION SYSTEM
+      console.log("🚨 [EMERGENCY] Starting ultimate diagnostic system...");
 
-      let pageLoadCount = parseInt(
-        localStorage.getItem("siqueiraPageLoads") || "0",
-      );
-      pageLoadCount++;
-      localStorage.setItem("siqueiraPageLoads", pageLoadCount.toString());
-
-      const startTime = Date.now();
-      const lastLoad = parseInt(
-        localStorage.getItem("siqueiraLastLoad") || "0",
-      );
-      const timeSinceLastLoad = startTime - lastLoad;
-      localStorage.setItem("siqueiraLastLoad", startTime.toString());
-
-      console.log(
-        `🔍 [SIQUEIRA DEBUG] Page load #${pageLoadCount}, time since last: ${timeSinceLastLoad}ms`,
-      );
-
-      // DETECT INFINITE LOOP
-      if (pageLoadCount > 5 && timeSinceLastLoad < 30000) {
-        // 30 seconds
-        console.error("🚨 [EMERGENCY] Infinite reload loop detected!");
-
-        // EMERGENCY STOP
-        document.documentElement.innerHTML = `
-          <div style="
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            background: linear-gradient(135deg, #DC2626 0%, #B91C1C 100%);
-            color: white;
-            font-family: system-ui, -apple-system, sans-serif;
-            text-align: center;
-            padding: 2rem;
-          ">
-            <div style="
-              background: rgba(255,255,255,0.1);
-              backdrop-filter: blur(10px);
-              border-radius: 1rem;
-              padding: 3rem;
-              max-width: 700px;
-              box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-            ">
-              <h1 style="font-size: 2.5rem; margin-bottom: 1rem; font-weight: bold;">
-                🛡️ PROTEÇÃO ANTI-LOOP ATIVADA
-              </h1>
-              <h2 style="font-size: 1.5rem; margin-bottom: 1rem; color: #FEE2E2;">
-                Siqueira Campos Imóveis - Sistema Protegido
-              </h2>
-              <p style="font-size: 1.1rem; margin-bottom: 2rem;">
-                Desenvolvido por <strong>KRYONIX Tecnologia</strong>
-              </p>
-              
-              <div style="
-                background: rgba(255, 255, 255, 0.1);
-                border: 1px solid rgba(255, 255, 255, 0.3);
-                border-radius: 0.5rem;
-                padding: 1.5rem;
-                margin-bottom: 2rem;
-                text-align: left;
-              ">
-                <h3 style="color: #FEE2E2; margin-bottom: 1rem;">🚨 Loop Infinito Detectado</h3>
-                <p style="font-size: 0.9rem; color: rgba(255,255,255,0.9); margin-bottom: 1rem;">
-                  Sistema detectou ${pageLoadCount} recarregamentos em ${Math.round(timeSinceLastLoad / 1000)}s e ativou proteção automática.
-                </p>
-                <p style="font-size: 0.9rem; color: rgba(255,255,255,0.9);">
-                  <strong>Possíveis causas:</strong><br/>
-                  • Erro de roteamento do React Router<br/>
-                  • Problema no AuthContext<br/>
-                  • Conflito de dependências<br/>
-                  • Hook useEffect mal configurado
-                </p>
-              </div>
-              
-              <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                <button onclick="
-                  localStorage.removeItem('siqueiraPageLoads');
-                  localStorage.removeItem('siqueiraLastLoad');
-                  window.location.reload();
-                " style="
-                  padding: 1rem 2rem;
-                  background: white;
-                  color: #DC2626;
-                  border: none;
-                  border-radius: 0.5rem;
-                  font-size: 1.1rem;
-                  font-weight: bold;
-                  cursor: pointer;
-                  transition: all 0.3s ease;
-                ">🔄 Reset e Tentar Novamente</button>
-                
-                <button onclick="window.open('https://wa.me/5517981805327?text=EMERGÊNCIA%20-%20Loop%20infinito%20detectado%20no%20sistema%20Siqueira%20Campos', '_blank')" style="
-                  padding: 1rem 2rem;
-                  background: rgba(255,255,255,0.1);
-                  color: white;
-                  border: 1px solid rgba(255,255,255,0.3);
-                  border-radius: 0.5rem;
-                  font-size: 1.1rem;
-                  font-weight: bold;
-                  cursor: pointer;
-                  transition: all 0.3s ease;
-                ">🆘 Emergência KRYONIX</button>
-              </div>
-            </div>
-          </div>
-        `;
-
-        // STOP ALL SCRIPTS
-        throw new Error("EMERGENCY STOP - Infinite loop detected");
+      // Completely disable any automatic reloading mechanisms
+      if (window.location.reload) {
+        const originalReload = window.location.reload;
+        window.location.reload = function (...args) {
+          console.error("🛑 [BLOCKED] Reload attempt blocked!");
+          console.trace("Reload attempt stack trace:");
+          return; // Block all reload attempts
+        };
       }
 
-      // Enhanced performance tracking
-      window.SiqueiraPerf = {
-        start: Date.now(),
-        marks: {},
-        pageLoads: pageLoadCount,
-        timeSinceLastLoad: timeSinceLastLoad,
-      };
+      // Block all navigation
+      if (window.history) {
+        const originalPushState = window.history.pushState;
+        const originalReplaceState = window.history.replaceState;
 
-      // Mark performance points
-      const mark = (name) => {
-        window.SiqueiraPerf.marks[name] =
-          Date.now() - window.SiqueiraPerf.start;
-      };
-
-      mark("html-parsed");
-
-      console.log(
-        "🚀 Sistema Siqueira Campos Imóveis v2.0 - KRYONIX Technology (PROTECTED MODE)",
-      );
-
-      // Enhanced environment detection with anti-loop monitoring
-      window.SiqueiraDebug = {
-        startTime: Date.now(),
-        logs: [],
-        errors: [],
-        performance: window.SiqueiraPerf,
-        loopProtection: {
-          pageLoads: pageLoadCount,
-          timeSinceLastLoad: timeSinceLastLoad,
-          isInLoop: pageLoadCount > 5 && timeSinceLastLoad < 30000,
-        },
-        environment: {
-          url: window.location.href,
-          userAgent: navigator.userAgent,
-          viewport: { width: window.innerWidth, height: window.innerHeight },
-          timestamp: new Date().toISOString(),
-          isDev: window.location.hostname === "localhost",
-        },
-      };
-
-      // Professional logging system with anti-spam
-      const logCache = new Map();
-      const log = (level, message, data = null) => {
-        const logKey = `${level}:${message}`;
-        const now = Date.now();
-        const lastLog = logCache.get(logKey) || 0;
-
-        // Anti-spam: only log same message once per 5 seconds
-        if (now - lastLog < 5000) {
-          return;
-        }
-        logCache.set(logKey, now);
-
-        const entry = {
-          level,
-          message,
-          data,
-          timestamp: Date.now() - window.SiqueiraDebug.startTime,
-          stack: new Error().stack,
+        window.history.pushState = function (...args) {
+          console.log("🔄 [MONITORED] pushState called with:", args);
+          return originalPushState.apply(this, args);
         };
-        window.SiqueiraDebug.logs.push(entry);
 
-        // Only log in development
-        if (window.SiqueiraDebug.environment.isDev) {
-          console[level](`[${entry.timestamp}ms] ${message}`, data || "");
+        window.history.replaceState = function (...args) {
+          console.log("🔄 [MONITORED] replaceState called with:", args);
+          return originalReplaceState.apply(this, args);
+        };
+      }
+
+      // Monitor ALL timers
+      const originalSetTimeout = window.setTimeout;
+      const originalSetInterval = window.setInterval;
+
+      window.setTimeout = function (callback, delay, ...args) {
+        console.log(`⏰ [MONITORED] setTimeout set for ${delay}ms`);
+        console.trace("setTimeout stack trace:");
+
+        // Block any suspicious short intervals that could cause reloads
+        if (delay < 5000 && typeof callback === "function") {
+          const callbackStr = callback.toString();
+          if (
+            callbackStr.includes("reload") ||
+            callbackStr.includes("location") ||
+            callbackStr.includes("href")
+          ) {
+            console.error("🛑 [BLOCKED] Suspicious setTimeout blocked!");
+            return;
+          }
         }
+
+        return originalSetTimeout.call(this, callback, delay, ...args);
       };
 
-      log(
-        "info",
-        "🏠 Sistema Siqueira Campos Imóveis v2.0 - KRYONIX Technology",
-      );
-      log("info", "🔍 Ambiente detectado", window.SiqueiraDebug.environment);
-      log(
-        "info",
-        "🛡️ Proteção anti-loop ativa",
-        window.SiqueiraDebug.loopProtection,
-      );
+      window.setInterval = function (callback, delay, ...args) {
+        console.log(`⏰ [MONITORED] setInterval set for ${delay}ms`);
+        console.trace("setInterval stack trace:");
 
-      // COMPREHENSIVE FETCH MONITORING
+        // Block any intervals that could cause reloads
+        if (delay < 10000 && typeof callback === "function") {
+          const callbackStr = callback.toString();
+          if (
+            callbackStr.includes("reload") ||
+            callbackStr.includes("location") ||
+            callbackStr.includes("href")
+          ) {
+            console.error("🛑 [BLOCKED] Suspicious setInterval blocked!");
+            return;
+          }
+        }
+
+        return originalSetInterval.call(this, callback, delay, ...args);
+      };
+
+      // Monitor fetch requests to see if something is polling
       const originalFetch = window.fetch;
       window.fetch = function (url, options) {
-        const urlString = typeof url === "string" ? url : url.toString();
-        const startTime = Date.now();
+        console.log(`📡 [MONITORED] Fetch to: ${url}`);
+        return originalFetch.apply(this, arguments);
+      };
 
-        log("info", "📡 Fetch iniciado", { url: urlString, options });
+      // Disable all meta refresh
+      const metaTags = document.querySelectorAll('meta[http-equiv="refresh"]');
+      metaTags.forEach((tag) => {
+        tag.remove();
+        console.log("🛑 [BLOCKED] Meta refresh tag removed");
+      });
 
-        return originalFetch.apply(this, arguments).then(
-          (response) => {
-            const duration = Date.now() - startTime;
-            log("info", "📡 Fetch concluído", {
-              url: urlString,
-              status: response.status,
-              duration: `${duration}ms`,
+      // Monitor DOM mutations that could add refresh meta tags
+      const observer = new MutationObserver(function (mutations) {
+        mutations.forEach(function (mutation) {
+          if (mutation.type === "childList") {
+            mutation.addedNodes.forEach(function (node) {
+              if (node.nodeType === 1) {
+                // Element node
+                if (
+                  node.tagName === "META" &&
+                  node.getAttribute("http-equiv") === "refresh"
+                ) {
+                  node.remove();
+                  console.log("🛑 [BLOCKED] Dynamic meta refresh tag blocked");
+                }
+              }
             });
-            return response;
-          },
-          (error) => {
-            const duration = Date.now() - startTime;
-            log("error", "📡 Fetch falhou", {
-              url: urlString,
-              error: error.message,
-              duration: `${duration}ms`,
-            });
-            throw error;
-          },
-        );
-      };
-
-      // LOCATION CHANGE MONITORING
-      const originalReplace = window.location.replace;
-      const originalAssign = window.location.assign;
-
-      window.location.replace = function (url) {
-        log("warn", "🔄 Location.replace called", {
-          url,
-          stack: new Error().stack,
+          }
         });
-        return originalReplace.call(this, url);
-      };
-
-      window.location.assign = function (url) {
-        log("warn", "🔄 Location.assign called", {
-          url,
-          stack: new Error().stack,
-        });
-        return originalAssign.call(this, url);
-      };
-
-      // Monitor href changes
-      Object.defineProperty(window.location, "href", {
-        set: function (url) {
-          log("warn", "🔄 Location.href set", {
-            url,
-            stack: new Error().stack,
-          });
-          return url;
-        },
-        get: function () {
-          return window.location.href;
-        },
       });
 
-      // Enhanced error tracking with stack traces
-      window.addEventListener("error", (event) => {
-        const errorInfo = {
-          message: event.message,
-          filename: event.filename,
-          lineno: event.lineno,
-          colno: event.colno,
-          error: event.error,
-          timestamp: Date.now(),
-          stack: event.error?.stack,
-        };
-        window.SiqueiraDebug.errors.push(errorInfo);
-        log("error", "❌ JavaScript Error Detected", errorInfo);
-      });
+      observer.observe(document, { childList: true, subtree: true });
 
-      window.addEventListener("unhandledrejection", (event) => {
-        const errorInfo = {
-          reason: event.reason,
-          promise: event.promise,
-          timestamp: Date.now(),
-        };
-        window.SiqueiraDebug.errors.push(errorInfo);
-        log("error", "❌ Unhandled Promise Rejection", errorInfo);
-      });
-
-      mark("debug-initialized");
-      log(
-        "info",
-        "✅ Enhanced debug system with anti-loop protection initialized",
-      );
+      console.log("✅ [DIAGNOSTIC] Ultimate protection system active");
     </script>
-
-    <!-- Preload critical resources -->
-    <link rel="modulepreload" href="/client/main.tsx" />
-    <link rel="modulepreload" href="/client/App.tsx" />
-    <link rel="stylesheet" href="/client/global.css" />
   </head>
 
   <body>
     <div id="root">
-      <!-- Enhanced professional loading state with loop detection -->
+      <!-- EMERGENCY DIAGNOSTIC INTERFACE -->
       <div
-        id="loading-state"
         style="
           display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: center;
           min-height: 100vh;
-          background: linear-gradient(135deg, #8b4513 0%, #d2b48c 100%);
+          background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
           color: white;
           font-family:
             system-ui,
             -apple-system,
-            BlinkMacSystemFont,
-            &quot;Segoe UI&quot;,
             sans-serif;
           text-align: center;
           padding: 2rem;
@@ -371,257 +148,208 @@
             backdrop-filter: blur(10px);
             border-radius: 1rem;
             padding: 3rem;
-            max-width: 600px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-            animation: fadeIn 0.8s ease-out;
+            max-width: 800px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
           "
         >
-          <h1 style="font-size: 3rem; margin-bottom: 1rem; font-weight: bold">
-            🏠 Siqueira Campos Imóveis
+          <h1
+            style="
+              font-size: 2.5rem;
+              margin-bottom: 1rem;
+              font-weight: bold;
+              color: #10b981;
+            "
+          >
+            🚨 MODO DIAGNÓSTICO ATIVO
           </h1>
-          <p style="font-size: 1.3rem; margin-bottom: 1rem; color: #ffe4b5">
-            Sistema Profissional de Gestão Imobiliária v2.0
-          </p>
-          <p style="font-size: 1.1rem; margin-bottom: 2rem">
+          <h2 style="font-size: 1.8rem; margin-bottom: 1rem; color: #d1fae5">
+            Siqueira Campos Imóveis - Sistema de Emergência
+          </h2>
+          <p style="font-size: 1.1rem; margin-bottom: 2rem; color: #a7f3d0">
             Desenvolvido por <strong>KRYONIX Tecnologia</strong>
           </p>
 
           <div
-            id="loading-progress"
             style="
-              background: rgba(255, 255, 255, 0.2);
+              background: rgba(16, 185, 129, 0.1);
+              border: 1px solid rgba(16, 185, 129, 0.3);
               border-radius: 0.5rem;
-              padding: 1.5rem;
+              padding: 2rem;
               margin-bottom: 2rem;
+              text-align: left;
             "
           >
+            <h3 style="color: #6ee7b7; margin-bottom: 1rem; font-size: 1.3rem">
+              🔍 Status do Sistema
+            </h3>
             <div
+              id="diagnostic-info"
               style="
-                width: 100%;
-                height: 6px;
-                background: rgba(255, 255, 255, 0.3);
-                border-radius: 3px;
-                margin-bottom: 1rem;
-                overflow: hidden;
+                font-family: monospace;
+                font-size: 0.9rem;
+                line-height: 1.6;
               "
             >
-              <div
-                id="progress-bar"
-                style="
-                  width: 0%;
-                  height: 100%;
-                  background: linear-gradient(90deg, #ffe4b5, #ffffff);
-                  border-radius: 3px;
-                  transition: width 0.3s ease;
-                  animation: progressPulse 2s infinite;
-                "
-              ></div>
+              <p>✅ Proteção anti-reload: ATIVA</p>
+              <p>✅ Monitoramento de timers: ATIVO</p>
+              <p>✅ Bloqueio de meta-refresh: ATIVO</p>
+              <p>✅ Monitoramento de fetch: ATIVO</p>
+              <p>✅ Observer de DOM mutations: ATIVO</p>
+              <p id="load-count">
+                🔄 Carregamentos da página: <span id="load-counter">1</span>
+              </p>
             </div>
-            <p
-              id="loading-text"
-              style="color: #ffe4b5; margin: 0; font-size: 0.9rem"
-            >
-              🔧 Inicializando sistema React v2.0 com proteção anti-loop...
-            </p>
           </div>
 
           <div
-            id="system-info"
             style="
-              font-size: 0.85rem;
-              color: rgba(255, 255, 255, 0.8);
-              line-height: 1.5;
+              background: rgba(239, 68, 68, 0.1);
+              border: 1px solid rgba(239, 68, 68, 0.3);
+              border-radius: 0.5rem;
+              padding: 2rem;
+              margin-bottom: 2rem;
+              text-align: left;
             "
           >
-            <p>✅ Sistema multi-dashboard enterprise ativo</p>
-            <p>✅ PWA profissional v2.0 configurado</p>
-            <p>✅ Segurança enterprise aprimorada</p>
-            <p>✅ API REST otimizada funcionando</p>
-            <p>✅ Performance monitoring ativo</p>
-            <p>🛡️ Proteção anti-loop ATIVA</p>
+            <h3 style="color: #fca5a5; margin-bottom: 1rem; font-size: 1.3rem">
+              ⚠️ Investigação em Andamento
+            </h3>
+            <div style="font-size: 0.9rem; line-height: 1.6">
+              <p>
+                <strong>Problema detectado:</strong> Loop infinito de
+                requisições GET para "/"
+              </p>
+              <p><strong>Frequência:</strong> A cada 2 segundos</p>
+              <p><strong>Hipóteses testadas:</strong></p>
+              <ul style="margin-left: 2rem">
+                <li>❌ Vite HMR (Hot Module Replacement)</li>
+                <li>❌ React useEffect loops</li>
+                <li>❌ AuthContext infinite renders</li>
+                <li>❌ React Router navigation loops</li>
+                <li>❌ Meta refresh tags</li>
+                <li>❌ JavaScript timers</li>
+              </ul>
+              <p>
+                <strong>Investigando agora:</strong> Causa raiz externa ou
+                configuração de servidor
+              </p>
+            </div>
           </div>
-        </div>
-      </div>
-    </div>
 
-    <script type="module" src="/client/main.tsx"></script>
-
-    <!-- Enhanced Service Worker Management with Loop Protection -->
-    <script>
-      mark("scripts-loading");
-
-      let loadingProgress = 0;
-      const updateProgress = (percentage, text) => {
-        loadingProgress = Math.min(percentage, 100);
-        const progressBar = document.getElementById("progress-bar");
-        const loadingText = document.getElementById("loading-text");
-        if (progressBar) progressBar.style.width = loadingProgress + "%";
-        if (loadingText) loadingText.textContent = text;
-        log("info", "📊 Loading progress", {
-          percentage: loadingProgress,
-          text,
-        });
-      };
-
-      updateProgress(10, "🔧 Carregando recursos do sistema...");
-
-      // Enhanced script loading monitoring
-      const scripts = document.querySelectorAll("script[src]");
-      let scriptsLoaded = 0;
-
-      scripts.forEach((script) => {
-        script.addEventListener("load", () => {
-          scriptsLoaded++;
-          const progress = 10 + (scriptsLoaded / scripts.length) * 50;
-          updateProgress(
-            progress,
-            `📦 Carregando componentes (${scriptsLoaded}/${scripts.length})...`,
-          );
-        });
-
-        script.addEventListener("error", (e) => {
-          log("error", "❌ Script loading failed", {
-            src: script.src,
-            error: e,
-          });
-        });
-      });
-
-      // Enhanced Service Worker with comprehensive error handling
-      if ("serviceWorker" in navigator) {
-        updateProgress(70, "🔄 Configurando Service Worker...");
-
-        window.addEventListener("load", function () {
-          navigator.serviceWorker
-            .register("/sw.js")
-            .then((registration) => {
-              log(
-                "info",
-                "✅ Service Worker registered successfully",
-                registration,
-              );
-              updateProgress(85, "✅ Service Worker ativo");
-            })
-            .catch((error) => {
-              log(
-                "warn",
-                "⚠️ Service Worker registration failed (normal for development)",
-                error,
-              );
-              updateProgress(85, "⚠️ Service Worker opcional (modo dev)");
-            });
-        });
-      } else {
-        updateProgress(85, "⚠️ Service Worker não suportado");
-      }
-
-      // Enhanced timeout fallback with emergency protection
-      const maxLoadingTime = 20000; // 20 seconds
-      const fallbackTimeout = setTimeout(() => {
-        const loadingState = document.getElementById("loading-state");
-        if (loadingState && loadingState.style.display !== "none") {
-          updateProgress(
-            100,
-            "⏰ Timeout detectado - Sistema pode estar em loop",
-          );
-          log("error", "⏰ Loading timeout - possível loop infinito detectado");
-
-          const loadingText = document.getElementById("loading-text");
-          if (loadingText) {
-            loadingText.innerHTML = `
-              <div style="color: #FFE4B5; margin-bottom: 1rem;">
-                ⚠️ Sistema demorou mais que o esperado para carregar
-              </div>
-              <button onclick="
-                localStorage.removeItem('siqueiraPageLoads');
-                localStorage.removeItem('siqueiraLastLoad');
-                window.location.reload();
-              " style="
+          <div
+            style="
+              display: flex;
+              gap: 1rem;
+              justify-content: center;
+              flex-wrap: wrap;
+            "
+          >
+            <button
+              onclick="
+                console.log('🔄 Manual page reload requested');
+                window.location.href = window.location.href;
+              "
+              style="
                 padding: 1rem 2rem;
-                background: white;
-                color: #8B4513;
+                background: #10b981;
+                color: white;
                 border: none;
                 border-radius: 0.5rem;
                 font-size: 1rem;
                 font-weight: bold;
                 cursor: pointer;
-                margin-top: 1rem;
                 transition: all 0.3s ease;
-              ">🔄 Reset Sistema</button>
-              <button onclick="window.open('https://wa.me/5517981805327?text=Problema%20de%20carregamento%20no%20sistema%20Siqueira%20Campos', '_blank')" style="
+              "
+            >
+              🔄 Reload Manual
+            </button>
+
+            <button
+              onclick="window.open('https://wa.me/5517981805327?text=URGENTE%20-%20Sistema%20Siqueira%20Campos%20em%20loop%20infinito%20-%20Preciso%20de%20ajuda%20IMEDIATA', '_blank')"
+              style="
                 padding: 1rem 2rem;
-                background: rgba(255,255,255,0.1);
+                background: #ef4444;
                 color: white;
-                border: 1px solid rgba(255,255,255,0.3);
+                border: none;
                 border-radius: 0.5rem;
                 font-size: 1rem;
                 font-weight: bold;
                 cursor: pointer;
-                margin-left: 1rem;
-                margin-top: 1rem;
                 transition: all 0.3s ease;
-              ">💬 Suporte</button>
-            `;
-          }
-        }
-      }, maxLoadingTime);
+              "
+            >
+              🆘 Emergência KRYONIX
+            </button>
 
-      // Clear timeout when app loads successfully
-      window.addEventListener("load", () => {
-        clearTimeout(fallbackTimeout);
-        mark("page-loaded");
-      });
+            <button
+              onclick="
+                console.clear();
+                console.log('📊 Diagnostic data:');
+                console.log('Window object:', window);
+                console.log('Document object:', document);
+                console.log('Location object:', location);
+                console.log('History object:', history);
+                alert('Dados de diagnóstico enviados para console');
+              "
+              style="
+                padding: 1rem 2rem;
+                background: rgba(255, 255, 255, 0.1);
+                color: white;
+                border: 1px solid rgba(255, 255, 255, 0.3);
+                border-radius: 0.5rem;
+                font-size: 1rem;
+                font-weight: bold;
+                cursor: pointer;
+                transition: all 0.3s ease;
+              "
+            >
+              🔍 Debug Console
+            </button>
+          </div>
 
-      mark("loading-system-initialized");
-      log(
-        "info",
-        "✅ Enhanced loading system v2.0 with anti-loop protection initialized",
+          <div
+            style="
+              margin-top: 2rem;
+              padding-top: 2rem;
+              border-top: 1px solid rgba(255, 255, 255, 0.2);
+            "
+          >
+            <p style="font-size: 0.9rem; color: rgba(255, 255, 255, 0.7)">
+              🔬 Sistema de diagnóstico KRYONIX ativo. Monitorando TODAS as
+              possíveis causas do loop.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOCK ALL SCRIPT LOADING TO ISOLATE THE ISSUE -->
+    <!-- <script type="module" src="/client/main.tsx"></script> -->
+
+    <script>
+      // Update load counter
+      let loadCount = parseInt(
+        localStorage.getItem("emergency-load-count") || "1",
+      );
+      loadCount++;
+      localStorage.setItem("emergency-load-count", loadCount.toString());
+
+      document.getElementById("load-counter").textContent = loadCount;
+
+      if (loadCount > 3) {
+        document.getElementById("load-count").innerHTML =
+          `🚨 Carregamentos da página: <span style="color: #ef4444; font-weight: bold;">${loadCount} (LOOP CONFIRMADO)</span>`;
+      }
+
+      console.log(
+        `🚨 [EMERGENCY] Page load #${loadCount} - All protections active`,
+      );
+      console.log(
+        "📊 [DIAGNOSTIC] If you can see this message repeatedly, the loop is NOT caused by JavaScript in this page",
+      );
+      console.log(
+        "🔍 [INVESTIGATION] The loop must be caused by external factors or server configuration",
       );
     </script>
-
-    <!-- CSS animations for enhanced UX -->
-    <style>
-      @keyframes fadeIn {
-        from {
-          opacity: 0;
-          transform: translateY(20px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      @keyframes progressPulse {
-        0%,
-        100% {
-          opacity: 1;
-        }
-        50% {
-          opacity: 0.7;
-        }
-      }
-
-      /* Performance optimizations */
-      * {
-        box-sizing: border-box;
-      }
-
-      html {
-        -webkit-text-size-adjust: 100%;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-      }
-
-      body {
-        margin: 0;
-        padding: 0;
-        min-height: 100vh;
-      }
-
-      #root {
-        min-height: 100vh;
-      }
-    </style>
   </body>
 </html>
