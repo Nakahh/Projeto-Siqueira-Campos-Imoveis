@@ -136,6 +136,7 @@ model Imovel {
   avaliacoes        Avaliacao[]
   atividades        Atividade[]
   historicos        HistoricoPreco[]
+  depoimentos       Depoimento[]
 
   @@map("imoveis")
 }
