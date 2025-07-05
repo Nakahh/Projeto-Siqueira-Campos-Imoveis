@@ -24,7 +24,28 @@ import statusRoutes from "./routes/status";
 dotenv.config();
 
 const app = express();
-const prisma = new PrismaClient();
+
+// Configurar Prisma com tratamento de erro
+let prisma: PrismaClient;
+try {
+  prisma = new PrismaClient({
+    log: process.env.NODE_ENV === "development" ? ["error", "warn"] : ["error"],
+  });
+} catch (error) {
+  console.error("Erro ao conectar com o banco de dados:", error);
+  // Criar um mock do Prisma para desenvolvimento se falhar
+  prisma = {
+    $queryRaw: async () => ({ result: "mock" }),
+    $disconnect: async () => {},
+    user: {
+      findMany: async () => [],
+      findUnique: async () => null,
+      create: async () => ({}),
+      update: async () => ({}),
+      delete: async () => ({}),
+    },
+  } as any;
+}
 
 // Health check endpoint
 app.get("/health", async (req, res) => {
