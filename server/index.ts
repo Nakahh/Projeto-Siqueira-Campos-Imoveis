@@ -76,22 +76,56 @@ app.get("/health", async (req, res) => {
 });
 
 // Middlewares de segurança
+// Enhanced CSP for React/Vite development - Siqueira Campos Professional System
 app.use(
   helmet({
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'"],
-        styleSrc: ["'self'", "'unsafe-inline'", "https:"],
-        scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
-        imgSrc: ["'self'", "data:", "https:"],
-        connectSrc: ["'self'", "https:"],
-        fontSrc: ["'self'", "https:", "data:"],
+        styleSrc: [
+          "'self'",
+          "'unsafe-inline'",
+          "https:",
+          "blob:",
+          "data:",
+          "fonts.googleapis.com",
+          "cdn.builder.io",
+        ],
+        scriptSrc: [
+          "'self'",
+          "'unsafe-inline'",
+          "'unsafe-eval'",
+          "blob:",
+          "data:",
+          "'wasm-unsafe-eval'",
+        ],
+        imgSrc: [
+          "'self'",
+          "data:",
+          "https:",
+          "blob:",
+          "cdn.builder.io",
+          "images.unsplash.com",
+        ],
+        connectSrc: ["'self'", "https:", "wss:", "ws:", "blob:", "data:"],
+        fontSrc: [
+          "'self'",
+          "https:",
+          "data:",
+          "fonts.googleapis.com",
+          "fonts.gstatic.com",
+        ],
         objectSrc: ["'none'"],
-        mediaSrc: ["'self'"],
+        mediaSrc: ["'self'", "data:", "blob:"],
         frameSrc: ["'none'"],
+        workerSrc: ["'self'", "blob:"],
+        childSrc: ["'self'", "blob:"],
+        manifestSrc: ["'self'"],
       },
     },
     crossOriginEmbedderPolicy: false,
+    crossOriginOpenerPolicy: false,
+    crossOriginResourcePolicy: false,
   }),
 );
 
