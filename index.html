@@ -44,12 +44,129 @@
 
     <title>Siqueira Campos Imóveis - Sistema Profissional</title>
 
-    <!-- Enhanced Performance & Debug System -->
+    <!-- ULTIMATE ANTI-LOOP DEBUG SYSTEM -->
     <script>
-      // Performance tracking
+      // EMERGENCY ANTI-LOOP PROTECTION SYSTEM
+      // This is a comprehensive debug and protection system
+
+      let pageLoadCount = parseInt(
+        localStorage.getItem("siqueiraPageLoads") || "0",
+      );
+      pageLoadCount++;
+      localStorage.setItem("siqueiraPageLoads", pageLoadCount.toString());
+
+      const startTime = Date.now();
+      const lastLoad = parseInt(
+        localStorage.getItem("siqueiraLastLoad") || "0",
+      );
+      const timeSinceLastLoad = startTime - lastLoad;
+      localStorage.setItem("siqueiraLastLoad", startTime.toString());
+
+      console.log(
+        `🔍 [SIQUEIRA DEBUG] Page load #${pageLoadCount}, time since last: ${timeSinceLastLoad}ms`,
+      );
+
+      // DETECT INFINITE LOOP
+      if (pageLoadCount > 5 && timeSinceLastLoad < 30000) {
+        // 30 seconds
+        console.error("🚨 [EMERGENCY] Infinite reload loop detected!");
+
+        // EMERGENCY STOP
+        document.documentElement.innerHTML = `
+          <div style="
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #DC2626 0%, #B91C1C 100%);
+            color: white;
+            font-family: system-ui, -apple-system, sans-serif;
+            text-align: center;
+            padding: 2rem;
+          ">
+            <div style="
+              background: rgba(255,255,255,0.1);
+              backdrop-filter: blur(10px);
+              border-radius: 1rem;
+              padding: 3rem;
+              max-width: 700px;
+              box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            ">
+              <h1 style="font-size: 2.5rem; margin-bottom: 1rem; font-weight: bold;">
+                🛡️ PROTEÇÃO ANTI-LOOP ATIVADA
+              </h1>
+              <h2 style="font-size: 1.5rem; margin-bottom: 1rem; color: #FEE2E2;">
+                Siqueira Campos Imóveis - Sistema Protegido
+              </h2>
+              <p style="font-size: 1.1rem; margin-bottom: 2rem;">
+                Desenvolvido por <strong>KRYONIX Tecnologia</strong>
+              </p>
+              
+              <div style="
+                background: rgba(255, 255, 255, 0.1);
+                border: 1px solid rgba(255, 255, 255, 0.3);
+                border-radius: 0.5rem;
+                padding: 1.5rem;
+                margin-bottom: 2rem;
+                text-align: left;
+              ">
+                <h3 style="color: #FEE2E2; margin-bottom: 1rem;">🚨 Loop Infinito Detectado</h3>
+                <p style="font-size: 0.9rem; color: rgba(255,255,255,0.9); margin-bottom: 1rem;">
+                  Sistema detectou ${pageLoadCount} recarregamentos em ${Math.round(timeSinceLastLoad / 1000)}s e ativou proteção automática.
+                </p>
+                <p style="font-size: 0.9rem; color: rgba(255,255,255,0.9);">
+                  <strong>Possíveis causas:</strong><br/>
+                  • Erro de roteamento do React Router<br/>
+                  • Problema no AuthContext<br/>
+                  • Conflito de dependências<br/>
+                  • Hook useEffect mal configurado
+                </p>
+              </div>
+              
+              <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <button onclick="
+                  localStorage.removeItem('siqueiraPageLoads');
+                  localStorage.removeItem('siqueiraLastLoad');
+                  window.location.reload();
+                " style="
+                  padding: 1rem 2rem;
+                  background: white;
+                  color: #DC2626;
+                  border: none;
+                  border-radius: 0.5rem;
+                  font-size: 1.1rem;
+                  font-weight: bold;
+                  cursor: pointer;
+                  transition: all 0.3s ease;
+                ">🔄 Reset e Tentar Novamente</button>
+                
+                <button onclick="window.open('https://wa.me/5517981805327?text=EMERGÊNCIA%20-%20Loop%20infinito%20detectado%20no%20sistema%20Siqueira%20Campos', '_blank')" style="
+                  padding: 1rem 2rem;
+                  background: rgba(255,255,255,0.1);
+                  color: white;
+                  border: 1px solid rgba(255,255,255,0.3);
+                  border-radius: 0.5rem;
+                  font-size: 1.1rem;
+                  font-weight: bold;
+                  cursor: pointer;
+                  transition: all 0.3s ease;
+                ">🆘 Emergência KRYONIX</button>
+              </div>
+            </div>
+          </div>
+        `;
+
+        // STOP ALL SCRIPTS
+        throw new Error("EMERGENCY STOP - Infinite loop detected");
+      }
+
+      // Enhanced performance tracking
       window.SiqueiraPerf = {
         start: Date.now(),
         marks: {},
+        pageLoads: pageLoadCount,
+        timeSinceLastLoad: timeSinceLastLoad,
       };
 
       // Mark performance points
@@ -61,15 +178,20 @@
       mark("html-parsed");
 
       console.log(
-        "🚀 Sistema Siqueira Campos Imóveis v2.0 - KRYONIX Technology",
+        "🚀 Sistema Siqueira Campos Imóveis v2.0 - KRYONIX Technology (PROTECTED MODE)",
       );
 
-      // Enhanced environment detection
+      // Enhanced environment detection with anti-loop monitoring
       window.SiqueiraDebug = {
         startTime: Date.now(),
         logs: [],
         errors: [],
         performance: window.SiqueiraPerf,
+        loopProtection: {
+          pageLoads: pageLoadCount,
+          timeSinceLastLoad: timeSinceLastLoad,
+          isInLoop: pageLoadCount > 5 && timeSinceLastLoad < 30000,
+        },
         environment: {
           url: window.location.href,
           userAgent: navigator.userAgent,
@@ -79,8 +201,19 @@
         },
       };
 
-      // Professional logging system
+      // Professional logging system with anti-spam
+      const logCache = new Map();
       const log = (level, message, data = null) => {
+        const logKey = `${level}:${message}`;
+        const now = Date.now();
+        const lastLog = logCache.get(logKey) || 0;
+
+        // Anti-spam: only log same message once per 5 seconds
+        if (now - lastLog < 5000) {
+          return;
+        }
+        logCache.set(logKey, now);
+
         const entry = {
           level,
           message,
@@ -101,8 +234,13 @@
         "🏠 Sistema Siqueira Campos Imóveis v2.0 - KRYONIX Technology",
       );
       log("info", "🔍 Ambiente detectado", window.SiqueiraDebug.environment);
+      log(
+        "info",
+        "🛡️ Proteção anti-loop ativa",
+        window.SiqueiraDebug.loopProtection,
+      );
 
-      // Enhanced fetch monitoring
+      // COMPREHENSIVE FETCH MONITORING
       const originalFetch = window.fetch;
       window.fetch = function (url, options) {
         const urlString = typeof url === "string" ? url : url.toString();
@@ -132,7 +270,41 @@
         );
       };
 
-      // Enhanced error tracking
+      // LOCATION CHANGE MONITORING
+      const originalReplace = window.location.replace;
+      const originalAssign = window.location.assign;
+
+      window.location.replace = function (url) {
+        log("warn", "🔄 Location.replace called", {
+          url,
+          stack: new Error().stack,
+        });
+        return originalReplace.call(this, url);
+      };
+
+      window.location.assign = function (url) {
+        log("warn", "🔄 Location.assign called", {
+          url,
+          stack: new Error().stack,
+        });
+        return originalAssign.call(this, url);
+      };
+
+      // Monitor href changes
+      Object.defineProperty(window.location, "href", {
+        set: function (url) {
+          log("warn", "🔄 Location.href set", {
+            url,
+            stack: new Error().stack,
+          });
+          return url;
+        },
+        get: function () {
+          return window.location.href;
+        },
+      });
+
+      // Enhanced error tracking with stack traces
       window.addEventListener("error", (event) => {
         const errorInfo = {
           message: event.message,
@@ -141,6 +313,7 @@
           colno: event.colno,
           error: event.error,
           timestamp: Date.now(),
+          stack: event.error?.stack,
         };
         window.SiqueiraDebug.errors.push(errorInfo);
         log("error", "❌ JavaScript Error Detected", errorInfo);
@@ -157,7 +330,10 @@
       });
 
       mark("debug-initialized");
-      log("info", "✅ Enhanced debug system initialized");
+      log(
+        "info",
+        "✅ Enhanced debug system with anti-loop protection initialized",
+      );
     </script>
 
     <!-- Preload critical resources -->
@@ -168,7 +344,7 @@
 
   <body>
     <div id="root">
-      <!-- Enhanced professional loading state -->
+      <!-- Enhanced professional loading state with loop detection -->
       <div
         id="loading-state"
         style="
@@ -245,7 +421,7 @@
               id="loading-text"
               style="color: #ffe4b5; margin: 0; font-size: 0.9rem"
             >
-              🔧 Inicializando sistema React v2.0...
+              🔧 Inicializando sistema React v2.0 com proteção anti-loop...
             </p>
           </div>
 
@@ -262,6 +438,7 @@
             <p>✅ Segurança enterprise aprimorada</p>
             <p>✅ API REST otimizada funcionando</p>
             <p>✅ Performance monitoring ativo</p>
+            <p>🛡️ Proteção anti-loop ATIVA</p>
           </div>
         </div>
       </div>
@@ -269,7 +446,7 @@
 
     <script type="module" src="/client/main.tsx"></script>
 
-    <!-- Enhanced Service Worker Management -->
+    <!-- Enhanced Service Worker Management with Loop Protection -->
     <script>
       mark("scripts-loading");
 
@@ -338,21 +515,28 @@
         updateProgress(85, "⚠️ Service Worker não suportado");
       }
 
-      // Enhanced timeout fallback
-      const maxLoadingTime = 15000; // 15 seconds
+      // Enhanced timeout fallback with emergency protection
+      const maxLoadingTime = 20000; // 20 seconds
       const fallbackTimeout = setTimeout(() => {
         const loadingState = document.getElementById("loading-state");
         if (loadingState && loadingState.style.display !== "none") {
           updateProgress(
             100,
-            "⏰ Carregamento timeout - clique para continuar",
+            "⏰ Timeout detectado - Sistema pode estar em loop",
           );
-          log("warn", "⏰ Loading timeout - showing fallback interface");
+          log("error", "⏰ Loading timeout - possível loop infinito detectado");
 
           const loadingText = document.getElementById("loading-text");
           if (loadingText) {
             loadingText.innerHTML = `
-              <button onclick="window.location.reload()" style="
+              <div style="color: #FFE4B5; margin-bottom: 1rem;">
+                ⚠️ Sistema demorou mais que o esperado para carregar
+              </div>
+              <button onclick="
+                localStorage.removeItem('siqueiraPageLoads');
+                localStorage.removeItem('siqueiraLastLoad');
+                window.location.reload();
+              " style="
                 padding: 1rem 2rem;
                 background: white;
                 color: #8B4513;
@@ -363,7 +547,20 @@
                 cursor: pointer;
                 margin-top: 1rem;
                 transition: all 0.3s ease;
-              ">🔄 Recarregar Sistema</button>
+              ">🔄 Reset Sistema</button>
+              <button onclick="window.open('https://wa.me/5517981805327?text=Problema%20de%20carregamento%20no%20sistema%20Siqueira%20Campos', '_blank')" style="
+                padding: 1rem 2rem;
+                background: rgba(255,255,255,0.1);
+                color: white;
+                border: 1px solid rgba(255,255,255,0.3);
+                border-radius: 0.5rem;
+                font-size: 1rem;
+                font-weight: bold;
+                cursor: pointer;
+                margin-left: 1rem;
+                margin-top: 1rem;
+                transition: all 0.3s ease;
+              ">💬 Suporte</button>
             `;
           }
         }
@@ -376,7 +573,10 @@
       });
 
       mark("loading-system-initialized");
-      log("info", "✅ Enhanced loading system v2.0 initialized");
+      log(
+        "info",
+        "✅ Enhanced loading system v2.0 with anti-loop protection initialized",
+      );
     </script>
 
     <!-- CSS animations for enhanced UX -->
