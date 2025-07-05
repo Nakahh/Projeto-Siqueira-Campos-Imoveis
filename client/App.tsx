@@ -1,8 +1,6 @@
-import React, { Suspense, lazy, memo } from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { ThemeProvider } from "next-themes";
-import { AuthProvider, useAuth } from "@/contexts/AuthContext";
-import { AppStateProvider } from "@/contexts/AppStateContext";
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Index from "@/pages/Index";
 
 // Lazy load pages for optimal performance
 const Index = lazy(() => import("@/pages/Index"));
