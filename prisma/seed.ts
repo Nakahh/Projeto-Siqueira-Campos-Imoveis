@@ -625,7 +625,7 @@ async function main() {
         leadId: leads[0].id,
         tipo: "NOVA_LEAD",
         descricao: "Nova lead criada via website",
-        usuarioId: sistema.id,
+        usuarioId: admin.id,
       },
     }),
     prisma.atividadeLead.create({
