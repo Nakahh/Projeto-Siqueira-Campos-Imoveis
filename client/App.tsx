@@ -113,11 +113,13 @@ DashboardRedirect.displayName = "DashboardRedirect";
 // Error Boundary
 class AppErrorBoundary extends React.Component<
   { children: React.ReactNode },
-  { hasError: boolean; error?: Error }
+  { hasError: boolean; error?: Error; errorCount: number }
 > {
+  private maxErrors = 3;
+
   constructor(props: { children: React.ReactNode }) {
     super(props);
-    this.state = { hasError: false };
+    this.state = { hasError: false, errorCount: 0 };
   }
 
   static getDerivedStateFromError(error: Error) {
@@ -126,6 +128,16 @@ class AppErrorBoundary extends React.Component<
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
     console.error("[App] Error caught by boundary:", error, errorInfo);
+
+    // Prevent infinite error loops
+    this.setState((prevState) => ({
+      errorCount: prevState.errorCount + 1,
+    }));
+
+    if (this.state.errorCount >= this.maxErrors) {
+      console.error("[App] Too many errors, stopping error reporting");
+      return;
+    }
   }
 
   render() {
