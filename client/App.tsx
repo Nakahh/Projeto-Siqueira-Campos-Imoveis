@@ -249,7 +249,7 @@ export default function App() {
                   <Routes>
                     <Route
                       path="dashboard"
-                      element={<div>Dev Dashboard</div>}
+                      element={<DesenvolvedorDashboard />}
                     />
                     <Route
                       path="sistema"
