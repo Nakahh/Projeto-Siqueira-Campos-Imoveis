@@ -17,6 +17,7 @@ import clienteRoutes from "./routes/cliente";
 import chatRoutes from "./routes/chat";
 import whatsappRoutes from "./routes/whatsapp";
 import uploadRoutes from "./routes/upload";
+import financeiroRoutes from "./routes/financeiro";
 
 dotenv.config();
 
