@@ -205,6 +205,9 @@ export function Header() {
 
           {/* Right Side Actions */}
           <div className="flex items-center space-x-2">
+            {/* Notification Center */}
+            {user && <NotificationCenter />}
+
             {/* Theme Toggle */}
             <Button
               variant="ghost"
