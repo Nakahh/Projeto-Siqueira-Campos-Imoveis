@@ -1,251 +1,102 @@
+# Docker Compose - Siqueira Campos Imóveis
+# Ambiente de Desenvolvimento
+# Desenvolvido por KRYONIX Tecnologia
+
 version: "3.8"
 
 services:
-  # Banco de Dados PostgreSQL
-  postgres:
-    image: postgres:15-alpine
-    container_name: siqueira-postgres
+  # Aplicação Principal
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: siqueira-app-dev
     restart: unless-stopped
+    ports:
+      - "3001:3001"
     environment:
-      POSTGRES_DB: bdsitejuarez
-      POSTGRES_USER: sitejuarez
-      POSTGRES_PASSWORD: juarez123
-      PGDATA: /var/lib/postgresql/data/pgdata
+      NODE_ENV: development
+      DATABASE_URL: file:./dev.db
+      JWT_SECRET: ${JWT_SECRET}
+      PORT: 3001
     volumes:
-      - postgres_data:/var/lib/postgresql/data
-      - ./backups:/backups
+      - .:/app
+      - /app/node_modules
+      - ./uploads:/app/uploads
+      - ./dev.db:/app/dev.db
     networks:
       - siqueira-network
+
+  # Banco PostgreSQL (opcional para desenvolvimento avançado)
+  postgres:
+    image: postgres:15-alpine
+    container_name: siqueira-postgres-dev
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: siqueira_dev
+      POSTGRES_USER: siqueira
+      POSTGRES_PASSWORD: siqueira123
     ports:
       - "5432:5432"
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U sitejuarez -d bdsitejuarez"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - siqueira-network
+    profiles:
+      - postgres
 
-  # Redis para Cache e Sessões
+  # Redis (opcional para cache)
   redis:
     image: redis:7-alpine
-    container_name: siqueira-redis
+    container_name: siqueira-redis-dev
     restart: unless-stopped
+    ports:
+      - "6379:6379"
     volumes:
       - redis_data:/data
     networks:
       - siqueira-network
-    ports:
-      - "6379:6379"
-    command: redis-server --appendonly yes
-    healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
+    profiles:
+      - redis
 
-  # Aplicação Principal
-  app:
-    build: .
-    container_name: siqueira-app
-    restart: unless-stopped
-    depends_on:
-      postgres:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
-    environment:
-      - DATABASE_URL=postgresql://sitejuarez:juarez123@postgres:5432/bdsitejuarez?schema=public
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
-      - NODE_ENV=production
-      - PORT=3000
-    volumes:
-      - ./uploads:/app/uploads
-      - ./logs:/app/logs
-    networks:
-      - siqueira-network
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.siqueira-app.rule=Host(`siqueicamposimoveis.com.br`) || Host(`www.siqueicamposimoveis.com.br`)"
-      - "traefik.http.routers.siqueira-app.entrypoints=websecure"
-      - "traefik.http.routers.siqueira-app.tls.certresolver=letsencrypt"
-      - "traefik.http.services.siqueira-app.loadbalancer.server.port=3000"
-
-  # App Subdomain
-  app-sub:
-    build: .
-    container_name: siqueira-app-sub
-    restart: unless-stopped
-    depends_on:
-      postgres:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
-    environment:
-      - DATABASE_URL=postgresql://sitejuarez:juarez123@postgres:5432/bdsitejuarez?schema=public
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
-      - NODE_ENV=production
-      - PORT=3002
-      - SUBDOMAIN=app
-    volumes:
-      - ./uploads:/app/uploads
-      - ./logs:/app/logs
-    networks:
-      - siqueira-network
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.siqueira-app-sub.rule=Host(`app.siqueicamposimoveis.com.br`)"
-      - "traefik.http.routers.siqueira-app-sub.entrypoints=websecure"
-      - "traefik.http.routers.siqueira-app-sub.tls.certresolver=letsencrypt"
-      - "traefik.http.services.siqueira-app-sub.loadbalancer.server.port=3002"
-
-  # Cliente Subdomain
-  cliente-sub:
-    build: .
-    container_name: siqueira-cliente
-    restart: unless-stopped
-    depends_on:
-      postgres:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
-    environment:
-      - DATABASE_URL=postgresql://sitejuarez:juarez123@postgres:5432/bdsitejuarez?schema=public
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
-      - NODE_ENV=production
-      - PORT=3003
-      - SUBDOMAIN=cliente
-    volumes:
-      - ./uploads:/app/uploads
-      - ./logs:/app/logs
-    networks:
-      - siqueira-network
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.siqueira-cliente.rule=Host(`cliente.siqueicamposimoveis.com.br`)"
-      - "traefik.http.routers.siqueira-cliente.entrypoints=websecure"
-      - "traefik.http.routers.siqueira-cliente.tls.certresolver=letsencrypt"
-      - "traefik.http.services.siqueira-cliente.loadbalancer.server.port=3003"
-
-  # Traefik Proxy Reverso
-  traefik:
-    image: traefik:v3.0
-    container_name: siqueira-traefik
-    restart: unless-stopped
-    ports:
-      - "80:80"
-      - "443:443"
-      - "8080:8080" # Dashboard (remover em produção)
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ./traefik:/etc/traefik
-      - ./letsencrypt:/letsencrypt
-    networks:
-      - siqueira-network
-    command:
-      - --api.dashboard=true
-      - --api.insecure=true
-      - --providers.docker=true
-      - --providers.docker.exposedbydefault=false
-      - --entrypoints.web.address=:80
-      - --entrypoints.websecure.address=:443
-      - --certificatesresolvers.letsencrypt.acme.httpchallenge=true
-      - --certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web
-      - --certificatesresolvers.letsencrypt.acme.email=dev@kryonix.com.br
-      - --certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json
-      - --entrypoints.web.http.redirections.entrypoint.to=websecure
-      - --entrypoints.web.http.redirections.entrypoint.scheme=https
-
-  # N8N para Automação
+  # N8N (opcional para automações)
   n8n:
     image: n8nio/n8n:latest
-    container_name: siqueira-n8n
+    container_name: siqueira-n8n-dev
     restart: unless-stopped
+    ports:
+      - "5678:5678"
     environment:
-      - DB_TYPE=postgresdb
-      - DB_POSTGRESDB_HOST=postgres
-      - DB_POSTGRESDB_PORT=5432
-      - DB_POSTGRESDB_DATABASE=n8n
-      - DB_POSTGRESDB_USER=sitejuarez
-      - DB_POSTGRESDB_PASSWORD=juarez123
-      - N8N_BASIC_AUTH_ACTIVE=true
-      - N8N_BASIC_AUTH_USER=admin
-      - N8N_BASIC_AUTH_PASSWORD=siqueira123
-      - WEBHOOK_URL=https://n8n.siqueicamposimoveis.com.br
+      N8N_BASIC_AUTH_ACTIVE: "true"
+      N8N_BASIC_AUTH_USER: admin
+      N8N_BASIC_AUTH_PASSWORD: admin123
+      WEBHOOK_URL: http://localhost:5678
+      GENERIC_TIMEZONE: America/Sao_Paulo
     volumes:
       - n8n_data:/home/node/.n8n
     networks:
       - siqueira-network
-    depends_on:
-      postgres:
-        condition: service_healthy
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.siqueira-n8n.rule=Host(`n8n.siqueicamposimoveis.com.br`)"
-      - "traefik.http.routers.siqueira-n8n.entrypoints=websecure"
-      - "traefik.http.routers.siqueira-n8n.tls.certresolver=letsencrypt"
-      - "traefik.http.services.siqueira-n8n.loadbalancer.server.port=5678"
+    profiles:
+      - n8n
 
-  # Evolution API para WhatsApp
-  evolution-api:
-    image: davidsongomes/evolution-api:latest
-    container_name: siqueira-whatsapp
+  # Evolution API (opcional para WhatsApp)
+  evolution:
+    image: atendai/evolution-api:latest
+    container_name: siqueira-evolution-dev
     restart: unless-stopped
+    ports:
+      - "8081:8080"
     environment:
-      - SERVER_PORT=8080
-      - CORS_ORIGIN=*
-      - DEL_INSTANCE=false
-      - PROVIDER_NAME=evolution
-      - PROVIDER_HOST=evolution-api
-      - PROVIDER_PORT=8080
-      - PROVIDER_PREFIX=evolution
-      - DATABASE_CONNECTION_URI=postgresql://sitejuarez:juarez123@postgres:5432/evolution?schema=public
-      - DATABASE_SAVE_DATA_INSTANCE=true
-      - DATABASE_SAVE_DATA_NEW_MESSAGE=true
-      - DATABASE_SAVE_MESSAGE_UPDATE=true
-      - REDIS_URI=redis://redis:6379
-      - AUTHENTICATION_API_KEY=siqueira_evolution_key_2024
+      SERVER_TYPE: http
+      CORS_ORIGIN: "*"
+      DEL_INSTANCE: "false"
+      AUTHENTICATION_API_KEY: dev_evolution_key
     volumes:
       - evolution_data:/evolution/instances
-      - evolution_store:/evolution/store
     networks:
       - siqueira-network
-    depends_on:
-      postgres:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.siqueira-whatsapp.rule=Host(`whatsapp.siqueicamposimoveis.com.br`)"
-      - "traefik.http.routers.siqueira-whatsapp.entrypoints=websecure"
-      - "traefik.http.routers.siqueira-whatsapp.tls.certresolver=letsencrypt"
-      - "traefik.http.services.siqueira-whatsapp.loadbalancer.server.port=8080"
-
-  # Backup Automático
-  backup:
-    image: prodrigestivill/postgres-backup-local:15
-    container_name: siqueira-backup
-    restart: unless-stopped
-    environment:
-      - POSTGRES_HOST=postgres
-      - POSTGRES_DB=bdsitejuarez
-      - POSTGRES_USER=sitejuarez
-      - POSTGRES_PASSWORD=juarez123
-      - POSTGRES_EXTRA_OPTS=-Z9 --schema=public --blobs
-      - SCHEDULE=@daily
-      - BACKUP_KEEP_DAYS=30
-      - BACKUP_KEEP_WEEKS=4
-      - BACKUP_KEEP_MONTHS=6
-      - HEALTHCHECK_PORT=8080
-    volumes:
-      - ./backups:/backups
-    networks:
-      - siqueira-network
-    depends_on:
-      postgres:
-        condition: service_healthy
+    profiles:
+      - evolution
 
 volumes:
   postgres_data:
@@ -256,9 +107,11 @@ volumes:
     driver: local
   evolution_data:
     driver: local
-  evolution_store:
-    driver: local
 
 networks:
   siqueira-network:
     driver: bridge
+# Como usar:
+# Desenvolvimento básico (apenas app): docker-compose up -d
+# Com PostgreSQL: docker-compose --profile postgres up -d
+# Com todos os serviços: docker-compose --profile postgres --profile redis --profile n8n --profile evolution up -d
