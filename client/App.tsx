@@ -13,6 +13,7 @@ import CorretorDashboard from "@/pages/Corretor/Dashboard";
 import AdminDashboard from "@/pages/Admin/Dashboard";
 import ClienteDashboard from "@/pages/Cliente/Dashboard";
 import DesenvolvedorDashboard from "@/pages/Desenvolvedor/Dashboard";
+import MarketingDashboard from "@/pages/Marketing/Dashboard";
 
 // Outras páginas
 import Imoveis from "@/pages/Imoveis";
