@@ -156,6 +156,8 @@ app.use("/api/upload", uploadRoutes);
 app.use("/api/financeiro", financeiroRoutes);
 app.use("/api/marketing", marketingRoutes);
 app.use("/api/status", statusRoutes);
+app.use("/api/artigos", artigosRoutes);
+app.use("/api/depoimentos", depoimentosRoutes);
 
 // Rota para servir arquivos est��ticos (uploads)
 app.use("/uploads", express.static("uploads"));
