@@ -35,21 +35,12 @@ async function main() {
       nome: "Juarez Siqueira",
       email: "admin@siqueicamposimoveis.com.br",
       telefone: "(62) 9 8556-3505",
+      whatsapp: "(62) 9 8556-3505",
       senha: senhaHash,
       tipo: "ADMIN",
       ativo: true,
-      whatsappAtivo: true,
-      configuracoes: {
-        avatar: "/uploads/admin-avatar.jpg",
-        notificacoes: true,
-        tema: "claro",
-        whatsapp: {
-          instance: "admin",
-          autoResposta: true,
-          mensagemPadrao:
-            "Olá! Sou o administrador da Siqueira Campos Imóveis.",
-        },
-      },
+      emailVerificado: true,
+      avatar: "/uploads/admin-avatar.jpg",
     },
   });
 
