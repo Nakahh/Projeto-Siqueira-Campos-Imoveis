@@ -157,7 +157,7 @@ export default function App() {
                   <Routes>
                     <Route
                       path="imoveis"
-                      element={<div>Gestão de Im��veis</div>}
+                      element={<div>Gestão de Imóveis</div>}
                     />
                     <Route path="leads" element={<div>Gestão de Leads</div>} />
                     <Route path="agenda" element={<div>Agenda</div>} />
