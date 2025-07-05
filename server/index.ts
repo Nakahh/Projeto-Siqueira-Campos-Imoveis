@@ -95,9 +95,33 @@ app.use(
   }),
 );
 
+// Configuração dinâmica de CORS baseada no ambiente
+const getAllowedOrigins = () => {
+  const origins = [];
+
+  // Adicionar origens do .env
+  if (process.env.CORS_ORIGIN) {
+    origins.push(...process.env.CORS_ORIGIN.split(","));
+  }
+
+  // Adicionar origem atual automaticamente (para Fly.dev)
+  if (process.env.FLY_APP_NAME) {
+    origins.push(`https://${process.env.FLY_APP_NAME}.fly.dev`);
+  }
+
+  // Origens padrão para desenvolvimento
+  origins.push(
+    "http://localhost:8080",
+    "http://localhost:3000",
+    "http://localhost:5173",
+  );
+
+  return origins;
+};
+
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN?.split(",") || ["http://localhost:3000"],
+    origin: getAllowedOrigins(),
     credentials: true,
   }),
 );
