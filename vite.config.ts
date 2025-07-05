@@ -7,7 +7,6 @@ export default defineConfig({
   plugins: [
     react({
       fastRefresh: true, // Enable fast refresh but configure properly
-      jsxImportSource: "@emotion/react",
     }),
     {
       name: "express-middleware",
