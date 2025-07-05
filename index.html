@@ -38,5 +38,40 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/client/main.tsx"></script>
+
+    <!-- Service Worker with Error Handling -->
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", function () {
+          navigator.serviceWorker
+            .register("/sw.js")
+            .then(function (registration) {
+              console.log(
+                "✅ Service Worker registrado com sucesso:",
+                registration,
+              );
+            })
+            .catch(function (error) {
+              console.warn(
+                "⚠️ Falha ao registrar Service Worker (isso é normal):",
+                error,
+              );
+              // Não bloquear a aplicação se o service worker falhar
+            });
+        });
+      }
+
+      // Limpar service workers antigos que podem estar causando problemas
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker
+          .getRegistrations()
+          .then(function (registrations) {
+            for (let registration of registrations) {
+              // Apenas log, não remover automaticamente
+              console.log("Service Worker encontrado:", registration.scope);
+            }
+          });
+      }
+    </script>
   </body>
 </html>
