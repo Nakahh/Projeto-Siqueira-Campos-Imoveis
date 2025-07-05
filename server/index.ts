@@ -226,18 +226,17 @@ process.on("SIGINT", async () => {
   process.exit(0);
 });
 
-const PORT = process.env.PORT || 3000;
+// Porta configurada para produção - em desenvolvimento o Vite gerencia
+const PORT = process.env.PORT || 3001;
 
-app.listen(PORT, () => {
-  console.log(`🚀 Servidor rodando na porta ${PORT}`);
-  console.log(`📍 Ambiente: ${process.env.NODE_ENV}`);
-  console.log(`🔗 Health check: http://localhost:${PORT}/api/health`);
-
-  if (process.env.NODE_ENV === "development") {
-    console.log(`🌐 Frontend: http://localhost:${PORT}`);
-    console.log(`🔧 API: http://localhost:${PORT}/api`);
-  }
-});
+// Só iniciar servidor se não estiver em modo Vite (desenvolvimento)
+if (process.env.NODE_ENV === "production" || !process.env.VITE_DEV_SERVER) {
+  app.listen(PORT, () => {
+    console.log(`🚀 Servidor rodando na porta ${PORT}`);
+    console.log(`📍 Ambiente: ${process.env.NODE_ENV}`);
+    console.log(`🔗 Health check: http://localhost:${PORT}/api/health`);
+  });
+}
 
 export const createServer = () => {
   // Não iniciar o servidor HTTP aqui para evitar conflito com Vite
