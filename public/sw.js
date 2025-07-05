@@ -1,24 +1,24 @@
-// Simple service worker without external connections
-const CACHE_NAME = "siqueira-campos-v1.0.0";
+// Siqueira Campos Imóveis - Service Worker
+// Versão limpa sem conexões externas
 
-// Install event
+console.log("🔧 Service Worker Siqueira Campos iniciado");
+
+// Install event - apenas log
 self.addEventListener("install", (event) => {
-  console.log("Service Worker instalado");
+  console.log("✅ Service Worker instalado");
   self.skipWaiting();
 });
 
-// Activate event
+// Activate event - apenas log
 self.addEventListener("activate", (event) => {
-  console.log("Service Worker ativado");
+  console.log("✅ Service Worker ativado");
   event.waitUntil(clients.claim());
 });
 
-// Fetch event - pass through all requests without caching external URLs
+// Fetch event - passa todas as requisições direto
 self.addEventListener("fetch", (event) => {
-  // Skip external URLs and just pass them through
-  if (!event.request.url.startsWith(self.location.origin)) {
-    return;
-  }
-
-  event.respondWith(fetch(event.request));
+  // Não fazer cache, não interceptar, apenas passar direto
+  return;
 });
+
+console.log("✅ Service Worker Siqueira Campos configurado");
