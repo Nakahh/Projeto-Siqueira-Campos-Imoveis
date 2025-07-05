@@ -3,75 +3,32 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#8B4513" />
-    <meta
-      name="description"
-      content="Sistema completo de gestão imobiliária - Siqueira Campos Imóveis"
-    />
-    <meta
-      name="keywords"
-      content="imóveis, casa, apartamento, venda, aluguel, Goiânia"
-    />
-    <meta name="author" content="KRYONIX Tecnologia" />
-
-    <!-- PWA Meta Tags -->
-    <link rel="manifest" href="/manifest.json" />
-    <meta name="mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta
-      name="apple-mobile-web-app-status-bar-style"
-      content="black-translucent"
-    />
-    <meta name="apple-mobile-web-app-title" content="SCI" />
-
-    <!-- SEO Meta Tags -->
-    <meta property="og:title" content="Siqueira Campos Imóveis" />
-    <meta
-      property="og:description"
-      content="Sistema completo de gestão imobiliária"
-    />
-    <meta property="og:type" content="website" />
-
     <title>Siqueira Campos Imóveis</title>
   </head>
-
   <body>
-    <div id="root"></div>
-    <script type="module" src="/client/main.tsx"></script>
-
-    <!-- Service Worker with Error Handling -->
+    <div id="root">
+      <div style="padding: 2rem; text-align: center">
+        <h1 style="color: #8b4513; font-size: 2rem">
+          🏠 Siqueira Campos Imóveis
+        </h1>
+        <p style="color: #666; font-size: 1.2rem">Carregando sistema...</p>
+      </div>
+    </div>
     <script>
-      if ("serviceWorker" in navigator) {
-        window.addEventListener("load", function () {
-          navigator.serviceWorker
-            .register("/sw.js")
-            .then(function (registration) {
-              console.log(
-                "✅ Service Worker registrado com sucesso:",
-                registration,
-              );
-            })
-            .catch(function (error) {
-              console.warn(
-                "⚠️ Falha ao registrar Service Worker (isso é normal):",
-                error,
-              );
-              // Não bloquear a aplicação se o service worker falhar
-            });
-        });
-      }
+      console.log("🔍 HTML carregado, verificando JavaScript...");
 
-      // Limpar service workers antigos que podem estar causando problemas
-      if ("serviceWorker" in navigator) {
-        navigator.serviceWorker
-          .getRegistrations()
-          .then(function (registrations) {
-            for (let registration of registrations) {
-              // Apenas log, não remover automaticamente
-              console.log("Service Worker encontrado:", registration.scope);
-            }
-          });
-      }
+      // Debug detalhado
+      console.log("✅ Root element:", document.getElementById("root"));
+      console.log("✅ Location:", window.location.href);
+      console.log("✅ User Agent:", navigator.userAgent);
+
+      // Carregar React com tratamento de erro
+      const script = document.createElement("script");
+      script.type = "module";
+      script.src = "/client/main.tsx";
+      script.onload = () => console.log("✅ Script React carregado");
+      script.onerror = (e) => console.error("❌ Erro ao carregar React:", e);
+      document.head.appendChild(script);
     </script>
   </body>
 </html>
