@@ -27,11 +27,7 @@ const initializeApp = () => {
 
   const root = ReactDOM.createRoot(rootElement);
 
-  root.render(
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>,
-  );
+  root.render(<App />);
 
   // Mark render complete - only once
   let renderMarked = false;

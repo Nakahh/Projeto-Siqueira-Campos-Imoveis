@@ -2,8 +2,24 @@ import type { Config } from "tailwindcss";
 
 export default {
   darkMode: ["class"],
-  content: ["./client/**/*.{ts,tsx}"],
+  content: {
+    files: ["./client/**/*.{ts,tsx}", "./index.html"],
+    extract: {
+      include: ["./client/**/*.{ts,tsx}"],
+      exclude: ["./node_modules/**", "./dist/**"],
+    },
+  },
   prefix: "",
+  mode: "jit",
+  safelist: [
+    "bg-brand-brown-50",
+    "bg-brand-brown-100",
+    "bg-brand-brown-700",
+    "bg-brand-brown-900",
+    "text-brand-beige-200",
+    "text-brand-beige-400",
+    "border-brand-beige-400",
+  ],
   theme: {
     container: {
       center: true,
