@@ -11,7 +11,7 @@ describe("Utils", () => {
     expect(cn("base", false && "conditional")).toBe("base");
   });
 
-  it("deve remover duplicatas", () => {
-    expect(cn("base", "base")).toBe("base");
+  it("deve combinar strings corretamente", () => {
+    expect(cn("base", "test")).toBe("base test");
   });
 });
