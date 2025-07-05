@@ -30,18 +30,118 @@ const Sobre = lazy(() => import("@/pages/Sobre"));
 const Desenvolvedor = lazy(() => import("@/pages/Desenvolvedor"));
 const Status = lazy(() => import("@/pages/Status"));
 
-// Professional loading component
+// Ultra-Premium loading component with luxury effects
 const LoadingFallback = memo(() => (
-  <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-brand-brown-50 to-brand-beige-50 dark:from-brand-brown-900 dark:to-brand-brown-800">
-    <div className="text-center">
-      <div className="w-16 h-16 border-4 border-brand-brown-300 border-t-brand-brown-600 rounded-full animate-spin mx-auto mb-4"></div>
-      <h2 className="text-xl font-semibold text-brand-brown-800 dark:text-brand-beige-200 mb-2">
-        🏠 Siqueira Campos Imóveis
-      </h2>
-      <p className="text-brand-brown-600 dark:text-brand-beige-300">
-        Sistema profissional carregando...
-      </p>
+  <div className="min-h-screen flex items-center justify-center relative overflow-hidden">
+    {/* Premium Background with Animated Gradients */}
+    <div className="absolute inset-0 bg-gradient-to-br from-brand-brown-50 via-brand-beige-50 to-white dark:from-brand-brown-900 dark:via-brand-brown-800 dark:to-brand-brown-900"></div>
+
+    {/* Floating Particles Animation */}
+    <div className="absolute inset-0 overflow-hidden opacity-30">
+      {[...Array(12)].map((_, i) => (
+        <div
+          key={i}
+          className="absolute w-2 h-2 bg-gradient-to-r from-yellow-400/40 to-amber-500/40 rounded-full animate-pulse"
+          style={{
+            left: `${Math.random() * 100}%`,
+            top: `${Math.random() * 100}%`,
+            animationDelay: `${Math.random() * 3}s`,
+            animationDuration: `${2 + Math.random() * 3}s`,
+          }}
+        ></div>
+      ))}
     </div>
+
+    {/* Main Loading Content */}
+    <div className="relative z-10 text-center p-8">
+      {/* Premium Logo with Glassmorphism */}
+      <div className="relative mb-8">
+        <div className="w-24 h-24 mx-auto bg-white/20 dark:bg-white/10 backdrop-blur-xl rounded-3xl flex items-center justify-center border border-white/30 shadow-2xl">
+          <div className="text-4xl">🏠</div>
+          {/* Sparkle Effects */}
+          <div className="absolute -top-2 -right-2 w-6 h-6 bg-gradient-to-r from-yellow-400 to-amber-500 rounded-full animate-ping"></div>
+          <div className="absolute -bottom-2 -left-2 w-4 h-4 bg-gradient-to-r from-amber-400 to-yellow-500 rounded-full animate-pulse"></div>
+        </div>
+      </div>
+
+      {/* Premium Loading Ring */}
+      <div className="relative mb-8">
+        <div className="w-20 h-20 mx-auto">
+          {/* Outer ring */}
+          <div
+            className="absolute inset-0 rounded-full border-4 border-transparent bg-gradient-to-r from-brand-brown-400 via-amber-400 to-brand-brown-600 animate-spin"
+            style={{
+              background:
+                "conic-gradient(from 0deg, #d4af37, #b8860b, #cd853f, #d4af37)",
+              mask: "radial-gradient(farthest-side, transparent calc(100% - 4px), black calc(100% - 4px))",
+              WebkitMask:
+                "radial-gradient(farthest-side, transparent calc(100% - 4px), black calc(100% - 4px))",
+            }}
+          ></div>
+          {/* Inner ring */}
+          <div
+            className="absolute inset-2 rounded-full border-2 border-transparent bg-gradient-to-r from-amber-300 to-yellow-400 animate-spin opacity-70"
+            style={{
+              animationDirection: "reverse",
+              animationDuration: "1.5s",
+            }}
+          ></div>
+          {/* Center dot */}
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="w-2 h-2 bg-gradient-to-r from-yellow-400 to-amber-500 rounded-full animate-pulse"></div>
+          </div>
+        </div>
+      </div>
+
+      {/* Premium Brand Text */}
+      <div className="space-y-4">
+        <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-brand-brown-800 via-amber-700 to-brand-brown-900 dark:from-brand-beige-200 dark:via-yellow-300 dark:to-brand-beige-100 bg-clip-text text-transparent mb-3">
+          Siqueira Campos Imóveis
+        </h1>
+
+        <div className="flex items-center justify-center space-x-2 mb-4">
+          <div className="w-2 h-2 bg-gradient-to-r from-yellow-400 to-amber-500 rounded-full"></div>
+          <span className="text-lg font-medium bg-gradient-to-r from-amber-700 to-brand-brown-700 dark:from-amber-300 dark:to-yellow-200 bg-clip-text text-transparent">
+            PREMIUM EXPERIENCE
+          </span>
+          <div className="w-2 h-2 bg-gradient-to-r from-amber-500 to-yellow-400 rounded-full"></div>
+        </div>
+
+        <p className="text-brand-brown-600 dark:text-brand-beige-300 text-lg font-medium mb-6">
+          Carregando experiência premium...
+        </p>
+
+        {/* Loading Progress Bar */}
+        <div className="w-64 h-2 bg-brand-brown-200/30 dark:bg-brand-brown-700/30 rounded-full mx-auto overflow-hidden">
+          <div
+            className="h-full bg-gradient-to-r from-brand-brown-500 via-amber-500 to-yellow-500 rounded-full animate-pulse"
+            style={{
+              background:
+                "linear-gradient(90deg, #8b5a2b, #d4af37, #ffd700, #d4af37, #8b5a2b)",
+              backgroundSize: "200% 100%",
+              animation: "shimmer 2s infinite",
+            }}
+          ></div>
+        </div>
+
+        {/* Subtle tagline */}
+        <p className="text-sm text-brand-brown-500 dark:text-brand-beige-400 opacity-75 mt-4">
+          Transformando sonhos em realidade desde 2008
+        </p>
+      </div>
+    </div>
+
+    {/* CSS animation for shimmer effect */}
+    <style jsx>{`
+      @keyframes shimmer {
+        0% {
+          background-position: -200% 0;
+        }
+        100% {
+          background-position: 200% 0;
+        }
+      }
+    `}</style>
   </div>
 ));
 
