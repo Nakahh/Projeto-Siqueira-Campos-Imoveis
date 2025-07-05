@@ -6,7 +6,8 @@ import { createServer } from "./server";
 export default defineConfig({
   plugins: [
     react({
-      fastRefresh: true, // Enable fast refresh but configure properly
+      fastRefresh: false, // COMPLETELY DISABLE fast refresh
+      jsxRuntime: "automatic",
     }),
     {
       name: "express-middleware",
@@ -16,8 +17,13 @@ export default defineConfig({
           if (
             req.url?.startsWith("/@") ||
             req.url?.includes("/node_modules/") ||
-            req.url?.includes(".css") ||
-            req.url?.includes("?html-proxy")
+            req.url?.includes("vite/") ||
+            req.url?.includes("__vite") ||
+            req.url?.endsWith(".css") ||
+            req.url?.includes("?html-proxy") ||
+            req.url?.includes("?direct") ||
+            req.url?.includes("?worker") ||
+            req.url?.includes("?raw")
           ) {
             return next();
           }
@@ -31,17 +37,12 @@ export default defineConfig({
     host: "::",
     port: parseInt(process.env.PORT || "8080"),
     strictPort: false,
-    hmr: {
-      port: 24678, // Use a different port for HMR
-      overlay: false, // Disable error overlay
-    },
-    watch: {
-      usePolling: false,
-      interval: 1000,
-      ignored: ["**/node_modules/**", "**/dist/**", "**/.git/**"],
-    },
+    hmr: false, // COMPLETELY DISABLE HMR
+    watch: null, // COMPLETELY DISABLE file watching
+    middlewareMode: false,
     fs: {
       allow: [".."],
+      strict: false,
     },
   },
 
