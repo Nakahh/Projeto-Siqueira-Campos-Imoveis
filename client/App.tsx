@@ -155,7 +155,7 @@ export default function App() {
                   <Routes>
                     <Route
                       path="imoveis"
-                      element={<div>Gestão de Imóveis</div>}
+                      element={<div>Gestão de Im��veis</div>}
                     />
                     <Route path="leads" element={<div>Gestão de Leads</div>} />
                     <Route path="agenda" element={<div>Agenda</div>} />
@@ -222,10 +222,7 @@ export default function App() {
               element={
                 <ProtectedRoute requiredRoles={["MARKETING", "ADMIN"]}>
                   <Routes>
-                    <Route
-                      path="dashboard"
-                      element={<div>Marketing Dashboard</div>}
-                    />
+                    <Route path="dashboard" element={<MarketingDashboard />} />
                     <Route path="campanhas" element={<div>Campanhas</div>} />
                     <Route path="leads" element={<div>Leads Marketing</div>} />
                     <Route path="emails" element={<div>Email Marketing</div>} />
